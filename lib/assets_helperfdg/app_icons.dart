@@ -28,6 +28,9 @@ class AppIcons{
   static const String gift = '$iconsRoute/gift.svg';
   static const String plusIcon = '$iconsRoute/plusIcon.svg';
   static const String unfavourite = '$iconsRoute/unfavourite.svg';
+  static const String cross = '$iconsRoute/cross.svg';
+  static const String selfCare = '$iconsRoute/selfCare.svg';
+  static const String userAdd = '$iconsRoute/userAdd.svg';
 
 
 
