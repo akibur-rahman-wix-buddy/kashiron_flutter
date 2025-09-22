@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
+import 'package:kashirons_flutter/feature/home_screen/widget/add_new_bottomsheet.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 import '../widget/home_app_bar.dart';
@@ -35,7 +36,9 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            AddNewBottomSheet(context);
+          },
           backgroundColor: const Color(0xFFA4161A),
           shape: const CircleBorder(),
           child: SvgPicture.asset(
