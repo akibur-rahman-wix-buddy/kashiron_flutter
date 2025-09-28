@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import '../assets_helperfdg/app_colors.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -20,6 +21,7 @@ class CustomTextField extends StatefulWidget {
   final GestureTapCallback? onTap;
   final bool read;
   final dynamic radius;
+  final dynamic maxLength;
   final VoidCallback? onRightTap;
   final TextInputType? inputType;
   final ValueChanged<String>? onChanged;
@@ -43,7 +45,7 @@ class CustomTextField extends StatefulWidget {
     this.read = false,
     this.onTap,
     this.onRightTap,this.inputType,
-    this.onChanged
+    this.onChanged, this.maxLength
   }) : super(key: key);
 
   @override
@@ -57,6 +59,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     final bool isLargeField = (widget.height ?? 52.h) > 100.h;
 
     return TextFormField(
+      maxLength: widget.maxLength,
       obscuringCharacter: "*",
       keyboardType:widget.inputType,
       controller: widget.controller,
@@ -75,6 +78,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       maxLines: isLargeField ? null : 1,
       minLines: isLargeField ? 5 : 1,
       decoration: InputDecoration(
+        counterStyle: TextFontStyle.textStyle12InterW400.copyWith(color: Colors.white),
         filled: true,
         fillColor: widget.fieldColor ?? Color(0xff373b4c),
         hintText: widget.hintText,

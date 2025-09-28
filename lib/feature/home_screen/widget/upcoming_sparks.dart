@@ -4,6 +4,8 @@ import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_container.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
+import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 
@@ -98,7 +100,9 @@ class UpcomingSparks extends StatelessWidget {
                             fontSize: 12,
                             color: AppColor.cFFFFFF
                         ),
-                        onPressed: () {})
+                        onPressed: () {
+                          NavigationService.navigateTo(Routes.vipSparkDetailsScreen);
+                        })
                     ),
                     UIHelper.horizontalSpace(12.w),
                     Expanded(child: CustomElevatedButton(

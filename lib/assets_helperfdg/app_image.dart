@@ -11,13 +11,10 @@ class AppImages {
   static const String resetSuccess = '$imageRoute/resetSuccess.png';
   static const String demoAvatar = '$imageRoute/demoAvatar.jpg';
   static const String demoItem = '$imageRoute/demoItem.png';
+  static const String placeholderImageItem = '$imageRoute/place_holder_image.png';
 
 
 
-
-  /**/
-
-  /**/
 
 }
 // CircleAvatar er jonno
