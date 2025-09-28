@@ -31,6 +31,7 @@ class AppIcons{
   static const String cross = '$iconsRoute/cross.svg';
   static const String selfCare = '$iconsRoute/selfCare.svg';
   static const String userAdd = '$iconsRoute/userAdd.svg';
+  static const String location = '$iconsRoute/location.svg';
 
 
 

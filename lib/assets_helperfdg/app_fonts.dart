@@ -118,7 +118,7 @@ class TextFontStyle {
         'Noto Sans',
       ],
       color: AppColor.cFFFFFF,
-      fontSize: 8.sp,
+      fontSize: 18.sp,
       height: 1.50,
       fontWeight: FontWeight.w700);
 

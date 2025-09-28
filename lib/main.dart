@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'assets_helperfdg/app_colors.dart';
 import 'constants/custome_theme.dart';
+import 'feature/spark/presentation/vip_spark_details_screen.dart';
 import 'helpers/all_routes.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';

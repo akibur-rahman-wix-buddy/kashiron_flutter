@@ -3,6 +3,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:kashirons_flutter/feature/auth/presentation/forgot_otp_screen.dart';
 import 'package:kashirons_flutter/feature/onboarding/presentation/onboarding_screen.dart';
+import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_delivery_address_send_flower_Card.dart';
+import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_flower_card.dart';
+import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/send_flower_&_card_screen.dart';
+import 'package:kashirons_flutter/feature/spark/presentation/spark_details_screen.dart';
+import 'package:kashirons_flutter/feature/spark/presentation/vip_spark_details_screen.dart';
 
 import '../feature/auth/presentation/forgot_password_screen.dart';
 import '../feature/auth/presentation/login_screen.dart';
@@ -32,6 +37,20 @@ final class Routes {
 
   // ################## all ##################
   static const String customBottomNavBar = '/customBottomNavBar';
+
+
+  ///>>>>>>>>>>>>>>>>>>> spark section >>>>>>>>>>>>>>>>>>>>>>
+
+  static const String sparkDetailsScreen = '/sparkDetailsScreen';
+  static const String vipSparkDetailsScreen = '/vipSparkDetailsScreen';
+
+
+  ///>>>>>>>>>>>>>>>>>>>>>>> send flower card section >>>>>>>>>>>>>
+
+ static const String sendFlowerCardScreen = "/sendFlowerCardScreen";
+ static const String chooseDeliveryAddressSendFlowerCard = "/chooseDeliveryAddressSendFlowerCard";
+ static const String chooseSendFlowerCard = "/chooseSendFlowerCard";
+
 
 
 }
@@ -105,6 +124,45 @@ final class RouteGenerator {
             ? _FadedTransitionRoute(
             widget: CustomBottomNavBar(), settings: settings)
             : CupertinoPageRoute(builder: (context) => CustomBottomNavBar());
+
+/// ================================= spark section ================================== ///
+
+      case Routes.sparkDetailsScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: SparkDetailsScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => SparkDetailsScreen());
+
+
+        case Routes.vipSparkDetailsScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: VipSparkDetailsScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => VipSparkDetailsScreen());
+
+
+    ///>>>>>>>>>>>>>>>>>>>>>>> send flower card section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+      case Routes.sendFlowerCardScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: SendFlowerCardScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => SendFlowerCardScreen());
+
+
+        case Routes.chooseDeliveryAddressSendFlowerCard:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: ChooseDeliveryAddressSendFlowerCard(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => ChooseDeliveryAddressSendFlowerCard());
+
+
+        case Routes.chooseSendFlowerCard:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: ChooseSendFlowerCard(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => ChooseSendFlowerCard());
 
 
 
