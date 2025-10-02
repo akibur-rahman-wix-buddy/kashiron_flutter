@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,8 +5,8 @@ import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
+import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
-import 'package:shimmer/shimmer.dart';
 
 class SparkProductCard extends StatefulWidget {
   final String title;
@@ -148,48 +147,5 @@ class _SparkProductCardState extends State<SparkProductCard> {
 
 
 
-class ShimmerImage extends StatelessWidget {
-  final String imageUrl;
-  final String placeholder;
-  final double height;
-  final double width;
-  final double borderRadius;
 
-  const ShimmerImage({
-    super.key,
-    required this.imageUrl,
-    required this.placeholder,
-    required this.height,
-    required this.width,
-    this.borderRadius = 8,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius),
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        height: height,
-        width: width,
-        fit: BoxFit.cover,
-        placeholder: (context, url) => Shimmer.fromColors(
-          baseColor: Colors.grey.shade400,
-          highlightColor: Colors.grey.shade100,
-          child: Container(
-            height: height,
-            width: width,
-            color: Colors.white,
-          ),
-        ),
-        errorWidget: (context, url, error) => Image.asset(
-          placeholder,
-          height: height,
-          width: width,
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-}
 

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:kashirons_flutter/feature/auth/presentation/forgot_otp_screen.dart';
+import 'package:kashirons_flutter/feature/brobrain_gift_list/presentation/gift_details_screen.dart';
 import 'package:kashirons_flutter/feature/onboarding/presentation/onboarding_screen.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_delivery_address_send_flower_Card.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_flower_card.dart';
@@ -50,6 +51,7 @@ final class Routes {
  static const String sendFlowerCardScreen = "/sendFlowerCardScreen";
  static const String chooseDeliveryAddressSendFlowerCard = "/chooseDeliveryAddressSendFlowerCard";
  static const String chooseSendFlowerCard = "/chooseSendFlowerCard";
+ static const String productDetailScreen = "/productDetailScreen";
 
 
 
@@ -163,6 +165,12 @@ final class RouteGenerator {
             ? _FadedTransitionRoute(
             widget: ChooseSendFlowerCard(), settings: settings)
             : CupertinoPageRoute(builder: (context) => ChooseSendFlowerCard());
+
+        case Routes.productDetailScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: ProductDetailScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => ProductDetailScreen());
 
 
 

@@ -32,6 +32,9 @@ class AppIcons{
   static const String selfCare = '$iconsRoute/selfCare.svg';
   static const String userAdd = '$iconsRoute/userAdd.svg';
   static const String location = '$iconsRoute/location.svg';
+  static const String orderBox = '$iconsRoute/order_box.svg';
+  static const String message01= '$iconsRoute/message-01.svg';
+  static const String search= '$iconsRoute/search-normal.svg';
 
 
 
