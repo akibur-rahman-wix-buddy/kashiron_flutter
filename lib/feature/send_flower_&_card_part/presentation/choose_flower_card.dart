@@ -107,10 +107,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
+import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/flower_review_order.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/widget/choose_flower_card.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 
@@ -165,6 +167,15 @@ final selectedValue = selectedIndexes.map((item)=> addresses[item]["value"]).toL
     final totalValue = selectedValue.fold<num>(0, (sum, item) => sum + item);
 
 
+    Get.to(ReviewFlowerCardOder(
+      message: 'Congratulations! You deserve all the beautiful things in life.',
+      isVip: true,
+      deliveryAddress: "dhaka bangladesh ",
+      value: 112,
+      sendToName: "Sarah Mitchell",
+      description: "this is description",
+      titleName: " this is title",
+    ));
     // Or you can print
     debugPrint("Selected Names: $selectedNames");
     debugPrint("Selected value : $selectedValue");

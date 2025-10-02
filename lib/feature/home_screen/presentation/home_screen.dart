@@ -109,7 +109,11 @@ class HomeScreen extends StatelessWidget {
                 ),
                 UIHelper.verticalSpace(16.h),
                 /// ============================ Popular Gifts ====================== ///
-                PopularGifts(),
+                PopularGifts(
+                  isLove: true,
+                  value: 2600.toString(),
+                  title: "Smart Watch",
+                ),
                 UIHelper.verticalSpace(30.h),
 
               ],
