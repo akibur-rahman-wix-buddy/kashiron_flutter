@@ -44,20 +44,15 @@ class CustomElevatedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          Text(
-            text,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: textStyle??TextFontStyle.textStyle12InterW600.copyWith(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w500,
-              color: AppColor.cEDEDED
-            ),
+        child: Text(
+          text,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: textStyle??TextFontStyle.textStyle12InterW600.copyWith(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w500,
+            color: AppColor.cEDEDED
           ),
-          ],
         ),
       ),
     );

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kashirons_flutter/feature/settings/presentation/setting_screen.dart';
 
 import '../assets_helperfdg/app_colors.dart';
 import '../assets_helperfdg/app_fonts.dart';
 import '../assets_helperfdg/app_icons.dart';
 import 'home_screen/presentation/home_screen.dart';
+import 'vip_profile/presentation/vip_profile_screen.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key});
@@ -19,8 +21,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   final List<Widget> pages = [
     HomeScreen(),
-    Container(color: Colors.green), // Example page
-    Container(color: Colors.blue),  // Example page
+    VipProfileScreen(), // Example page
+    SettingScreen( ),  // Example page
   ];
 
   void _onTabTap(int index) {

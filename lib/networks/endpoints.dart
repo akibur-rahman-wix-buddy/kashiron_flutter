@@ -1,6 +1,8 @@
  // ignore_for_file: constant_identifier_names
 
 const String url = "";
+const String personImageUrl = "https://thumbs.dreamstime.com/b/portrait-adorable-cheerful-teenage-girl-wonderful-brown-hair-lot-freckles-cheerful-teenager-girl-freckles-264911980.jpg";
+
 
 final class NetworkConstants {
   NetworkConstants._();
