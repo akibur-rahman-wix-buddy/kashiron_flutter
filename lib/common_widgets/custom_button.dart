@@ -1,85 +1,142 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../assets_helperfdg/app_colors.dart';
-import '../assets_helperfdg/app_fonts.dart';
-
-
-Widget customButton(
-    {required String name,
-    required VoidCallback onCallBack,
-    double? height,
-    double? minWidth,
-    double? borderRadius,
-    Color? color,
-    padding,
-    TextStyle? textStyle,
-    required BuildContext context,
-    Color? borderColor,
-    elevation}) {
-  return GestureDetector(
-    onTap: onCallBack,
-    child: Container(
-      height: height ?? 62.h,
-      width: minWidth ?? double.infinity,
-      padding: padding ?? EdgeInsets.all(0),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          color: color ?? AppColor.cB0B0B0,
-          borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
-          border: Border.all(
-            color: borderColor ?? AppColor.cB0B0B0,
-          )),
-      child: Text(
-        name,
-        overflow: TextOverflow.ellipsis,
-        style: textStyle ??
-            TextFontStyle.textStyle14InterW400
-                .copyWith(color: AppColor.cFFFFFF),
-      ),
-    ),
-  );
-}
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import '../assets_helperfdg/app_colors.dart';
+// import '../assets_helperfdg/app_fonts.dart';
 //
-// import '../constants/text_font_style.dart';
-// import '../gen/colors.gen.dart';
 //
-// Widget customButton({
-//   required String name,
-//   required VoidCallback? onCallBack, // Allow null for safety
-//   double? height,
-//   double? minWidth,
-//   double? borderRadius,
-//   Color? color,
-//   padding,
-//   TextStyle? textStyle,
-//   required BuildContext context,
-//   Color? borderColor,
-//   elevation,
-// }) {
+// Widget customButton(
+//     {required String name,
+//     required VoidCallback onCallBack,
+//     double? height,
+//     double? minWidth,
+//     double? borderRadius,
+//     Color? color,
+//     padding,
+//     TextStyle? textStyle,
+//     required BuildContext context,
+//     Color? borderColor,
+//     elevation}) {
 //   return GestureDetector(
-//     onTap: onCallBack ?? () {}, // Provide a fallback if null
+//     onTap: onCallBack,
 //     child: Container(
 //       height: height ?? 62.h,
 //       width: minWidth ?? double.infinity,
 //       padding: padding ?? EdgeInsets.all(0),
 //       alignment: Alignment.center,
 //       decoration: BoxDecoration(
-//         color: color ?? AppColors.c6940C9,
-//         borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
-//         border: Border.all(
-//           color: borderColor ?? AppColors.c0A5B55,
-//         ),
-//       ),
+//           color: color ?? AppColor.cB0B0B0,
+//           borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
+//           border: Border.all(
+//             color: borderColor ?? AppColor.cB0B0B0,
+//           )),
 //       child: Text(
 //         name,
 //         overflow: TextOverflow.ellipsis,
 //         style: textStyle ??
-//             TextFontStyle.textStyle16c171717Popinsw500
-//                 .copyWith(color: AppColors.cFFFFFF),
+//             TextFontStyle.textStyle14InterW400
+//                 .copyWith(color: AppColor.cFFFFFF),
 //       ),
 //     ),
 //   );
 // }
+//
+// // import 'package:flutter/material.dart';
+// // import 'package:flutter_screenutil/flutter_screenutil.dart';
+// //
+// // import '../constants/text_font_style.dart';
+// // import '../gen/colors.gen.dart';
+// //
+// // Widget customButton({
+// //   required String name,
+// //   required VoidCallback? onCallBack, // Allow null for safety
+// //   double? height,
+// //   double? minWidth,
+// //   double? borderRadius,
+// //   Color? color,
+// //   padding,
+// //   TextStyle? textStyle,
+// //   required BuildContext context,
+// //   Color? borderColor,
+// //   elevation,
+// // }) {
+// //   return GestureDetector(
+// //     onTap: onCallBack ?? () {}, // Provide a fallback if null
+// //     child: Container(
+// //       height: height ?? 62.h,
+// //       width: minWidth ?? double.infinity,
+// //       padding: padding ?? EdgeInsets.all(0),
+// //       alignment: Alignment.center,
+// //       decoration: BoxDecoration(
+// //         color: color ?? AppColors.c6940C9,
+// //         borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
+// //         border: Border.all(
+// //           color: borderColor ?? AppColors.c0A5B55,
+// //         ),
+// //       ),
+// //       child: Text(
+// //         name,
+// //         overflow: TextOverflow.ellipsis,
+// //         style: textStyle ??
+// //             TextFontStyle.textStyle16c171717Popinsw500
+// //                 .copyWith(color: AppColors.cFFFFFF),
+// //       ),
+// //     ),
+// //   );
+// // }
+
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../assets_helperfdg/app_colors.dart';
+import '../assets_helperfdg/app_fonts.dart';
+
+Widget customButton({
+  required String name,
+  required VoidCallback onCallBack,
+  double? height,
+  double? minWidth,
+  double? borderRadius,
+  Color? color,
+  EdgeInsetsGeometry? padding,
+  TextStyle? textStyle,
+  required BuildContext context,
+  Color? borderColor,
+  double? elevation,
+  Widget? icon,
+  double? iconSpacing,
+}) {
+  return ElevatedButton(
+    onPressed: onCallBack,
+    style: ElevatedButton.styleFrom(
+      backgroundColor: color ?? AppColor.cB0B0B0,
+      foregroundColor: AppColor.cFFFFFF,
+      elevation: elevation ?? 0,
+      minimumSize: Size(minWidth ?? double.infinity, height ?? 62.h),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
+        side: BorderSide(
+          color: borderColor ?? AppColor.cB0B0B0,
+          width: 1.0,
+        ),
+      ),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (icon != null) icon,
+        if (icon != null) SizedBox(width: iconSpacing ?? 8.w),
+        Text(
+          name,
+          overflow: TextOverflow.ellipsis,
+          style: textStyle ??
+              TextFontStyle.textStyle14InterW400.copyWith(
+                color: AppColor.cFFFFFF,
+              ),
+        ),
+      ],
+    ),
+  );
+}

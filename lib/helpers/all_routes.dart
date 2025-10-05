@@ -9,6 +9,8 @@ import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/c
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/send_flower_&_card_screen.dart';
 import 'package:kashirons_flutter/feature/spark/presentation/spark_details_screen.dart';
 import 'package:kashirons_flutter/feature/spark/presentation/vip_spark_details_screen.dart';
+import 'package:kashirons_flutter/feature/vip_profile/presentation/create_spark_screen.dart';
+import 'package:kashirons_flutter/feature/vip_profile/presentation/vip_details_screen.dart';
 
 import '../feature/auth/presentation/forgot_password_screen.dart';
 import '../feature/auth/presentation/login_screen.dart';
@@ -52,6 +54,8 @@ final class Routes {
  static const String chooseDeliveryAddressSendFlowerCard = "/chooseDeliveryAddressSendFlowerCard";
  static const String chooseSendFlowerCard = "/chooseSendFlowerCard";
  static const String productDetailScreen = "/productDetailScreen";
+ static const String vipDetailsScreen = "/vipDetailsScreen";
+ static const String createSparkScreen = "/createSparkScreen";
 
 
 
@@ -93,6 +97,12 @@ final class RouteGenerator {
             widget: SetPasswordScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => SetPasswordScreen());
 
+      case Routes.vipDetailsScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: VipDetailsScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => VipDetailsScreen());
+
       case Routes.loginScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
@@ -104,6 +114,12 @@ final class RouteGenerator {
             ? _FadedTransitionRoute(
             widget: ForgotPasswordScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => ForgotPasswordScreen());
+
+      case Routes.createSparkScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: CreateSparkScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => CreateSparkScreen());
 
       case Routes.forgotOtpScreen:
         return Platform.isAndroid

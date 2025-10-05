@@ -35,6 +35,18 @@ class AppIcons{
   static const String orderBox = '$iconsRoute/order_box.svg';
   static const String message01= '$iconsRoute/message-01.svg';
   static const String search= '$iconsRoute/search-normal.svg';
+  static const String profileElements= '$iconsRoute/profile_elements.svg';
+  static const String filter= '$iconsRoute/filter.svg';
+  static const String calendar= '$iconsRoute/calendar.svg';
+  static const String clock= '$iconsRoute/clock.svg';
+  static const String calendar2= '$iconsRoute/calendar-2.svg';
+  static const String workHistory= '$iconsRoute/work-history.svg';
+  static const String profile= '$iconsRoute/profile.svg';
+  static const String documentText= '$iconsRoute/document-text.svg';
+  static const String terms= '$iconsRoute/terms.svg';
+  static const String delete2= '$iconsRoute/delete-02.svg';
+  static const String policy= '$iconsRoute/policy.svg';
+  static const String logout= '$iconsRoute/logout.svg';
 
 
 

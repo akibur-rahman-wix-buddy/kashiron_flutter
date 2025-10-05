@@ -76,6 +76,19 @@ class TextFontStyle {
       fontWeight: FontWeight.w400);
 
 
+  static var textStyle20InterW500 = TextStyle(
+      fontFamily: 'Inter',
+      fontFamilyFallback: const [
+        'Open Sans',
+        'Roboto',
+        'Noto Sans',
+      ],
+      color: AppColor.cFFFFFF,
+      fontSize: 20.sp,
+      height: 1.50,
+      fontWeight: FontWeight.w500);
+
+
   /*################################################*/
 
   /*14 SP Size*/
