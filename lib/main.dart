@@ -8,9 +8,7 @@ import 'package:kashirons_flutter/feature/vip_profile/presentation/vip_profile_s
 import 'assets_helperfdg/app_colors.dart';
 import 'constants/custome_theme.dart';
 import 'feature/bottom_nav_bar.dart';
-import 'feature/brobrain_gift_list/presentation/brobrain_gift_list_screen.dart';
-import 'feature/vip_profile/presentation/create_spark_screen.dart';
-import 'feature/vip_profile/presentation/vip_details_screen.dart';
+import 'feature/settings/presentation/edit_profile_screen.dart';
 import 'helpers/all_routes.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';
@@ -88,7 +86,7 @@ class UtillScreenMobile extends StatelessWidget {
             },
             navigatorKey: NavigationService.navigatorKey,
             onGenerateRoute: RouteGenerator.generateRoute,
-            home: CustomBottomNavBar(),
+            home: EditProfileScreen(),
           //  home: HomeScreen(),
           ),
         );

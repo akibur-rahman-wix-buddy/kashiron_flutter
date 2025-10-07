@@ -2,11 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:kashirons_flutter/feature/auth/presentation/forgot_otp_screen.dart';
+import 'package:kashirons_flutter/feature/brobrain_gift_list/presentation/brobrain_gift_list_screen.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/presentation/gift_details_screen.dart';
 import 'package:kashirons_flutter/feature/onboarding/presentation/onboarding_screen.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_delivery_address_send_flower_Card.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_flower_card.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/send_flower_&_card_screen.dart';
+import 'package:kashirons_flutter/feature/settings/presentation/favorite_gifts_screen.dart';
+import 'package:kashirons_flutter/feature/settings/presentation/order_history.dart';
+import 'package:kashirons_flutter/feature/settings/presentation/upcomming_spark_screen.dart';
 import 'package:kashirons_flutter/feature/spark/presentation/spark_details_screen.dart';
 import 'package:kashirons_flutter/feature/spark/presentation/vip_spark_details_screen.dart';
 import 'package:kashirons_flutter/feature/vip_profile/presentation/create_spark_screen.dart';
@@ -56,6 +60,16 @@ final class Routes {
  static const String productDetailScreen = "/productDetailScreen";
  static const String vipDetailsScreen = "/vipDetailsScreen";
  static const String createSparkScreen = "/createSparkScreen";
+
+
+ ///>>>>>>>>>>>>>>>>>>>>>>>> settings section >>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+  static const String upcommingSparkScreen = "/upcommingSparkScreen";
+  static const String brobrainGiftListScreen = "/brobrainGiftListScreen";
+  static const String favoriteGiftsScreen = "/favoriteGiftsScreen";
+  static const String orderHistoryScreen = "/orderHistoryScreen";
 
 
 
@@ -132,6 +146,30 @@ final class RouteGenerator {
             ? _FadedTransitionRoute(
             widget: ResetPasswordScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => ResetPasswordScreen());
+
+        case Routes.upcommingSparkScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: UpcommingSparkScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => UpcommingSparkScreen());
+
+        case Routes.brobrainGiftListScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: BrobrainGiftListScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => BrobrainGiftListScreen());
+
+        case Routes.favoriteGiftsScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: FavoriteGiftsScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => FavoriteGiftsScreen());
+
+        case Routes.orderHistoryScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: OrderHistoryScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => OrderHistoryScreen());
 
 
 
