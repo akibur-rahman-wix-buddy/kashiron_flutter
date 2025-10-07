@@ -7,6 +7,8 @@ import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
 import 'package:kashirons_flutter/feature/settings/widget/setting_item_card.dart';
+import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 
@@ -92,25 +94,32 @@ class _SettingScreenState extends State<SettingScreen> {
                           Text("Reminders & Gifts",style: TextFontStyle.textStyle16InterW700,),
                           UIHelper.verticalSpace(16.h),
                           SettingsItemCard(
-                            onTap: (){},
+                            onTap: (){
+                              NavigationService.navigateTo(Routes.upcommingSparkScreen);},
                             icon: AppIcons.calendar2,
                             title: "Upcoming Sparks",
                             subtitle: "See all upcoming reminders (VIP events + self-care)",
                           ),
                           SettingsItemCard(
-                            onTap: (){},
+                            onTap: (){
+                              NavigationService.navigateTo(Routes.brobrainGiftListScreen);
+                            },
                             icon: AppIcons.gift,
                             title: "Brobrain Gift lists",
                             subtitle: "Browse popular gifts by category",
                           ),
                           SettingsItemCard(
-                            onTap: (){},
+                            onTap: (){
+                              NavigationService.navigateTo(Routes.favoriteGiftsScreen);
+                            },
                             icon: AppIcons.favourite,
                             title: "Favorite Gifts",
                             subtitle: "View and manage your saved gift items",
                           ),
                           SettingsItemCard(
-                            onTap: (){},
+                            onTap: (){
+                              NavigationService.navigateTo(Routes.orderHistoryScreen);
+                            },
                             icon: AppIcons.workHistory,
                             title: "Order History",
                             subtitle: "Track and review your past gift orders",
