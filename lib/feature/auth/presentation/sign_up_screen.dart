@@ -101,7 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   leftIcon: AppIcons.fieldCalander,
                   hintText: "Date of Birth",
                   controller: dateController,
-                  read: true,
+                  readOnly: true,
                   onTap: () async {
 
                     FocusScope.of(context)

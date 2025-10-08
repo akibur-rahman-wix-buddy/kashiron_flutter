@@ -75,6 +75,31 @@ class TextFontStyle {
       height: 1.50,
       fontWeight: FontWeight.w400);
 
+  static var textStyle14InterW400c787A83 = TextStyle(
+      fontFamily: 'Inter',
+      fontFamilyFallback: const [
+        'Open Sans',
+        'Roboto',
+        'Noto Sans',
+      ],
+      color: AppColor.c787A83,
+      fontSize: 14.sp,
+      height: 1.50,
+      fontWeight: FontWeight.w400);
+
+
+  static var textcA9A9A9Style12InterW400 = TextStyle(
+      fontFamily: 'Inter',
+      fontFamilyFallback: const [
+        'Open Sans',
+        'Roboto',
+        'Noto Sans',
+      ],
+      color: AppColor.cA9A9A9,
+      fontSize: 10.sp,
+      height: 1.50,
+      fontWeight: FontWeight.w400);
+
 
   static var textStyle20InterW500 = TextStyle(
       fontFamily: 'Inter',

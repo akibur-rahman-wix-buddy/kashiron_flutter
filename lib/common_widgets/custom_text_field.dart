@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,7 +26,11 @@ class CustomTextField extends StatefulWidget {
   final VoidCallback? onRightTap;
   final TextInputType? inputType;
   final ValueChanged<String>? onChanged;
-
+  final EdgeInsetsGeometry? contentPadding;
+  final TextStyle? hintTextSyle;
+  final bool? readOnly;
+  final Widget? rightIconWidget;
+  final int? maxLines;
   const CustomTextField({
     Key? key,
     this.hintText,
@@ -44,8 +49,15 @@ class CustomTextField extends StatefulWidget {
     this.height = 52.0,
     this.read = false,
     this.onTap,
-    this.onRightTap,this.inputType,
-    this.onChanged, this.maxLength
+    this.onRightTap,
+    this.inputType,
+    this.onChanged,
+    this.maxLength,
+    this.contentPadding,
+    this.hintTextSyle,
+    this.readOnly,
+    this.rightIconWidget,
+    this.maxLines,
   }) : super(key: key);
 
   @override
@@ -53,7 +65,6 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-
   @override
   Widget build(BuildContext context) {
     final bool isLargeField = (widget.height ?? 52.h) > 100.h;
@@ -61,7 +72,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return TextFormField(
       maxLength: widget.maxLength,
       obscuringCharacter: "*",
-      keyboardType:widget.inputType,
+      keyboardType: widget.inputType,
       controller: widget.controller,
       onChanged: widget.onChanged,
       readOnly: widget.read,
@@ -75,18 +86,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
       cursorColor: AppColor.cFFFFFF,
       textAlign: widget.textAlign ?? TextAlign.start,
       onTap: widget.onTap,
-      maxLines: isLargeField ? null : 1,
+      maxLines: widget.maxLines ?? 1,
       minLines: isLargeField ? 5 : 1,
       decoration: InputDecoration(
         counterStyle: TextFontStyle.textStyle12InterW400.copyWith(color: Colors.white),
         filled: true,
-        fillColor: widget.fieldColor ?? Color(0xff373b4c),
+        fillColor: widget.fieldColor ?? const Color(0xff373b4c),
         hintText: widget.hintText,
-        hintStyle: TextStyle(
-          color: Color(0xff787A83),
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w400,
-        ),
+        hintStyle: widget.hintTextSyle ??
+            TextFontStyle.textStyle8InterW700.copyWith(
+              color: AppColor.blackColor,
+              fontWeight: FontWeight.w400,
+            ),
         prefixIcon: widget.leftIcon != null
             ? Padding(
           padding: EdgeInsets.all(12.w),
@@ -97,13 +108,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
         )
             : null,
-        suffixIcon: widget.isPassword
+        suffixIcon: widget.rightIconWidget != null
+            ? widget.rightIconWidget
+            : (widget.isPassword && widget.toggleVisibility != null
             ? GestureDetector(
           onTap: widget.toggleVisibility,
           child: Icon(
-            widget.obscureText
-                ? Icons.visibility_off
-                : Icons.visibility,
+            widget.obscureText ? Icons.visibility_off : Icons.visibility,
             color: AppColor.c979797,
           ),
         )
@@ -119,10 +130,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
           ),
         )
-            : null),
-        contentPadding: isLargeField
-            ? EdgeInsets.only(top: 12.h)
-            : EdgeInsets.symmetric(vertical: 15.h, horizontal: 16.w),
+            : null)),
+        contentPadding: widget.contentPadding ??
+            EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.radius),
           borderSide: BorderSide(
@@ -133,7 +143,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.radius),
           borderSide: BorderSide(
-            color: widget.borderColor ??  Colors.transparent,
+            color: widget.borderColor ?? Colors.transparent,
             width: 1,
           ),
         ),
@@ -156,3 +166,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
     );
   }
 }
+
+
+

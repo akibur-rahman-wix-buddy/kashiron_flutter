@@ -47,6 +47,15 @@ class AppIcons{
   static const String delete2= '$iconsRoute/delete-02.svg';
   static const String policy= '$iconsRoute/policy.svg';
   static const String logout= '$iconsRoute/logout.svg';
+  static const String arrwlefticon= '$iconsRoute/arrwlefticon.svg';
+  static const String qustionicon= '$iconsRoute/qustionicon.svg';
+  static const String camera= '$iconsRoute/camera.svg';
+  static const String cameraicon= '$iconsRoute/cameraicon.svg';
+  static const String usericon= '$iconsRoute/usericon.svg';
+  static const String drwopdwonicon= '$iconsRoute/drwopdwonicon.svg';
+  static const String searchiconcon= '$iconsRoute/searchiconcon.svg';
+  static const String calendars= '$iconsRoute/calendar.svg';
+  static const String searchicon= '$iconsRoute/searchicon.svg';
 
 
 

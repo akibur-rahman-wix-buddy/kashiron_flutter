@@ -294,7 +294,7 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                                   ? "${selectedDate!.month.toString().padLeft(2, '0')}/${selectedDate!.day.toString().padLeft(2, '0')}/${selectedDate!.year}"
                                   : "mm/dd/yyyy",
                               rightIcon: AppIcons.calendar,
-                              read: true,
+                               readOnly: true,
                               controller: dateController,
                             ),
                           ),
@@ -309,8 +309,8 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                               hintText: selectedTime != null
                                   ? "${selectedTime!.hourOfPeriod}:${selectedTime!.minute.toString().padLeft(2, '0')} ${selectedTime!.period.name.toUpperCase()}"
                                   : "hh:mm aa",
-                              rightIcon: AppIcons.clock, // Make sure you have a clock icon
-                              read: true,
+                              rightIcon: AppIcons.clock,
+                              readOnly: true,
                               controller: timeController,
                             ),
                           ),
