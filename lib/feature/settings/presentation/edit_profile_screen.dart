@@ -21,8 +21,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-
-  List<String> category = [ "All","Delivered","Pending"];
+  List<String> category = ["All", "Delivered", "Pending"];
   int selectedCategoryIndex = 0;
 
   @override
@@ -39,30 +38,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             UIHelper.verticalSpace(26.h),
             Column(
               children: [
-                shimmerClipOvalWidget(networkImageLink: personImageUrl,  height: 120, weight: 120),
+                shimmerClipOvalWidget(
+                    networkImageLink: personImageUrl, height: 120, weight: 120),
                 Positioned(
                     left: 10,
-                    bottom: 10 ,
+                    bottom: 10,
                     child: Container(
-
-
-                  height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.r),
-                      color: Colors.red
-                    ),
-
-
-                    child: Icon(Icons.edit,color: Colors.white,)))
+                        height: 35,
+                        width: 35,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.r),
+                            color: Colors.red),
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        )))
               ],
             ),
-
-
-
-
-
-
           ],
         ),
       ),

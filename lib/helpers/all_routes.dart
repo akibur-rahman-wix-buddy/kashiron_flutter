@@ -9,6 +9,7 @@ import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/c
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_flower_card.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/send_flower_&_card_screen.dart';
 import 'package:kashirons_flutter/feature/settings/presentation/favorite_gifts_screen.dart';
+import 'package:kashirons_flutter/feature/settings/presentation/order_details_screen.dart';
 import 'package:kashirons_flutter/feature/settings/presentation/order_history.dart';
 import 'package:kashirons_flutter/feature/settings/presentation/upcomming_spark_screen.dart';
 import 'package:kashirons_flutter/feature/spark/presentation/spark_details_screen.dart';
@@ -70,6 +71,7 @@ final class Routes {
   static const String brobrainGiftListScreen = "/brobrainGiftListScreen";
   static const String favoriteGiftsScreen = "/favoriteGiftsScreen";
   static const String orderHistoryScreen = "/orderHistoryScreen";
+  static const String orderDetailsScreen = "/orderDetailsScreen";
 
 
 
@@ -170,6 +172,12 @@ final class RouteGenerator {
             ? _FadedTransitionRoute(
             widget: OrderHistoryScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => OrderHistoryScreen());
+
+        case Routes.orderDetailsScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: OrderDetailsScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => OrderDetailsScreen());
 
 
 

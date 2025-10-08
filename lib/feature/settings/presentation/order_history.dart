@@ -9,6 +9,8 @@ import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/widget/product_card.dart';
 import 'package:kashirons_flutter/feature/settings/widget/order_history_card.dart';
+import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 
@@ -116,6 +118,9 @@ int selectedCategoryIndex = 0;
                      primary: false,
                      itemBuilder: (context,index) {
                        return OrderHistoryCard(
+                         onTap: (){
+                           NavigationService.navigateTo(Routes.orderDetailsScreen);
+                         },
                          price: "205",
                          orderDateTime: "15 July 2025, 10:00 AM",
                          orderId: "#BOK 782 085",

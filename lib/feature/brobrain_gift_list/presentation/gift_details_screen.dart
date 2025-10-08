@@ -5,6 +5,7 @@ import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
+import 'package:kashirons_flutter/common_widgets/expandabl_text.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
 
@@ -224,45 +225,51 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           UIHelper.verticalSpace(8.h),
                 
                           /// Description with See More/See Less
-                          description.length > 150
-                              ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _isExpanded
-                                    ? description
-                                    : '${description.substring(0, 150)}...',
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: Colors.white70,
-                                  height: 1.4,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _isExpanded = !_isExpanded;
-                                  });
-                                },
-                                child: Text(
-                                  _isExpanded ? "See Less" : "See More",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                              : Text(
-                            description,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.white70,
-                              height: 1.4,
-                            ),
-                          ),
+
+
+                          ExpandableText(text: description,
+                          trimLength: 150,),
+
+
+                          // description.length > 150
+                          //     ? Column(
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     Text(
+                          //       _isExpanded
+                          //           ? description
+                          //           : '${description.substring(0, 150)}...',
+                          //       style: TextStyle(
+                          //         fontSize: 14.sp,
+                          //         color: Colors.white70,
+                          //         height: 1.4,
+                          //       ),
+                          //     ),
+                          //     TextButton(
+                          //       onPressed: () {
+                          //         setState(() {
+                          //           _isExpanded = !_isExpanded;
+                          //         });
+                          //       },
+                          //       child: Text(
+                          //         _isExpanded ? "See Less" : "See More",
+                          //         style: TextStyle(
+                          //           color: Colors.red,
+                          //           fontSize: 14.sp,
+                          //           fontWeight: FontWeight.bold,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // )
+                          //     : Text(
+                          //   description,
+                          //   style: TextStyle(
+                          //     fontSize: 14.sp,
+                          //     color: Colors.white70,
+                          //     height: 1.4,
+                          //   ),
+                          // ),
                           UIHelper.verticalSpace(16.h),
                         ],
                       ),

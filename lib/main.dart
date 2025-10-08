@@ -86,7 +86,7 @@ class UtillScreenMobile extends StatelessWidget {
             },
             navigatorKey: NavigationService.navigatorKey,
             onGenerateRoute: RouteGenerator.generateRoute,
-            home: EditProfileScreen(),
+            home: CustomBottomNavBar(),
           //  home: HomeScreen(),
           ),
         );
