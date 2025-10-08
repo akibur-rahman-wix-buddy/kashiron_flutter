@@ -6,6 +6,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/presentation/add_vip_profile_part_screen.dart';
 import 'assets_helperfdg/app_colors.dart';
 import 'constants/custome_theme.dart';
+import 'feature/bottom_nav_bar.dart';
+import 'feature/settings/presentation/edit_profile_screen.dart';
 import 'helpers/all_routes.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';
@@ -83,9 +85,10 @@ class UtillScreenMobile extends StatelessWidget {
             navigatorKey: NavigationService.navigatorKey,
             onGenerateRoute: RouteGenerator.generateRoute,
 
-           // home: CustomBottomNavBar(),
 
-           home: AddVipProfilePartScreen(),
+          home: CustomBottomNavBar(),
+
+
           ),
         );
       },
