@@ -30,110 +30,112 @@ int selectedCategoryIndex = 0;
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
-      body: Column(
-        children: [
-          /// App Bar
-          CustomAppBar(
-            title: "Order History",
-          ),
-          UIHelper.verticalSpace(16.h),
+      body: SafeArea(
+        child: Column(
+          children: [
+            /// App Bar
+            CustomAppBar(
+              title: "Order History",
+            ),
+            UIHelper.verticalSpace(16.h),
 
 
-          /// Content Section
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  /// Header
-                  Text(
-                    "Your Gift Order History",
-                    style: TextFontStyle.textStyle18InterW700,
-                  ),
-                  UIHelper.verticalSpace(16.h),
+            /// Content Section
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /// Header
+                    Text(
+                      "Your Gift Order History",
+                      style: TextFontStyle.textStyle18InterW700,
+                    ),
+                    UIHelper.verticalSpace(16.h),
 
-                  /// Description
-                  Text(
-                    "Track all your past and current gift orders from Brobrain. Review details and stay updated with the delivery status anytime.",
-                    style: TextFontStyle.textStyle14InterW500.copyWith(color: Colors.white60),
-                  ),
-                  UIHelper.verticalSpace(16.h),
+                    /// Description
+                    Text(
+                      "Track all your past and current gift orders from Brobrain. Review details and stay updated with the delivery status anytime.",
+                      style: TextFontStyle.textStyle14InterW500.copyWith(color: Colors.white60),
+                    ),
+                    UIHelper.verticalSpace(16.h),
 
-                  /// Category Horizontal List
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: SizedBox(
-                      height: 45.h,
-                      child: ListView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: category.length,
-                        itemBuilder: (context, index) {
-                          bool isSelected = selectedCategoryIndex == index;
+                    /// Category Horizontal List
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        height: 45.h,
+                        child: ListView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: category.length,
+                          itemBuilder: (context, index) {
+                            bool isSelected = selectedCategoryIndex == index;
 
-                          return Padding(
-                            padding: EdgeInsets.all(5.h),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  selectedCategoryIndex = index;
-                                });
-                                // Add your category filter logic here
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: isSelected ? const Color(0xFF4A5065) : const Color(0xFF2D3142),
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    width: 1,
-                                    color: isSelected ? Colors.white : const Color(0xFF32374C),
+                            return Padding(
+                              padding: EdgeInsets.all(5.h),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    selectedCategoryIndex = index;
+                                  });
+                                  // Add your category filter logic here
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: isSelected ? const Color(0xFF4A5065) : const Color(0xFF2D3142),
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      width: 1,
+                                      color: isSelected ? Colors.white : const Color(0xFF32374C),
+                                    ),
+                                    borderRadius: BorderRadius.circular(30.r),
                                   ),
-                                  borderRadius: BorderRadius.circular(30.r),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 20.w,
+                                    vertical: 7.h,
+                                  ),
                                 ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w,
-                                  vertical: 7.h,
+                                child: Text(
+                                  category[index],
+                                  style: TextFontStyle.textStyle12InterW400.copyWith(
+                                    color: isSelected ? Colors.white : Colors.white70, // Optional: change text color too
+                                  ),
                                 ),
                               ),
-                              child: Text(
-                                category[index],
-                                style: TextFontStyle.textStyle12InterW400.copyWith(
-                                  color: isSelected ? Colors.white : Colors.white70, // Optional: change text color too
-                                ),
-                              ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                  UIHelper.verticalSpace(8.h),
+                    UIHelper.verticalSpace(8.h),
 
-               Expanded(
-                 child: ListView.builder(
-                   itemCount: 10,
-                   shrinkWrap: true,
-                   primary: false,
-                   itemBuilder: (context,index) {
-                     return OrderHistoryCard(
-                       onTap: (){
-                         NavigationService.navigateTo(Routes.orderDetailsScreen);
-                       },
-                       price: "205",
-                       orderDateTime: "15 July 2025, 10:00 AM",
-                       orderId: "#BOK 782 085",
-                       status:"Pending",
-                       productName: "Smart Watch",
-                     );
-                   }
-                 ),
-               )
-                ],
+                 Expanded(
+                   child: ListView.builder(
+                     itemCount: 10,
+                     shrinkWrap: true,
+                     primary: false,
+                     itemBuilder: (context,index) {
+                       return OrderHistoryCard(
+                         onTap: (){
+                           NavigationService.navigateTo(Routes.orderDetailsScreen);
+                         },
+                         price: "205",
+                         orderDateTime: "15 July 2025, 10:00 AM",
+                         orderId: "#BOK 782 085",
+                         status:"Pending",
+                         productName: "Smart Watch",
+                       );
+                     }
+                   ),
+                 )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,140 +1,93 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
-import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
-import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
-import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
-import 'package:kashirons_flutter/feature/brobrain_gift_list/widget/product_card.dart';
-import 'package:kashirons_flutter/feature/settings/widget/order_history_card.dart';
-import 'package:kashirons_flutter/helpers/all_routes.dart';
-import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 
-class OrderHistoryScreen extends StatefulWidget {
-  const OrderHistoryScreen({super.key});
+class OrderHistoryCard extends StatelessWidget {
+  const OrderHistoryCard({
+    super.key, required this.productName, required this.price, required this.orderDateTime, required this.orderId, required this.status, required this.onTap,
+  });
 
-  @override
-  State<OrderHistoryScreen> createState() => _OrderHistoryScreenState();
-}
 
-class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
-
-List<String> category = [ "All","Delivered","Pending"];
-int selectedCategoryIndex = 0;
+  final String productName;
+  final String price;
+  final String orderDateTime;
+  final String orderId;
+  final String status;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.primaryBg,
-      body: Column(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsetsGeometry.symmetric(vertical: 8),
+        padding: const EdgeInsets.all(16),
+        decoration: ShapeDecoration(
+          color: const Color(0xFF2D3142),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),child: Column(
         children: [
-          /// App Bar
-          CustomAppBar(
-            title: "Order History",
-          ),
-          UIHelper.verticalSpace(16.h),
-
-
-          /// Content Section
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 children: [
-                  /// Header
-                  Text(
-                    "Your Gift Order History",
-                    style: TextFontStyle.textStyle18InterW700,
-                  ),
-                  UIHelper.verticalSpace(16.h),
-
-                  /// Description
-                  Text(
-                    "Track all your past and current gift orders from Brobrain. Review details and stay updated with the delivery status anytime.",
-                    style: TextFontStyle.textStyle14InterW500.copyWith(color: Colors.white60),
-                  ),
-                  UIHelper.verticalSpace(16.h),
-
-                  /// Category Horizontal List
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: SizedBox(
-                      height: 45.h,
-                      child: ListView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: category.length,
-                        itemBuilder: (context, index) {
-                          bool isSelected = selectedCategoryIndex == index;
-
-                          return Padding(
-                            padding: EdgeInsets.all(5.h),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  selectedCategoryIndex = index;
-                                });
-                                // Add your category filter logic here
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: isSelected ? const Color(0xFF4A5065) : const Color(0xFF2D3142),
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    width: 1,
-                                    color: isSelected ? Colors.white : const Color(0xFF32374C),
-                                  ),
-                                  borderRadius: BorderRadius.circular(30.r),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w,
-                                  vertical: 7.h,
-                                ),
-                              ),
-                              child: Text(
-                                category[index],
-                                style: TextFontStyle.textStyle12InterW400.copyWith(
-                                  color: isSelected ? Colors.white : Colors.white70, // Optional: change text color too
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                  ShimmerImage(imageUrl: personImageUrl, placeholder: AppImages.placeholderImageItem, height: 56, width: 72),
+                  UIHelper.horizontalSpace(8.w),
+                  SizedBox(
+                    height: 70,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(productName,style: TextFontStyle.textStyle16InterW700,),
+                        Text("\$$price",style: TextFontStyle.textStyle16InterW700.copyWith(color: Color(0xFFEF233C)),)
+                      ],
                     ),
-                  ),
-                  UIHelper.verticalSpace(8.h),
-
-               Expanded(
-                 child: ListView.builder(
-                   itemCount: 10,
-                   shrinkWrap: true,
-                   primary: false,
-                   itemBuilder: (context,index) {
-                     return OrderHistoryCard(
-                       onTap: (){
-                         NavigationService.navigateTo(Routes.orderDetailsScreen);
-                       },
-                       price: "205",
-                       orderDateTime: "15 July 2025, 10:00 AM",
-                       orderId: "#BOK 782 085",
-                       status:"Pending",
-                       productName: "Smart Watch",
-                     );
-                   }
-                 ),
-               )
+                  )
                 ],
               ),
-            ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                decoration: ShapeDecoration(
+                  color: const Color(0x21FFA144),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),child: Text(status,style: TextFontStyle.textStyle14InterW500,),
+              )
+            ],
           ),
+          UIHelper.verticalSpace(16.h),
+          Divider(color: Colors.white,height: 2,),
+          UIHelper.verticalSpace(16.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Order Date",style: TextFontStyle.textStyle14InterW500,),
+              Text(orderDateTime,style: TextFontStyle.textStyle14InterW500,),
+            ],
+          ), UIHelper.verticalSpace(8.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Order ID",style: TextFontStyle.textStyle14InterW500,),
+              Text(orderId,style: TextFontStyle.textStyle14InterW500,),
+            ],
+          )
         ],
+      ),
       ),
     );
   }
 }
+
+
+
+
+
+
