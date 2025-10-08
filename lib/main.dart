@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_flower_card.dart';
-import 'package:kashirons_flutter/feature/vip_profile/presentation/vip_profile_screen.dart';
+import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/presentation/add_vip_profile_part_screen.dart';
 import 'assets_helperfdg/app_colors.dart';
 import 'constants/custome_theme.dart';
 import 'feature/bottom_nav_bar.dart';
@@ -13,7 +12,6 @@ import 'helpers/all_routes.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';
 import 'helpers/navigation_service.dart';
-import 'loading_screen.dart';
 import 'networks/dio/dio.dart';
 
 void main() async {
@@ -86,8 +84,16 @@ class UtillScreenMobile extends StatelessWidget {
             },
             navigatorKey: NavigationService.navigatorKey,
             onGenerateRoute: RouteGenerator.generateRoute,
+<<<<<<< HEAD
             home: CustomBottomNavBar(),
           //  home: HomeScreen(),
+=======
+
+
+          home: CustomBottomNavBar(),
+
+
+>>>>>>> be6e04c35c1ac85c35eaed8003e1909b500ed6f8
           ),
         );
       },
