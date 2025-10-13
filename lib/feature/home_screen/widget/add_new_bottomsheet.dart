@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_container.dart';
+import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 
@@ -38,7 +40,9 @@ void AddNewBottomSheet(BuildContext context) {
                 ),
                 UIHelper.verticalSpace(20.h),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    NavigationService.navigateTo(Routes.addVipProfilePartScreen);
+                  },
                   child: CustomContainer(
                     color: Color(0xff353a4e),
                     borderRadius: 8,
@@ -58,7 +62,11 @@ void AddNewBottomSheet(BuildContext context) {
                 ),
                 UIHelper.verticalSpace(10.h),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+
+                    NavigationService.navigateTo(Routes.createSparkAndSelfScreen);
+
+                  },
                   child: CustomContainer(
                       color: Color(0xff353a4e),
                       borderRadius: 8,
@@ -78,7 +86,12 @@ void AddNewBottomSheet(BuildContext context) {
                 ),
                 UIHelper.verticalSpace(10.h),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+
+
+                    NavigationService.navigateTo(Routes.selfCareReminderScreen);
+
+                  },
                   child: CustomContainer(
                       color: Color(0xff353a4e),
                       borderRadius: 8,
