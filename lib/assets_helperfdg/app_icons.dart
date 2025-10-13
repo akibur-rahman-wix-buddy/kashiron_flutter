@@ -38,7 +38,6 @@ class AppIcons{
   static const String profileElements= '$iconsRoute/profile_elements.svg';
   static const String filter= '$iconsRoute/filter.svg';
   static const String calendar= '$iconsRoute/calendar.svg';
-  static const String calendar3= '$iconsRoute/calendar2.svg';
   static const String clock= '$iconsRoute/clock.svg';
   static const String calendar2= '$iconsRoute/calendar-2.svg';
   static const String workHistory= '$iconsRoute/work-history.svg';
@@ -58,8 +57,6 @@ class AppIcons{
   static const String calendars= '$iconsRoute/calendar.svg';
   static const String searchicon= '$iconsRoute/searchicon.svg';
   static const String downArrow= '$iconsRoute/down_arrow.svg';
-  static const String star= '$iconsRoute/star.svg';
-  static const String suggestedStars= '$iconsRoute/suggested_stars.svg';
 
 
 
