@@ -56,6 +56,7 @@ class AppIcons{
   static const String searchiconcon= '$iconsRoute/searchiconcon.svg';
   static const String calendars= '$iconsRoute/calendar.svg';
   static const String searchicon= '$iconsRoute/searchicon.svg';
+  static const String downArrow= '$iconsRoute/down_arrow.svg';
 
 
 

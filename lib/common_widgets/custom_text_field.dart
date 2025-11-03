@@ -69,6 +69,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     final bool isLargeField = (widget.height ?? 52.h) > 100.h;
 
+    // Determine minLines safely
+    int minLines = 1;
+    if (isLargeField) {
+      if (widget.maxLines != null && widget.maxLines! < 5) {
+        minLines = widget.maxLines!;
+      } else {
+        minLines = 5;
+      }
+    }
+
     return TextFormField(
       maxLength: widget.maxLength,
       obscuringCharacter: "*",
@@ -86,8 +96,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       cursorColor: AppColor.cFFFFFF,
       textAlign: widget.textAlign ?? TextAlign.start,
       onTap: widget.onTap,
-      maxLines: widget.maxLines ?? 1,
-      minLines: isLargeField ? 5 : 1,
+      maxLines: widget.maxLines ?? (isLargeField ? null : 1), // null allows growing
+      minLines: minLines,
       decoration: InputDecoration(
         counterStyle: TextFontStyle.textStyle12InterW400.copyWith(color: Colors.white),
         filled: true,
@@ -95,7 +105,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         hintText: widget.hintText,
         hintStyle: widget.hintTextSyle ??
             TextFontStyle.textStyle8InterW700.copyWith(
-              color: AppColor.blackColor,
+              color: Colors.white60,
+              fontSize: 14,
               fontWeight: FontWeight.w400,
             ),
         prefixIcon: widget.leftIcon != null
@@ -108,31 +119,29 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
         )
             : null,
-        suffixIcon: widget.rightIconWidget != null
-            ? widget.rightIconWidget
-            : (widget.isPassword && widget.toggleVisibility != null
-            ? GestureDetector(
-          onTap: widget.toggleVisibility,
-          child: Icon(
-            widget.obscureText ? Icons.visibility_off : Icons.visibility,
-            color: AppColor.c979797,
-          ),
-        )
-            : (widget.rightIcon != null
-            ? GestureDetector(
-          onTap: widget.onRightTap,
-          child: Padding(
-            padding: EdgeInsets.all(12.w),
-            child: SvgPicture.asset(
-              widget.rightIcon!,
-              height: 20.h,
-              width: 20.w,
-            ),
-          ),
-        )
-            : null)),
-        contentPadding: widget.contentPadding ??
-            EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+        suffixIcon: widget.rightIconWidget ??
+            (widget.isPassword && widget.toggleVisibility != null
+                ? GestureDetector(
+              onTap: widget.toggleVisibility,
+              child: Icon(
+                widget.obscureText ? Icons.visibility_off : Icons.visibility,
+                color: AppColor.c979797,
+              ),
+            )
+                : (widget.rightIcon != null
+                ? GestureDetector(
+              onTap: widget.onRightTap,
+              child: Padding(
+                padding: EdgeInsets.all(12.w),
+                child: SvgPicture.asset(
+                  widget.rightIcon!,
+                  height: 20.h,
+                  width: 20.w,
+                ),
+              ),
+            )
+                : null)),
+        contentPadding: widget.contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.radius),
           borderSide: BorderSide(
@@ -166,6 +175,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     );
   }
 }
+
 
 
 

@@ -31,7 +31,8 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Column(
           children: [
             CustomAppBar(
-              title: "Create Spark",
+              prefixIcon: SizedBox(width: 50,),
+              title: "Settings",
             ), Expanded(
               child: SingleChildScrollView(
                 child: Column(

@@ -21,8 +21,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-
-  List<String> category = [ "All","Delivered","Pending"];
+  List<String> category = ["All", "Delivered", "Pending"];
   int selectedCategoryIndex = 0;
 
   @override
@@ -37,32 +36,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               title: "Edit Profile",
             ),
             UIHelper.verticalSpace(26.h),
-            Column(
+            Stack(
               children: [
-                shimmerClipOvalWidget(networkImageLink: personImageUrl,  height: 120, weight: 120),
+                Container(
+                  decoration: BoxDecoration(border: Border.all(color: Colors.white,width: 2),
+                  borderRadius: BorderRadius.circular(60)
+                  ),
+                  child: shimmerClipOvalWidget(
+                      networkImageLink: personImageUrl, height: 110, weight: 110),
+                ),
                 Positioned(
-                    left: 10,
-                    bottom: 10 ,
+                    right: 5,
+                    bottom: 5,
                     child: Container(
-
-
-                  height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.r),
-                      color: Colors.red
-                    ),
-
-
-                    child: Icon(Icons.edit,color: Colors.white,)))
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.r),
+                            color:Color(0xFFA4161A)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: Icon(
+                            size: 20,
+                            Icons.camera_alt,
+                            color: Colors.white,
+                          ),
+                        )))
               ],
             ),
-
-
-
-
-
-
+            UIHelper.verticalSpace(26.h),
           ],
         ),
       ),
