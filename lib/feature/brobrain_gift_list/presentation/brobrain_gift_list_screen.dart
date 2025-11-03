@@ -21,178 +21,176 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /// App Bar
-            CustomAppBar(
-              title: "Brobrain Giftlist",
-            ),
-            UIHelper.verticalSpace(16.h),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// App Bar
+          CustomAppBar(
+            title: "Brobrain Giftlist",
+          ),
+          UIHelper.verticalSpace(16.h),
 
-            /// Search Field
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: CustomTextField(
-                hintText: "Search for gifts...",
-                leftIcon: AppIcons.search,
-              ),
+          /// Search Field
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: CustomTextField(
+              hintText: "Search for gifts...",
+              leftIcon: AppIcons.search,
             ),
-            UIHelper.verticalSpace(16.h),
+          ),
+          UIHelper.verticalSpace(16.h),
 
-            /// Category Horizontal List
-            SizedBox(
-              height: 45.h,
-              child: ListView.builder(
-                primary: false,
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.all(5.h),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Define tap action here (e.g., select category)
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Selected Category ${index + 1}")),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF2D3142),
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                            width: 1,
-                            color: Color(0xFF32374C),
-                          ),
-                          borderRadius: BorderRadius.circular(30.r),
+          /// Category Horizontal List
+          SizedBox(
+            height: 45.h,
+            child: ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.all(5.h),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Define tap action here (e.g., select category)
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Selected Category ${index + 1}")),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF2D3142),
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          width: 1,
+                          color: Color(0xFF32374C),
                         ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 7.h,
-                        ),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
-                      child: Center(
-                        child: Text(
-                          'Category ${index + 1}',
-                          style: TextFontStyle.textStyle12InterW400,
-                        ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 7.h,
                       ),
                     ),
-                  );
-                },
-              ),
-            ),
-            UIHelper.verticalSpace(16.h),
-
-            /// Most Popular Section
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-
-                      ///>>>>>>>>>>>>> here is the mose popular section >>>>>>>>>>>>>>>>>>
-                      BrobrainRowCard(
-                        title: "Most Popular",
-                        onCLickViewAll: (){},
+                    child: Center(
+                      child: Text(
+                        'Category ${index + 1}',
+                        style: TextFontStyle.textStyle12InterW400,
                       ),
-                      UIHelper.verticalSpace(16.h),
-
-                      /// Horizontal Gifts List with fixed height
-                      SizedBox(
-                        height: 230.h,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return ProductCard(isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
-                          },
-                        ),
-                      ),
-
-                      UIHelper.verticalSpace(8.h),
-
-                      ///>>>>>>>>>>>>> here is women  section >>>>>>>>>>>>>>>>>>
-
-
-                      BrobrainRowCard(
-                        title: "For Women",
-                        onCLickViewAll: (){},
-                      ),
-                      UIHelper.verticalSpace(8.h),
-
-                      /// Horizontal Gifts List with fixed height
-                      SizedBox(
-                        height: 230.h,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return ProductCard(isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
-                          },
-                        ),
-                      ),
-
-
-                      UIHelper.verticalSpace(16.h),
-                      ///>>>>>>>>>>>>> here is women  section >>>>>>>>>>>>>>>>>>
-
-
-                      BrobrainRowCard(
-                        title: "For wan",
-                        onCLickViewAll: (){},
-                      ),
-                      UIHelper.verticalSpace(8.h),
-
-                      /// Horizontal Gifts List with fixed height
-                      SizedBox(
-                        height: 230.h,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return ProductCard(isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
-                          },
-                        ),
-                      ),
-                      UIHelper.verticalSpace(16.h),
-                      ///>>>>>>>>>>>>> here is Baby section >>>>>>>>>>>>>>>>>>
-
-
-                      BrobrainRowCard(
-                        title: "Baby",
-                        onCLickViewAll: (){},
-                      ),
-                      UIHelper.verticalSpace(8.h),
-
-                      /// Horizontal Gifts List with fixed height
-                      SizedBox(
-                        height: 230.h,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return ProductCard(isLoveValue: false,price: 260.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
-                          },
-                        ),
-                      ),
-
-
-
-
-
-                    ],
+                    ),
                   ),
+                );
+              },
+            ),
+          ),
+          UIHelper.verticalSpace(16.h),
+
+          /// Most Popular Section
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+
+                    ///>>>>>>>>>>>>> here is the mose popular section >>>>>>>>>>>>>>>>>>
+                    BrobrainRowCard(
+                      title: "Most Popular",
+                      onCLickViewAll: (){},
+                    ),
+                    UIHelper.verticalSpace(16.h),
+
+                    /// Horizontal Gifts List with fixed height
+                    SizedBox(
+                      height: 230.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        itemBuilder: (context, index) {
+                          return ProductCard(isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                        },
+                      ),
+                    ),
+
+                    UIHelper.verticalSpace(8.h),
+
+                    ///>>>>>>>>>>>>> here is women  section >>>>>>>>>>>>>>>>>>
+
+
+                    BrobrainRowCard(
+                      title: "For Women",
+                      onCLickViewAll: (){},
+                    ),
+                    UIHelper.verticalSpace(8.h),
+
+                    /// Horizontal Gifts List with fixed height
+                    SizedBox(
+                      height: 230.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        itemBuilder: (context, index) {
+                          return ProductCard(isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                        },
+                      ),
+                    ),
+
+
+                    UIHelper.verticalSpace(16.h),
+                    ///>>>>>>>>>>>>> here is women  section >>>>>>>>>>>>>>>>>>
+
+
+                    BrobrainRowCard(
+                      title: "For wan",
+                      onCLickViewAll: (){},
+                    ),
+                    UIHelper.verticalSpace(8.h),
+
+                    /// Horizontal Gifts List with fixed height
+                    SizedBox(
+                      height: 230.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        itemBuilder: (context, index) {
+                          return ProductCard(isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                        },
+                      ),
+                    ),
+                    UIHelper.verticalSpace(16.h),
+                    ///>>>>>>>>>>>>> here is Baby section >>>>>>>>>>>>>>>>>>
+
+
+                    BrobrainRowCard(
+                      title: "Baby",
+                      onCLickViewAll: (){},
+                    ),
+                    UIHelper.verticalSpace(8.h),
+
+                    /// Horizontal Gifts List with fixed height
+                    SizedBox(
+                      height: 230.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        itemBuilder: (context, index) {
+                          return ProductCard(isLoveValue: false,price: 260.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                        },
+                      ),
+                    ),
+
+
+
+
+
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

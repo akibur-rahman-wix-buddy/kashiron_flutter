@@ -348,11 +348,6 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
         backgroundColor: AppColor.c2D3142,
         title: Row(
           children: [
-            GestureDetector(
-              onTap: () => Get.back(),
-              child: SvgPicture.asset(AppIcons.arrwlefticon,
-                  height: 20.h, width: 20.w),
-            ),
             const Spacer(),
             Text('Add VIP Profile',
                 style: TextFontStyle.textStyle14InterW500
@@ -481,7 +476,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                   UIHelper.horizontalSpace(12.w),
 
                   Expanded(child: CancelSaveButton(
-                      color: AppColor.cA4161A,
+                      color: AppColor.buttonColor,
                       title: 'Save VIP Profile'))
                 ],
               )

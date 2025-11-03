@@ -153,196 +153,194 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomAppBar(
-                title: "Create Spark",
-              ),
-              Padding(
-                padding: EdgeInsets.all(12.w),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(8.w),
-                      padding: EdgeInsets.all(16.w),
-                      decoration: ShapeDecoration(
-                        color: const Color(0xFF2D3142),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(16),
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF373B4C),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                shimmerClipOvalWidget(
-                                  height: 50.h,
-                                  weight: 50.w,
-                                  networkImageLink:personImageUrl ,
-                                ),
-                                UIHelper.horizontalSpace(8.w),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("name",style: TextFontStyle.textStyle20InterW500.copyWith(fontSize: 18),),
-
-                                    UIHelper.verticalSpace(8.h),
-
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                      decoration: ShapeDecoration(
-                                        color: const Color(0xFF373B4C),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12),
-                                        ),
-                                      ),
-                                      child: Text(
-                                          "brother",
-                                          style: TextFontStyle.textStyle10InterW400
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            UIHelper.verticalSpace(8.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.calendar_month,color: Colors.white,),
-                                    UIHelper.horizontalSpace(8.w),
-                                    Text("Birthday: ${"10 august"}",style: TextFontStyle.textStyle10InterW400,)
-                                  ],
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                                  decoration: ShapeDecoration(
-                                    color: const Color(0xFF2D3142),
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                        width: 1,
-                                        color: const Color(0xFF373B4C),
-                                      ),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    spacing: 6,
-                                    children: [
-                                      Text(
-                                          "10" ,
-                                          textAlign: TextAlign.center,
-                                          style: TextFontStyle.textStyle12InterW600.copyWith(color: Color(0xFFEF233C),)
-                                      ),
-                                      Text(
-                                          'spark',
-                                          style: TextFontStyle.textStyle12InterW600
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                           ],
-                        ),
-                        ),
-                        UIHelper.verticalSpace(16.h),
-                        Text("Spark Title",style: TextFontStyle.textStyle16InterW700,),
-                        UIHelper.verticalSpace(16.h),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xff373b4c),
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          padding: EdgeInsets.all(16.w),
-                          child: CustomTextField(
-                            borderColor: Colors.transparent,
-                            height: 120.h,
-                            hintText:
-                            "Enter heads-up or spark name (e.g., Call Mom about doctor’s visit",
-                            controller: sparkTitleTextController,
-                            maxLength: 30,
-                          ),
-                        ),
-
-                        UIHelper.verticalSpace(16.h),
-                        Text("Date",style: TextFontStyle.textStyle16InterW700,),
-                        UIHelper.verticalSpace(16.h),
-                        InkWell(
-                          onTap: _selectDate,
-                          child: AbsorbPointer(
-                            child: CustomTextField(
-                              hintText: selectedDate != null
-                                  ? "${selectedDate!.month.toString().padLeft(2, '0')}/${selectedDate!.day.toString().padLeft(2, '0')}/${selectedDate!.year}"
-                                  : "mm/dd/yyyy",
-                              rightIcon: AppIcons.calendar,
-                               readOnly: true,
-                              controller: dateController,
-                            ),
-                          ),
-                        ),
-                        UIHelper.verticalSpace(16.h),
-                        Text("Time",style: TextFontStyle.textStyle16InterW700,),
-                        UIHelper.verticalSpace(16.h),
-                        InkWell(
-                          onTap: _selectTime,
-                          child: AbsorbPointer(
-                            child: CustomTextField(
-                              hintText: selectedTime != null
-                                  ? "${selectedTime!.hourOfPeriod}:${selectedTime!.minute.toString().padLeft(2, '0')} ${selectedTime!.period.name.toUpperCase()}"
-                                  : "hh:mm aa",
-                              rightIcon: AppIcons.clock,
-                              readOnly: true,
-                              controller: timeController,
-                            ),
-                          ),
-                        ),
-                        UIHelper.verticalSpace(16.h),
-                        Text("Sparks Notes / Description",style: TextFontStyle.textStyle16InterW700,),
-                        UIHelper.verticalSpace(16.h),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xff373b4c),
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          padding: EdgeInsets.all(16.w),
-                          child: CustomTextField(
-                            borderColor: Colors.transparent,
-                            height: 120.h,
-                            hintText:
-                            "Write any extra details, instructions, or context for this sparks…",
-                            controller: sparkDescriptionController,
-                            maxLength: 500,
-                          ),
-                        ),
-
-                      ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CustomAppBar(
+              title: "Create Spark",
+            ),
+            Padding(
+              padding: EdgeInsets.all(12.w),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(8.w),
+                    padding: EdgeInsets.all(16.w),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF2D3142),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r),
                       ),
                     ),
-                    UIHelper.verticalSpace(150.h), // Adjusted for floatingActionButton
-                  ],
-                ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFF373B4C),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              shimmerClipOvalWidget(
+                                height: 50.h,
+                                weight: 50.w,
+                                networkImageLink:personImageUrl ,
+                              ),
+                              UIHelper.horizontalSpace(8.w),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("name",style: TextFontStyle.textStyle20InterW500.copyWith(fontSize: 18),),
+
+                                  UIHelper.verticalSpace(8.h),
+
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                    decoration: ShapeDecoration(
+                                      color: const Color(0xFF373B4C),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    child: Text(
+                                        "brother",
+                                        style: TextFontStyle.textStyle10InterW400
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                          UIHelper.verticalSpace(8.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.calendar_month,color: Colors.white,),
+                                  UIHelper.horizontalSpace(8.w),
+                                  Text("Birthday: ${"10 august"}",style: TextFontStyle.textStyle10InterW400,)
+                                ],
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                                decoration: ShapeDecoration(
+                                  color: const Color(0xFF2D3142),
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      width: 1,
+                                      color: const Color(0xFF373B4C),
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  spacing: 6,
+                                  children: [
+                                    Text(
+                                        "10" ,
+                                        textAlign: TextAlign.center,
+                                        style: TextFontStyle.textStyle12InterW600.copyWith(color: Color(0xFFEF233C),)
+                                    ),
+                                    Text(
+                                        'spark',
+                                        style: TextFontStyle.textStyle12InterW600
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                         ],
+                      ),
+                      ),
+                      UIHelper.verticalSpace(16.h),
+                      Text("Spark Title",style: TextFontStyle.textStyle16InterW700,),
+                      UIHelper.verticalSpace(16.h),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xff373b4c),
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        padding: EdgeInsets.all(16.w),
+                        child: CustomTextField(
+                          borderColor: Colors.transparent,
+                          height: 120.h,
+                          hintText:
+                          "Enter heads-up or spark name (e.g., Call Mom about doctor’s visit",
+                          controller: sparkTitleTextController,
+                          maxLength: 30,
+                        ),
+                      ),
+
+                      UIHelper.verticalSpace(16.h),
+                      Text("Date",style: TextFontStyle.textStyle16InterW700,),
+                      UIHelper.verticalSpace(16.h),
+                      InkWell(
+                        onTap: _selectDate,
+                        child: AbsorbPointer(
+                          child: CustomTextField(
+                            hintText: selectedDate != null
+                                ? "${selectedDate!.month.toString().padLeft(2, '0')}/${selectedDate!.day.toString().padLeft(2, '0')}/${selectedDate!.year}"
+                                : "mm/dd/yyyy",
+                            rightIcon: AppIcons.calendar,
+                             readOnly: true,
+                            controller: dateController,
+                          ),
+                        ),
+                      ),
+                      UIHelper.verticalSpace(16.h),
+                      Text("Time",style: TextFontStyle.textStyle16InterW700,),
+                      UIHelper.verticalSpace(16.h),
+                      InkWell(
+                        onTap: _selectTime,
+                        child: AbsorbPointer(
+                          child: CustomTextField(
+                            hintText: selectedTime != null
+                                ? "${selectedTime!.hourOfPeriod}:${selectedTime!.minute.toString().padLeft(2, '0')} ${selectedTime!.period.name.toUpperCase()}"
+                                : "hh:mm aa",
+                            rightIcon: AppIcons.clock,
+                            readOnly: true,
+                            controller: timeController,
+                          ),
+                        ),
+                      ),
+                      UIHelper.verticalSpace(16.h),
+                      Text("Sparks Notes / Description",style: TextFontStyle.textStyle16InterW700,),
+                      UIHelper.verticalSpace(16.h),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xff373b4c),
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        padding: EdgeInsets.all(16.w),
+                        child: CustomTextField(
+                          borderColor: Colors.transparent,
+                          height: 120.h,
+                          hintText:
+                          "Write any extra details, instructions, or context for this sparks…",
+                          controller: sparkDescriptionController,
+                          maxLength: 500,
+                        ),
+                      ),
+
+                    ],
+                    ),
+                  ),
+                  UIHelper.verticalSpace(150.h), // Adjusted for floatingActionButton
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -39,42 +39,40 @@ class _ReviewFlowerCardOderState extends State<ReviewFlowerCardOder> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CustomAppBar(title: "Review Order"),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              child: Column(
-                children: [
-                  GreetingCard(
-                    message: widget.message,
-                  ),
-                  UIHelper.verticalSpace(16),
-                  DeliveryAddressCard(
-                    sendToName: widget.sendToName,
-                    deliveryAddress: widget.deliveryAddress,
-                    isVip: widget.isVip,
-                  ),
-                  UIHelper.verticalSpace(16),
-                  OrderItemsCard(
-                    titleName: widget.titleName,
-                    description: widget.description,
-                    value: widget.value,
-                  ),
-                  UIHelper.verticalSpace(16),
-                  ReviewTotalCardWidget(flowerCardAmount: "\$70",totalAmount:  "\$70",),
-                  UIHelper.verticalSpace(16),
-                  CustomElevatedButton(
-                    text: "Proceed to Payment - \$70",
-                    onPressed: () {},
-                  ),
-                ],
-              ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CustomAppBar(title: "Review Order"),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: Column(
+              children: [
+                GreetingCard(
+                  message: widget.message,
+                ),
+                UIHelper.verticalSpace(16),
+                DeliveryAddressCard(
+                  sendToName: widget.sendToName,
+                  deliveryAddress: widget.deliveryAddress,
+                  isVip: widget.isVip,
+                ),
+                UIHelper.verticalSpace(16),
+                OrderItemsCard(
+                  titleName: widget.titleName,
+                  description: widget.description,
+                  value: widget.value,
+                ),
+                UIHelper.verticalSpace(16),
+                ReviewTotalCardWidget(flowerCardAmount: "\$70",totalAmount:  "\$70",),
+                UIHelper.verticalSpace(16),
+                CustomElevatedButton(
+                  text: "Proceed to Payment - \$70",
+                  onPressed: () {},
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

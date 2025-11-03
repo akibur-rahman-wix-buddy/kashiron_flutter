@@ -51,7 +51,7 @@ class _RerollButtonState extends State<RerollButton>
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         decoration: ShapeDecoration(
-          color: AppColor.cA4161A,
+          color: AppColor.buttonColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
           ),
