@@ -1,13 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
+import 'package:kashirons_flutter/constants/app_constants.dart';
 import 'package:kashirons_flutter/feature/auth/presentation/sign_up_screen.dart';
+import 'package:kashirons_flutter/feature/bottom_nav_bar.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/di.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
+import 'package:kashirons_flutter/helpers/toast.dart';
+import 'package:kashirons_flutter/networks/api_acess.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,6 +30,44 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+
+
+
+  Future<void> _submitForm() async {
+    if (!_formKey.currentState!.validate()) return;
+
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      // Set a timeout of 10 seconds
+      bool success = await signInApiRxObj
+          .signIn(
+        email: emailController.text,
+        password: passController.text,
+      )
+          .timeout(const Duration(seconds: 10));
+
+      if (success) {
+        await appData.write(kKeyIsLoggedIn, true);
+        NavigationService.navigateTo(Routes.customBottomNavBar);
+      } else {
+
+      }
+    } on TimeoutException {
+      ToastUtil.showLongToast("Request timed out. Please check your connection and try again.");
+    } catch (e) {
+      ToastUtil.showLongToast('An error occurred: $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -106,9 +152,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 SizedBox(height: 16.h,),
-                CustomElevatedButton(text: "Sign In", onPressed: () {
+                CustomElevatedButton(text: "Sign In",
+
+                    isLoading:  isLoading ,
+
+                    onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    NavigationService.navigateTo(Routes.customBottomNavBar);
+
+
+                    _submitForm();
+
+
+
                   }
                 }),
                 SizedBox(height: 30.h,),

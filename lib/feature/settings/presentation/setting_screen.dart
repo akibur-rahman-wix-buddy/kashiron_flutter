@@ -12,6 +12,7 @@ import 'package:kashirons_flutter/feature/settings/widget/setting_item_card.dart
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/api_acess.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -22,8 +23,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-
-
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,16 @@ class _SettingScreenState extends State<SettingScreen> {
       body: Column(
         children: [
           CustomAppBar(
-            prefixIcon: SizedBox(width: 50,),
+            prefixIcon: SizedBox(
+              width: 50,
+            ),
             title: "Settings",
-          ), Expanded(
+          ),
+          Expanded(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Padding(
                     padding: EdgeInsets.all(12.w),
                     child: Column(
@@ -59,53 +61,61 @@ class _SettingScreenState extends State<SettingScreen> {
                             children: [
                               Container(
                                 child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      shimmerClipOvalWidget(
-                                        height: 50.h,
-                                        weight: 50.w,
-                                        networkImageLink:personImageUrl ,
-                                      ),
-                                      UIHelper.horizontalSpace(8.w),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("name",style: TextFontStyle.textStyle20InterW500.copyWith(fontSize: 18),),
-
-                                          UIHelper.verticalSpace(8.h),
-                                          Text(
-                                              "jahidulislam3454@gmail.com",
-                                              style: TextFontStyle.textStyle10InterW400
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                  children: [
+                                    Row(
+                                      children: [
+                                        shimmerClipOvalWidget(
+                                          height: 50.h,
+                                          weight: 50.w,
+                                          networkImageLink: personImageUrl,
+                                        ),
+                                        UIHelper.horizontalSpace(8.w),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "name",
+                                              style: TextFontStyle
+                                                  .textStyle20InterW500
+                                                  .copyWith(fontSize: 18),
+                                            ),
+                                            UIHelper.verticalSpace(8.h),
+                                            Text("jahidulislam3454@gmail.com",
+                                                style: TextFontStyle
+                                                    .textStyle10InterW400),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                              ),
-
-
-
                             ],
                           ),
                         ),
 
                         UIHelper.verticalSpace(16.h),
-                        Text("Reminders & Gifts",style: TextFontStyle.textStyle16InterW700,),
+                        Text(
+                          "Reminders & Gifts",
+                          style: TextFontStyle.textStyle16InterW700,
+                        ),
                         UIHelper.verticalSpace(16.h),
                         SettingsItemCard(
-                          onTap: (){
-                            NavigationService.navigateTo(Routes.upcommingSparkScreen);},
+                          onTap: () {
+                            NavigationService.navigateTo(
+                                Routes.upcommingSparkScreen);
+                          },
                           icon: AppIcons.calendar2,
                           title: "Upcoming Sparks",
-                          subtitle: "See all upcoming reminders (VIP events + self-care)",
+                          subtitle:
+                              "See all upcoming reminders (VIP events + self-care)",
                         ),
 
                         SettingsItemCard(
-                          onTap: (){
-                            NavigationService.navigateTo(Routes.brobrainGiftListScreen);
+                          onTap: () {
+                            NavigationService.navigateTo(
+                                Routes.brobrainGiftListScreen);
                           },
                           icon: AppIcons.gift,
                           title: "Brobrain Gift lists",
@@ -113,8 +123,9 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
 
                         SettingsItemCard(
-                          onTap: (){
-                            NavigationService.navigateTo(Routes.favoriteGiftsScreen);
+                          onTap: () {
+                            NavigationService.navigateTo(
+                                Routes.favoriteGiftsScreen);
                           },
                           icon: AppIcons.favourite,
                           title: "Favorite Gifts",
@@ -122,8 +133,9 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
 
                         SettingsItemCard(
-                          onTap: (){
-                            NavigationService.navigateTo(Routes.orderHistoryScreen);
+                          onTap: () {
+                            NavigationService.navigateTo(
+                                Routes.orderHistoryScreen);
                           },
                           icon: AppIcons.workHistory,
                           title: "Order History",
@@ -131,37 +143,45 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
 
                         UIHelper.verticalSpace(16.h),
-                        Text("Account & Security",style: TextFontStyle.textStyle16InterW700,),
+                        Text(
+                          "Account & Security",
+                          style: TextFontStyle.textStyle16InterW700,
+                        ),
                         UIHelper.verticalSpace(16.h),
 
                         SettingsItemCard(
-                          onTap: (){
-                            NavigationService.navigateTo(Routes.editProfileScreen);
+                          onTap: () {
+                            NavigationService.navigateTo(
+                                Routes.editProfileScreen);
                           },
                           icon: AppIcons.profile,
                           title: "Edit Profile",
-                          subtitle: "Update your name, email, date of birth and avatar",
+                          subtitle:
+                              "Update your name, email, date of birth and avatar",
                         ),
 
                         SettingsItemCard(
-                          onTap: (){
-                            NavigationService.navigateTo(Routes.changePasswordScreen);
+                          onTap: () {
+                            NavigationService.navigateTo(
+                                Routes.changePasswordScreen);
                           },
                           icon: AppIcons.fieldLock,
                           title: "Change Password",
                           subtitle: "Update your account password",
                         ),
                         SettingsItemCard(
-                          onTap: (){
-                            NavigationService.navigateTo(Routes.settingsNotificationScreen);
+                          onTap: () {
+                            NavigationService.navigateTo(
+                                Routes.settingsNotificationScreen);
                           },
                           icon: AppIcons.notificationIcon,
                           title: "Notifications",
                           subtitle: "Manage push alerts and preferences",
                         ),
                         SettingsItemCard(
-                          onTap: (){
-                            NavigationService.navigateTo(Routes.termsAndConditionScreen);
+                          onTap: () {
+                            NavigationService.navigateTo(
+                                Routes.termsAndConditionScreen);
                           },
                           icon: AppIcons.documentText,
                           title: "Terms of Use",
@@ -169,33 +189,52 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
 
                         SettingsItemCard(
-                          onTap: (){
-                            NavigationService.navigateTo(Routes.privacyPolicyScreen);
+                          onTap: () {
+                            NavigationService.navigateTo(
+                                Routes.privacyPolicyScreen);
                           },
                           icon: AppIcons.policy,
                           title: "Privacy Policy",
                           subtitle: "Read our privacy policy",
                         ),
                         SettingsItemCard(
-                          onTap: (){
-                            NavigationService.navigateTo(Routes.deleteAccountScreen);
+                          onTap: () {
+                            NavigationService.navigateTo(
+                                Routes.deleteAccountScreen);
                           },
                           icon: AppIcons.delete2,
                           title: "Delete Account",
                           subtitle: "Permanently delete all data",
                         ),
                         SettingsItemCard(
-                          onTap: (){
+                          onTap: () {
                             LogoutDialog.showLogoutDialog(
+
                               context: context,
-                              onLogout:(){},
+                              onLogout: () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                bool success = await postLogOutRX.logOut();
+                                if (success) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+
+                                  NavigationService.navigateToUntilReplacement(
+                                      Routes.loginScreen);
+                                }
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              },
+                              isLoading: isLoading,
                             );
                           },
                           icon: AppIcons.logout,
                           title: "Sign Out",
                           subtitle: "End session and return to login",
                         ),
-
                       ],
                     ),
                   ),
@@ -207,6 +246,4 @@ class _SettingScreenState extends State<SettingScreen> {
       ),
     );
   }
-
-
 }

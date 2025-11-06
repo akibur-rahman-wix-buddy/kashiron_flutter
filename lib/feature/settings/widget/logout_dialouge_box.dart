@@ -3,6 +3,7 @@ import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 
 class LogoutDialog {
   static void showLogoutDialog({
+    required bool isLoading,
     required BuildContext context,
     required VoidCallback onLogout,
     String title = "Logout",
@@ -23,6 +24,7 @@ class LogoutDialog {
             context,
             title,
             message,
+            isLoading,
             confirmText,
             cancelText,
             onLogout,
@@ -36,6 +38,7 @@ class LogoutDialog {
       BuildContext context,
       String title,
       String message,
+      bool isLoading,
       String confirmText,
       String cancelText,
       VoidCallback onLogout,
@@ -141,7 +144,7 @@ class LogoutDialog {
                     ),
                     elevation: 0,
                   ),
-                  child: Text(
+                  child: isLoading?CircularProgressIndicator(color: Colors.white,): Text(
                     confirmText,
                     style: TextStyle(
                       color: Color(0xffffffff), // Primary color as text color

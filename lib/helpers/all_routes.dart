@@ -120,16 +120,18 @@ final class RouteGenerator {
             : CupertinoPageRoute(builder: (context) => SignUpScreen());
 
       case Routes.selfCareReminderScreen:
+
         return Platform.isAndroid
             ? _FadedTransitionRoute(
             widget: SelfCareReminderScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => SelfCareReminderScreen());
 
       case Routes.signupOtpScreen:
+        final Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: SignupOtpScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => SignupOtpScreen());
+            widget: SignupOtpScreen(email: args["email"],isForgetScreen: args["isForgetScreen"],), settings: settings)
+            : CupertinoPageRoute(builder: (context) => SignupOtpScreen(email: args["email"],isForgetScreen: args["isForgetScreen"],),);
 
       case Routes.privacyPolicyScreen:
         return Platform.isAndroid
@@ -161,10 +163,14 @@ final class RouteGenerator {
             : CupertinoPageRoute(builder: (context) => SettingsNotificationScreen());
 
       case Routes.setPasswordScreen:
+        final Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: SetPasswordScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => SetPasswordScreen());
+            widget: SetPasswordScreen(setToken: args["setToken"],email: args["email"], isForget: args["isForget"],),
+            settings: settings)
+            : CupertinoPageRoute(
+            builder: (context) => SetPasswordScreen(setToken: args["setToken"],email: args["email"], isForget: args["isForget"]));
+
 
       case Routes.vipDetailsScreen:
         return Platform.isAndroid

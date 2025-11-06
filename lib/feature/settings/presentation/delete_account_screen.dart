@@ -3,6 +3,7 @@ import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_button.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 
 class DeleteAccountScreen extends StatelessWidget {
@@ -43,7 +44,9 @@ class DeleteAccountScreen extends StatelessWidget {
               UIHelper.verticalSpace(24),
               customButton(
                   name: "Cancel",
-                  onCallBack: () {},
+                  onCallBack: () {
+                    NavigationService.goBack;
+                  },
                   color: Color(0xFF2D3142),
                   borderColor: Colors.transparent,
                   context: context),

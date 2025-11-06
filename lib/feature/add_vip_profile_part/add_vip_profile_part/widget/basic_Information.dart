@@ -1,8 +1,12 @@
 //
+//
+//
+//
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:intl/intl.dart';
 // import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 // import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 // import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
@@ -10,15 +14,19 @@
 // import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 //
 // class BasicInformationSection extends StatefulWidget {
-//   final String? selectedRelationship;
+//   final dynamic selectedRelationship;
 //   final GlobalKey relationshipFieldKey;
 //   final VoidCallback onTapRelationship;
+//   final TextEditingController firstNameController;
+//   final TextEditingController anniversaryController;
 //
 //   const BasicInformationSection({
 //     super.key,
 //     required this.selectedRelationship,
 //     required this.relationshipFieldKey,
 //     required this.onTapRelationship,
+//     required this.firstNameController,
+//     required this.anniversaryController,
 //   });
 //
 //   @override
@@ -28,36 +36,43 @@
 //
 // class _BasicInformationSectionState extends State<BasicInformationSection> {
 //   bool isAnniversaryOn = false;
-//   TextEditingController anniversaryController = TextEditingController();
-//
-//   @override
-//   void dispose() {
-//     anniversaryController.dispose();
-//     super.dispose();
-//   }
 //
 //   /// Opens date picker and sets anniversary date
 //   void _pickDate() async {
 //     DateTime? pickedDate = await showDatePicker(
-//
 //       context: context,
 //       initialDate: DateTime.now(),
 //       firstDate: DateTime(1900),
 //       lastDate: DateTime(2100),
+//       builder: (context, child) {
+//         return Theme(
+//           data: ThemeData.dark().copyWith(
+//             colorScheme: ColorScheme.dark(
+//               primary: AppColor.c373B4C,
+//               onPrimary: Colors.white,
+//               surface: AppColor.c2D3142,
+//               onSurface: Colors.white,
+//             ),
+//             dialogBackgroundColor: AppColor.c2D3142,
+//           ),
+//           child: child!,
+//         );
+//       },
 //     );
 //
 //     if (pickedDate != null) {
 //       setState(() {
-//
-//         anniversaryController.text =
-//         '${pickedDate.day}/${pickedDate.month}/${pickedDate.year}';
+//         // Using DateFormat with custom pattern for d-m-Y
+//         String formattedDate = "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+//         widget.anniversaryController.text = formattedDate;
 //       });
 //     }
 //   }
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     final isWifeSelected = widget.selectedRelationship == 'Wife';
+//     final isWifeSelected = widget.selectedRelationship == 'Wife' ||
+//         widget.selectedRelationship == 'Husband';
 //
 //     return Container(
 //       width: double.infinity,
@@ -94,6 +109,7 @@
 //           ),
 //           UIHelper.verticalSpace(6.h),
 //           CustomTextField(
+//             controller: widget.firstNameController,
 //             contentPadding:
 //             EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
 //             hintText: 'Enter full name',
@@ -105,7 +121,7 @@
 //           ),
 //           UIHelper.verticalSpace(12.h),
 //
-//           // Relationship field
+//           ///========================= Relationship field =====================///
 //           Text(
 //             'Relationship',
 //             style: TextFontStyle.textStyle10InterW400.copyWith(
@@ -134,7 +150,7 @@
 //             ),
 //           ),
 //
-//           // ======================== Wife Section ========================
+//           /// ======================== Wife/Husband Section ========================
 //           if (isWifeSelected) ...[
 //             UIHelper.verticalSpace(12.h),
 //
@@ -156,19 +172,23 @@
 //                 onChanged: (val) {
 //                   setState(() {
 //                     isAnniversaryOn = val;
+//                     // Clear anniversary date when toggle is turned off
+//                     if (!val) {
+//                       widget.anniversaryController.clear();
+//                     }
 //                   });
 //                 },
 //               ),
 //             ),
 //
-//             // 2️⃣ Second TextField → only visible when toggle is ON
+//             ///========================== Second TextField ======================//
 //             if (isAnniversaryOn) ...[
 //               UIHelper.verticalSpace(12.h),
 //               CustomTextField(
-//                 controller: anniversaryController,
+//                 controller: widget.anniversaryController,
 //                 contentPadding:
 //                 EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
-//                 hintText: 'day/month/year',
+//                 hintText: 'dd/mm/yyyy',
 //                 hintTextSyle: TextFontStyle.textStyle10InterW400.copyWith(
 //                   color: const Color(0xFF787A83),
 //                   fontSize: 14.sp,
@@ -194,8 +214,6 @@
 //   }
 // }
 
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -208,15 +226,19 @@ import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 
 class BasicInformationSection extends StatefulWidget {
-  final String? selectedRelationship;
+  final dynamic selectedRelationship;
   final GlobalKey relationshipFieldKey;
   final VoidCallback onTapRelationship;
+  final TextEditingController firstNameController;
+  final TextEditingController anniversaryController;
 
   const BasicInformationSection({
     super.key,
     required this.selectedRelationship,
     required this.relationshipFieldKey,
     required this.onTapRelationship,
+    required this.firstNameController,
+    required this.anniversaryController,
   });
 
   @override
@@ -226,13 +248,6 @@ class BasicInformationSection extends StatefulWidget {
 
 class _BasicInformationSectionState extends State<BasicInformationSection> {
   bool isAnniversaryOn = false;
-  TextEditingController anniversaryController = TextEditingController();
-
-  @override
-  void dispose() {
-    anniversaryController.dispose();
-    super.dispose();
-  }
 
   /// Opens date picker and sets anniversary date
   void _pickDate() async {
@@ -259,15 +274,17 @@ class _BasicInformationSectionState extends State<BasicInformationSection> {
 
     if (pickedDate != null) {
       setState(() {
-        anniversaryController.text =
-            DateFormat('dd/MM/yyyy').format(pickedDate);
+        // Using DateFormat with custom pattern for d-m-Y
+        String formattedDate = "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+        widget.anniversaryController.text = formattedDate;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final isWifeSelected = widget.selectedRelationship == 'Wife';
+    final isWifeSelected = widget.selectedRelationship == 'Wife' ||
+        widget.selectedRelationship == 'Husband';
 
     return Container(
       width: double.infinity,
@@ -304,6 +321,7 @@ class _BasicInformationSectionState extends State<BasicInformationSection> {
           ),
           UIHelper.verticalSpace(6.h),
           CustomTextField(
+            controller: widget.firstNameController,
             contentPadding:
             EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
             hintText: 'Enter full name',
@@ -327,6 +345,7 @@ class _BasicInformationSectionState extends State<BasicInformationSection> {
           CustomTextField(
             key: widget.relationshipFieldKey,
             readOnly: true,
+
             contentPadding:
             EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
             hintText: widget.selectedRelationship ?? 'Select relationship',
@@ -344,7 +363,7 @@ class _BasicInformationSectionState extends State<BasicInformationSection> {
             ),
           ),
 
-          /// ======================== Wife Section ========================
+          /// ======================== Wife/Husband Section ========================
           if (isWifeSelected) ...[
             UIHelper.verticalSpace(12.h),
 
@@ -366,15 +385,20 @@ class _BasicInformationSectionState extends State<BasicInformationSection> {
                 onChanged: (val) {
                   setState(() {
                     isAnniversaryOn = val;
+                    // Clear anniversary date when toggle is turned off
+                    if (!val) {
+                      widget.anniversaryController.clear();
+                    }
                   });
                 },
               ),
             ),
+
             ///========================== Second TextField ======================//
             if (isAnniversaryOn) ...[
               UIHelper.verticalSpace(12.h),
               CustomTextField(
-                controller: anniversaryController,
+                controller: widget.anniversaryController,
                 contentPadding:
                 EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
                 hintText: 'dd/mm/yyyy',

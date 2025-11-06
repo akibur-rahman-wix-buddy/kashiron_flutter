@@ -8,6 +8,7 @@ import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/widget/product_card.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/endpoints.dart';
 
 class BrobrainGiftListScreen extends StatefulWidget {
   const BrobrainGiftListScreen({super.key});
@@ -109,7 +110,9 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return ProductCard(isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                          return ProductCard(
+                            imageUrl: personImageUrl,
+                            isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
                         },
                       ),
                     ),
@@ -132,7 +135,9 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return ProductCard(isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                          return ProductCard(
+                            imageUrl: personImageUrl,
+                            isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
                         },
                       ),
                     ),
@@ -155,7 +160,9 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return ProductCard(isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                          return ProductCard(
+                            imageUrl: personImageUrl,
+                            isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
                         },
                       ),
                     ),
@@ -176,7 +183,7 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return ProductCard(isLoveValue: false,price: 260.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                          return ProductCard(        imageUrl: personImageUrl,isLoveValue: false,price: 260.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
                         },
                       ),
                     ),

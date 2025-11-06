@@ -7,6 +7,7 @@ import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/widget/product_card.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/endpoints.dart';
 
 class FavoriteGiftsScreen extends StatefulWidget {
   const FavoriteGiftsScreen({super.key});
@@ -74,6 +75,7 @@ class _FavoriteGiftsScreenState extends State<FavoriteGiftsScreen> {
                         itemCount: 10,
                         itemBuilder: (context, index) {
                           return ProductCard(
+                            imageUrl: personImageUrl,
                             isLoveValue: false,
                             price: 250.toString(),
                             productName: "Smart Watch",

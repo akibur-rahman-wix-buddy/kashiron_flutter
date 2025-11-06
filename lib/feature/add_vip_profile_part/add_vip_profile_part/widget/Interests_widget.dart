@@ -4,14 +4,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
+import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/model/vip_category_data_model.dart';
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/widget/button_widget.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 
 /// Custom Widget for Interest Selection
 class InterestsWidget extends StatefulWidget {
-  final Map<String, List<String>> categories;
+  final Map<String, List<Interests>> categories; // Changed to store Interests objects
+  final Function(List<dynamic>)? onInterestsSelected; // Changed to pass IDs
 
-  const InterestsWidget({super.key, required this.categories});
+  const InterestsWidget({
+    super.key,
+    required this.categories,
+    this.onInterestsSelected,
+  });
 
   @override
   State<InterestsWidget> createState() => _InterestsWidgetState();
@@ -23,7 +29,7 @@ class _InterestsWidgetState extends State<InterestsWidget> {
   int selectedCount = 0;
 
   final TextEditingController searchController = TextEditingController();
-  final Set<String> selectedItems = {};
+  final Set<int> selectedItemIds = {}; // Changed to store IDs
 
   @override
   void initState() {
@@ -35,22 +41,39 @@ class _InterestsWidgetState extends State<InterestsWidget> {
     });
   }
 
-  List<String> _getFilteredItems(String category) {
+  List<Interests> _getFilteredItems(String category) {
+    final items = widget.categories[category] ?? [];
     if (searchQuery.isEmpty) {
-      return widget.categories[category]!;
+      return items;
     } else {
-      return widget.categories[category]!
-          .where((item) => item.toLowerCase().contains(searchQuery))
-          .toList();
+      return items.where((item) =>
+      item.name?.toLowerCase().contains(searchQuery) ?? false
+      ).toList();
     }
   }
 
-  List<String> _getAllFilteredItems() {
-    List<String> allItems = [];
+  List<Interests> _getAllFilteredItems() {
+    List<Interests> allItems = [];
     widget.categories.forEach((key, value) {
       allItems.addAll(_getFilteredItems(key));
     });
     return allItems;
+  }
+
+  // Method to handle item selection - Now using IDs
+  void _onItemSelected(Interests interest) {
+    setState(() {
+      if (selectedItemIds.contains(interest.id)) {
+        selectedItemIds.remove(interest.id);
+      } else {
+        selectedItemIds.add(interest.id!);
+      }
+      selectedCount = selectedItemIds.length;
+
+      if (widget.onInterestsSelected != null) {
+        widget.onInterestsSelected!(selectedItemIds.toList());
+      }
+    });
   }
 
   Widget _buildCategory(String category) {
@@ -73,19 +96,10 @@ class _InterestsWidgetState extends State<InterestsWidget> {
           runSpacing: 10.h,
           children: items
               .map(
-                (item) => ButtonWidget(
-              title: item,
-              isSelected: selectedItems.contains(item),
-              onTap: () {
-                setState(() {
-                  if (selectedItems.contains(item)) {
-                    selectedItems.remove(item);
-                  } else {
-                    selectedItems.add(item);
-                  }
-                  selectedCount = selectedItems.length;
-                });
-              },
+                (interest) => ButtonWidget(
+              title: interest.name ?? '',
+              isSelected: selectedItemIds.contains(interest.id),
+              onTap: () => _onItemSelected(interest),
             ),
           )
               .toList(),
@@ -151,24 +165,21 @@ class _InterestsWidgetState extends State<InterestsWidget> {
             runSpacing: 10.h,
             children: allItems
                 .map(
-                  (item) => ButtonWidget(
-                title: item,
-                isSelected: selectedItems.contains(item),
-                onTap: () {
-                  setState(() {
-                    if (selectedItems.contains(item)) {
-                      selectedItems.remove(item);
-                    } else {
-                      selectedItems.add(item);
-                    }
-                    selectedCount = selectedItems.length;
-                  });
-                },
+                  (interest) => ButtonWidget(
+                title: interest.name ?? '',
+                isSelected: selectedItemIds.contains(interest.id),
+                onTap: () => _onItemSelected(interest),
               ),
             )
                 .toList(),
           ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 }

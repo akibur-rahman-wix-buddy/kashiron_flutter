@@ -10,11 +10,13 @@ import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 
 class ImportantEventsWidget extends StatefulWidget {
+  final TextEditingController birthday;
+  final TextEditingController spacialNote;
   final String title;
 
   const ImportantEventsWidget({
     super.key,
-    required this.title,
+    required this.title, required this.birthday, required this.spacialNote,
   });
 
   @override
@@ -22,10 +24,9 @@ class ImportantEventsWidget extends StatefulWidget {
 }
 
 class _ImportantEventsWidgetState extends State<ImportantEventsWidget> {
-  final TextEditingController _dateController = TextEditingController();
 
-  Future<void> _pickDate() async {
-    final DateTime? pickedDate = await showDatePicker(
+  void _pickDate() async {
+    DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
@@ -33,11 +34,10 @@ class _ImportantEventsWidgetState extends State<ImportantEventsWidget> {
       builder: (context, child) {
         return Theme(
           data: ThemeData.dark().copyWith(
-            colorScheme:  ColorScheme.dark(
+            colorScheme: ColorScheme.dark(
               primary: AppColor.c373B4C,
               onPrimary: Colors.white,
-              surface: AppColor.c2D3142
-              ,
+              surface: AppColor.c2D3142,
               onSurface: Colors.white,
             ),
             dialogBackgroundColor: AppColor.c2D3142,
@@ -49,7 +49,7 @@ class _ImportantEventsWidgetState extends State<ImportantEventsWidget> {
 
     if (pickedDate != null) {
       setState(() {
-        _dateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+        widget.birthday.text = DateFormat('dd-MM-yyyy').format(pickedDate);
       });
     }
   }
@@ -93,7 +93,7 @@ class _ImportantEventsWidgetState extends State<ImportantEventsWidget> {
 
           // Date picker field
           CustomTextField(
-            controller: _dateController,
+            controller: widget.birthday,
             contentPadding:
             EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
             hintText: 'dd/mm/yyyy',
@@ -125,6 +125,7 @@ class _ImportantEventsWidgetState extends State<ImportantEventsWidget> {
 
           // Notes field
           CustomTextField(
+            controller: widget.spacialNote,
             maxLines: 7,
             contentPadding:
             EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
