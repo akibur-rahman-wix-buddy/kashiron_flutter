@@ -166,8 +166,9 @@ class _ForgotOtpScreenState extends State<ForgotOtpScreen> {
             ),
             SizedBox(height: 32.h,),
             CustomElevatedButton(text: "Verify", onPressed: () {
+
               NavigationService.navigateTo(Routes.resetPasswordScreen);
-            })
+            }, isLoading: isLoading,  )
 
           ],
         ),

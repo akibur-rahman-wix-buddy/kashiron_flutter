@@ -3,18 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:kashirons_flutter/feature/create_spark_and_self/presentation/create_spark_and_self_screen.dart';
-import 'package:kashirons_flutter/loading_screen.dart';
 import 'assets_helperfdg/app_colors.dart';
 import 'constants/custome_theme.dart';
-import 'feature/add_vip_profile_part/add_vip_profile_part/presentation/add_vip_profile_part_screen.dart';
-import 'feature/bottom_nav_bar.dart';
-import 'feature/create_spark_and_self/presentation/self_care_reminder.dart';
-import 'feature/settings/presentation/edit_profile_screen.dart';
 import 'helpers/all_routes.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';
 import 'helpers/navigation_service.dart';
+import 'loading_screen.dart';
 import 'networks/dio/dio.dart';
 
 void main() async {
@@ -91,7 +86,7 @@ class UtillScreenMobile extends StatelessWidget {
 
 
 
-          home: EditProfileScreen(),
+          home: LoadingScreen(),
 
           ),
         );

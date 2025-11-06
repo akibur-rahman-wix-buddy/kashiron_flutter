@@ -186,60 +186,58 @@ final selectedValue = selectedIndexes.map((item)=> addresses[item]["value"]).toL
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CustomAppBar(
-              title: "Send Flowers & Card",
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Choose the perfect flower for your VIP.",
-                      style: TextFontStyle.textStyle16InterW700.copyWith(
-                        color: Colors.white,
-                      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CustomAppBar(
+            title: "Send Flowers & Card",
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Choose the perfect flower for your VIP.",
+                    style: TextFontStyle.textStyle16InterW700.copyWith(
+                      color: Colors.white,
                     ),
-                    UIHelper.verticalSpace(16.h),
+                  ),
+                  UIHelper.verticalSpace(16.h),
 
-                    // Address cards
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: addresses.length,
-                      separatorBuilder: (context, index) =>
-                          UIHelper.verticalSpace(12.h),
-                      itemBuilder: (context, index) {
-                        final address = addresses[index];
-                        return ChooseFlowerCard(
-                          value: address["value"],
-                          titleName: address['titleName'],
-                          address: address['address'],
-                          isVip: address['isVip'],
-                          isSelected: selectedIndexes.contains(index),
-                          onTap: () => _toggleAddress(index),
-                        );
-                      },
-                    ),
+                  // Address cards
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: addresses.length,
+                    separatorBuilder: (context, index) =>
+                        UIHelper.verticalSpace(12.h),
+                    itemBuilder: (context, index) {
+                      final address = addresses[index];
+                      return ChooseFlowerCard(
+                        value: address["value"],
+                        titleName: address['titleName'],
+                        address: address['address'],
+                        isVip: address['isVip'],
+                        isSelected: selectedIndexes.contains(index),
+                        onTap: () => _toggleAddress(index),
+                      );
+                    },
+                  ),
 
-                    const Spacer(),
+                  const Spacer(),
 
-                    // Continue Button
-                    CustomElevatedButton(
-                      text: "Continue",
-                      onPressed: _onContinue,
-                    ),
-                  ],
-                ),
+                  // Continue Button
+                  CustomElevatedButton(
+                    text: "Continue",
+                    onPressed: _onContinue,
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

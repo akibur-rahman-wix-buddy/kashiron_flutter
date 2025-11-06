@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
+import 'package:kashirons_flutter/constants/app_constants.dart';
 import 'package:kashirons_flutter/feature/onboarding/widget/onboarding_button.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/di.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 
 import '../../../assets_helperfdg/app_colors.dart';
@@ -164,6 +166,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       curve: Curves.easeInOut,
                     );
                   } else {
+                    appData.write(kKeyIsFirstTime,false);
                     NavigationService.navigateTo(Routes.signUpScreen);
                   }
                 },

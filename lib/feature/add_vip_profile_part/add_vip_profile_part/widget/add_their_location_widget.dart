@@ -8,7 +8,7 @@ import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 class AddTheirLocationWidget extends StatelessWidget {
   final bool isOn;
   final ValueChanged<bool> onSwitchChanged;
-  final TextEditingController streemController;
+  final TextEditingController streetAddressController;
   final TextEditingController countryController;
   final TextEditingController cityController;
   final TextEditingController zipcodeController;
@@ -18,7 +18,7 @@ class AddTheirLocationWidget extends StatelessWidget {
     Key? key,
     required this.isOn,
     required this.onSwitchChanged,
-    required this.streemController,
+    required this.streetAddressController,
     required this.countryController,
     required this.cityController,
     required this.zipcodeController,
@@ -85,7 +85,7 @@ class AddTheirLocationWidget extends StatelessWidget {
             ),
             UIHelper.verticalSpace(6.h),
             CustomTextField(
-              controller: streemController,
+              controller: streetAddressController,
               contentPadding:
               EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
             ),

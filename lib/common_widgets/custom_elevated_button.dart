@@ -14,6 +14,8 @@ class CustomElevatedButton extends StatelessWidget {
   final dynamic height;
   final dynamic width;
   final dynamic radius;
+  final bool  isLoading ;
+  final Color? circularColors;
 
   const CustomElevatedButton({
     super.key,
@@ -24,11 +26,12 @@ class CustomElevatedButton extends StatelessWidget {
     this.padding,
     this.height,
     this.width,
-    this.radius = 8.00,
+    this.radius = 8.00,  this.isLoading = false,  this.circularColors,
   });
 
   @override
   Widget build(BuildContext context) {
+
     return SizedBox(
       height: height?? 52.h,
       width: width?? double.infinity,
@@ -44,7 +47,7 @@ class CustomElevatedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius),
           ),
         ),
-        child: Text(
+        child: isLoading? CircularProgressIndicator(color: circularColors?? Colors.white): Text(
           text,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

@@ -5,14 +5,17 @@ import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
+import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/endpoints.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard({super.key, required this.productName, required this.price, required this.isLoveValue, required this.isBuyGiftClick});
+  const ProductCard({super.key, required this.productName, required this.price, required this.isLoveValue, required this.isBuyGiftClick, required this.imageUrl});
   final String productName;
   final String price;
+  final String imageUrl;
   final bool isLoveValue ;
   final VoidCallback isBuyGiftClick;
 
@@ -53,10 +56,18 @@ class _ProductCardState extends State<ProductCard> {
           children: [
             Stack(
               children: [
-                ClipRRect(
-                  child: Image.asset(AppImages.demoItem, height: 120.h, width: double.infinity, fit: BoxFit.cover,),
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+
+                ShimmerImage(
+                  imageUrl:widget.imageUrl ,
+                  height: 120.h,
+                  width: 120.w, placeholder: AppImages.placeholderImageItem,
                 ),
+
+
+                // ClipRRect(
+                //   child: Image.asset(AppImages.demoItem, height: 120.h, width: double.infinity, fit: BoxFit.cover,),
+                //   borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                // ),
                 Positioned(
 
                   right: 10,

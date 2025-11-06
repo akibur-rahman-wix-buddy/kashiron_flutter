@@ -149,229 +149,227 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            CustomAppBar(
-              title: "Create Spark",
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(12.w),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(8.w),
-                        padding: EdgeInsets.all(16.w),
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF2D3142),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.r),
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.info_outline,
-                                  color: Colors.grey,
-                                ),
-                                UIHelper.horizontalSpace(08),
-                                SizedBox(
-                                  width: 270.w,
-                                  child: Text(
-                                    "Set a Spark to remember important tasks and special moments with your VIPs.",
-                                    style: TextFontStyle.textStyle14InterW400
-                                        .copyWith(color: Color(0xFF787A83)),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Select VIP profile",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            // VIP Dropdown Field
-                            ValueListenableBuilder<TextEditingValue>(
-                              valueListenable: vipProfileController,
-                              builder: (context, value, child) {
-                                return CustomTextField(
-                                  key: _textFieldKey,
-                                  hintText: vipProfileController.text.isEmpty
-                                      ? "Choose a VIP"
-                                      : vipProfileController.text,
-                                  hintTextSyle: TextFontStyle.textStyle12InterW400.copyWith(
-                                    fontSize: 14,
-                                    color: Colors.white60,
-                                  ),
-                                  rightIcon: AppIcons.downArrow,
-                                  onRightTap: () {
-                                    VipDropdown.show(
-                                      context: context,
-                                      controller: vipProfileController,
-                                      textFieldKey: _textFieldKey,
-                                      onVipSelected: () {
-                                        print('VIP selected: ${vipProfileController.text}');
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Spark Title",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xff373b4c),
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              padding: EdgeInsets.all(16.w),
-                              child: CustomTextField(
-                                borderColor: Colors.transparent,
-                                height: 120.h,
-                                hintText:
-                                "Write any extra details, instructions, or context for this sparks…",
-                                controller: sparkTitleController,
-                                maxLength: 500,
-                              ),
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Gift Suggestion Needed?",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Radio(
-                                  activeColor: Colors.white,
-                                  fillColor: MaterialStateProperty.resolveWith<Color>(
-                                        (states) {
-                                      if (states.contains(MaterialState.selected)) {
-                                        return Colors.white; // Active color
-                                      }
-                                      return Colors.grey; // Inactive color
-                                    },
-                                  ),
-                                  value: 'yes',
-                                  groupValue: _selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedOption = value;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  'Yes',
-                                  style: TextStyle(color: Colors.white, fontSize: 18),
-                                ),
-                                Radio(
-                                  activeColor: Colors.white,
-                                  fillColor: MaterialStateProperty.resolveWith<Color>(
-                                        (states) {
-                                      if (states.contains(MaterialState.selected)) {
-                                        return Colors.white; // Active color
-                                      }
-                                      return Colors.grey; // Inactive color
-                                    },
-                                  ),
-                                  value: 'no',
-                                  groupValue: _selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedOption = value;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  'No',
-                                  style: TextStyle(color: Colors.white, fontSize: 18),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              "If Yes, we'll connect this spark with gift suggestions later.",
-                              style: TextFontStyle.textStyle14InterW400
-                                  .copyWith(color: Colors.white60),
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Date",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            InkWell(
-                              onTap: _selectDate,
-                              child: AbsorbPointer(
-                                child: CustomTextField(
-                                  hintText: selectedDate != null
-                                      ? "${selectedDate!.month.toString().padLeft(2, '0')}/${selectedDate!.day.toString().padLeft(2, '0')}/${selectedDate!.year}"
-                                      : "mm/dd/yyyy",
-                                  rightIcon: AppIcons.calendar,
-                                  readOnly: true,
-                                  controller: dateController,
-                                ),
-                              ),
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Time",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            InkWell(
-                              onTap: _selectTime,
-                              child: AbsorbPointer(
-                                child: CustomTextField(
-                                  hintText: selectedTime != null
-                                      ? "${selectedTime!.hourOfPeriod}:${selectedTime!.minute.toString().padLeft(2, '0')} ${selectedTime!.period.name.toUpperCase()}"
-                                      : "hh:mm aa",
-                                  rightIcon: AppIcons.clock,
-                                  readOnly: true,
-                                  controller: timeController,
-                                ),
-                              ),
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Description",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xff373b4c),
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              padding: EdgeInsets.all(16.w),
-                              child: CustomTextField(
-                                borderColor: Colors.transparent,
-                                height: 120.h,
-                                hintText: "What would you like to remember?",
-                                controller: sparkDescriptionController,
-                                maxLength: 500,
-                              ),
-                            ),
-                          ],
+      body: Column(
+        children: [
+          CustomAppBar(
+            title: "Create Spark",
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(12.w),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(8.w),
+                      padding: EdgeInsets.all(16.w),
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF2D3142),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
-                      UIHelper.verticalSpace(100.h),
-                    ],
-                  ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.info_outline,
+                                color: Colors.grey,
+                              ),
+                              UIHelper.horizontalSpace(08),
+                              SizedBox(
+                                width: 270.w,
+                                child: Text(
+                                  "Set a Spark to remember important tasks and special moments with your VIPs.",
+                                  style: TextFontStyle.textStyle14InterW400
+                                      .copyWith(color: Color(0xFF787A83)),
+                                ),
+                              ),
+                            ],
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Text(
+                            "Select VIP profile",
+                            style: TextFontStyle.textStyle16InterW700,
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          // VIP Dropdown Field
+                          ValueListenableBuilder<TextEditingValue>(
+                            valueListenable: vipProfileController,
+                            builder: (context, value, child) {
+                              return CustomTextField(
+                                key: _textFieldKey,
+                                hintText: vipProfileController.text.isEmpty
+                                    ? "Choose a VIP"
+                                    : vipProfileController.text,
+                                hintTextSyle: TextFontStyle.textStyle12InterW400.copyWith(
+                                  fontSize: 14,
+                                  color: Colors.white60,
+                                ),
+                                rightIcon: AppIcons.downArrow,
+                                onRightTap: () {
+                                  VipDropdown.show(
+                                    context: context,
+                                    controller: vipProfileController,
+                                    textFieldKey: _textFieldKey,
+                                    onVipSelected: () {
+                                      print('VIP selected: ${vipProfileController.text}');
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Text(
+                            "Spark Title",
+                            style: TextFontStyle.textStyle16InterW700,
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xff373b4c),
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            padding: EdgeInsets.all(16.w),
+                            child: CustomTextField(
+                              borderColor: Colors.transparent,
+                              height: 120.h,
+                              hintText:
+                              "Write any extra details, instructions, or context for this sparks…",
+                              controller: sparkTitleController,
+                              maxLength: 500,
+                            ),
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Text(
+                            "Gift Suggestion Needed?",
+                            style: TextFontStyle.textStyle16InterW700,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Radio(
+                                activeColor: Colors.white,
+                                fillColor: MaterialStateProperty.resolveWith<Color>(
+                                      (states) {
+                                    if (states.contains(MaterialState.selected)) {
+                                      return Colors.white; // Active color
+                                    }
+                                    return Colors.grey; // Inactive color
+                                  },
+                                ),
+                                value: 'yes',
+                                groupValue: _selectedOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedOption = value;
+                                  });
+                                },
+                              ),
+                              Text(
+                                'Yes',
+                                style: TextStyle(color: Colors.white, fontSize: 18),
+                              ),
+                              Radio(
+                                activeColor: Colors.white,
+                                fillColor: MaterialStateProperty.resolveWith<Color>(
+                                      (states) {
+                                    if (states.contains(MaterialState.selected)) {
+                                      return Colors.white; // Active color
+                                    }
+                                    return Colors.grey; // Inactive color
+                                  },
+                                ),
+                                value: 'no',
+                                groupValue: _selectedOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedOption = value;
+                                  });
+                                },
+                              ),
+                              Text(
+                                'No',
+                                style: TextStyle(color: Colors.white, fontSize: 18),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "If Yes, we'll connect this spark with gift suggestions later.",
+                            style: TextFontStyle.textStyle14InterW400
+                                .copyWith(color: Colors.white60),
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Text(
+                            "Date",
+                            style: TextFontStyle.textStyle16InterW700,
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          InkWell(
+                            onTap: _selectDate,
+                            child: AbsorbPointer(
+                              child: CustomTextField(
+                                hintText: selectedDate != null
+                                    ? "${selectedDate!.month.toString().padLeft(2, '0')}/${selectedDate!.day.toString().padLeft(2, '0')}/${selectedDate!.year}"
+                                    : "mm/dd/yyyy",
+                                rightIcon: AppIcons.calendar,
+                                readOnly: true,
+                                controller: dateController,
+                              ),
+                            ),
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Text(
+                            "Time",
+                            style: TextFontStyle.textStyle16InterW700,
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          InkWell(
+                            onTap: _selectTime,
+                            child: AbsorbPointer(
+                              child: CustomTextField(
+                                hintText: selectedTime != null
+                                    ? "${selectedTime!.hourOfPeriod}:${selectedTime!.minute.toString().padLeft(2, '0')} ${selectedTime!.period.name.toUpperCase()}"
+                                    : "hh:mm aa",
+                                rightIcon: AppIcons.clock,
+                                readOnly: true,
+                                controller: timeController,
+                              ),
+                            ),
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Text(
+                            "Description",
+                            style: TextFontStyle.textStyle16InterW700,
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xff373b4c),
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            padding: EdgeInsets.all(16.w),
+                            child: CustomTextField(
+                              borderColor: Colors.transparent,
+                              height: 120.h,
+                              hintText: "What would you like to remember?",
+                              controller: sparkDescriptionController,
+                              maxLength: 500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    UIHelper.verticalSpace(100.h),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       )
     );
   }

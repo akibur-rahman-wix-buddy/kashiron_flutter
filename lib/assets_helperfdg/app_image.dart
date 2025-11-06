@@ -12,6 +12,7 @@ class AppImages {
   static const String demoAvatar = '$imageRoute/demoAvatar.jpg';
   static const String demoItem = '$imageRoute/demoItem.png';
   static const String placeholderImageItem = '$imageRoute/place_holder_image.png';
+  static const String deleteCard = '$imageRoute/delate_card.png';
 
 
 

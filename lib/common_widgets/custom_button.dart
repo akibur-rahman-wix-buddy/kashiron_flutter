@@ -109,7 +109,7 @@ Widget customButton({
   return ElevatedButton(
     onPressed: onCallBack,
     style: ElevatedButton.styleFrom(
-      backgroundColor: color ?? AppColor.cB0B0B0,
+      backgroundColor: color ?? AppColor.buttonColor,
       foregroundColor: AppColor.cFFFFFF,
       elevation: elevation ?? 0,
       minimumSize: Size(minWidth ?? double.infinity, height ?? 62.h),
@@ -134,6 +134,8 @@ Widget customButton({
           style: textStyle ??
               TextFontStyle.textStyle14InterW400.copyWith(
                 color: AppColor.cFFFFFF,
+                fontSize: 18,
+                fontWeight: FontWeight.w500
               ),
         ),
       ],

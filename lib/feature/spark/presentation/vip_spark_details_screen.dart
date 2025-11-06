@@ -20,156 +20,155 @@ class VipSparkDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /// ============================ App bar ====================== ///
-            CustomAppBar(
-              title: "Spark Details",
-            ),
-        
-            /// ============================ Scrollable Content ====================== ///
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    /// ============================ Fixed Header Section ====================== ///
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SparkHadingCard(
-                            title: "Mom's Birthday 🎂 ",
-                            image: PlaceholderNetworkImageUrl,
-                            name: "Samantha Usry",
-                            description:
-                            "Don't miss their special day—send love, wishes, and joy that make birthdays truly unforgettable!",
-                            leftDate: "September 6, 2025",
-                            relation: "Mother",
-                            leftTime: "2 days left",
-                          ),
-        
-                          UIHelper.verticalSpace(16.h),
-        
-                          // This section stays fixed at the top
-                          Container(
-                            color: AppColor.primaryBg,
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Gift Ideas for Mother",
-                                      style: TextFontStyle.textStyle16InterW700,
-                                    ),
-                                    RerollButton(
-                                      onTap: () {
-                                        print("Reroll API called!");
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                UIHelper.verticalSpace(8.h),
-                                Divider(
-                                  color: Colors.white,
-                                  height: 3,
-                                ),
-                                UIHelper.verticalSpace(8.h),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-        
-                    /// ============================ GridView Section ====================== ///
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 16,
-                          crossAxisSpacing: 16,
-                          childAspectRatio: 100 / 145,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// ============================ App bar ====================== ///
+          CustomAppBar(
+            title: "Spark Details",
+          ),
+
+          /// ============================ Scrollable Content ====================== ///
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// ============================ Fixed Header Section ====================== ///
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SparkHadingCard(
+                          title: "Mom's Birthday 🎂 ",
+                          image: PlaceholderNetworkImageUrl,
+                          name: "Samantha Usry",
+                          description:
+                          "Don't miss their special day—send love, wishes, and joy that make birthdays truly unforgettable!",
+                          leftDate: "September 6, 2025",
+                          relation: "Mother",
+                          leftTime: "2 days left",
                         ),
-                        itemCount: 6,
-                        padding: const EdgeInsets.only(bottom: 16),
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return SparkProductCard(
-                            title: "Smart Watch",
-                            price: 100,
-                            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D",
-                            onBuyTap: () {
-                              print("Buy gift tapped for index $index");
-                            },
-                          );
-                        },
-                      ),
+
+                        UIHelper.verticalSpace(16.h),
+
+                        // This section stays fixed at the top
+                        Container(
+                          color: AppColor.primaryBg,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Gift Ideas for Mother",
+                                    style: TextFontStyle.textStyle16InterW700,
+                                  ),
+                                  RerollButton(
+                                    onTap: () {
+                                      print("Reroll API called!");
+                                    },
+                                  ),
+                                ],
+                              ),
+                              UIHelper.verticalSpace(8.h),
+                              Divider(
+                                color: Colors.white,
+                                height: 3,
+                              ),
+                              UIHelper.verticalSpace(8.h),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-        
-                    /// "Surprise Flowers" Text at the bottom
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                      child: Text(
-                        "Surprise Flowers",
-                        style: TextFontStyle.textStyle18InterW700,
+                  ),
+
+                  /// ============================ GridView Section ====================== ///
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 16,
+                        childAspectRatio: 100 / 145,
                       ),
-                    ),
-                    SparkCard(
-                      iconCircleColor: Color(0xFF009F50),
-                      ifButton: true,
-                      onTap: () {
-                        NavigationService.navigateTo(Routes.sendFlowerCardScreen);
+                      itemCount: 6,
+                      padding: const EdgeInsets.only(bottom: 16),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return SparkProductCard(
+                          title: "Smart Watch",
+                          price: 100,
+                          image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D",
+                          onBuyTap: () {
+                            print("Buy gift tapped for index $index");
+                          },
+                        );
                       },
-                      title: "Send Flowers & Card",
-                      subTitle: "Deliver fresh flowers with a personalized card ",
-                      buttonName: "Send Now",
-                      iconName: Icons.settings,
                     ),
-        
-                    ///>>>>>>>>>>>>>>>>>>>>>> option section >>>>>>>>>>>>>>>>>>>>>>>>
-                    UIHelper.verticalSpace(16),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                      child: Text(
-                        "Option",
-                        style: TextFontStyle.textStyle18InterW700,
-                      ),
+                  ),
+
+                  /// "Surprise Flowers" Text at the bottom
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                    child: Text(
+                      "Surprise Flowers",
+                      style: TextFontStyle.textStyle18InterW700,
                     ),
-                    SparkCard(
-                      iconCircleColor: Color(0xFF009F50),
-                      ifButton: false,
-                      onTap: () {},
-                      title: "Delete Spark",
-                      subTitle: "Remove this reminder",
-                      buttonName: "Send Now",
-                      iconName: Icons.delete,
+                  ),
+                  SparkCard(
+                    iconCircleColor: Color(0xFF009F50),
+                    ifButton: true,
+                    onTap: () {
+                      NavigationService.navigateTo(Routes.sendFlowerCardScreen);
+                    },
+                    title: "Send Flowers & Card",
+                    subTitle: "Deliver fresh flowers with a personalized card ",
+                    buttonName: "Send Now",
+                    
+                    iconName: Icons.settings,
+                  ),
+
+                  ///>>>>>>>>>>>>>>>>>>>>>> option section >>>>>>>>>>>>>>>>>>>>>>>>
+                  UIHelper.verticalSpace(16),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                    child: Text(
+                      "Option",
+                      style: TextFontStyle.textStyle18InterW700,
                     ),
-                    UIHelper.verticalSpace(16.h),
-                    SparkCard(
-                      iconCircleColor: Color(0xFFEB690E),
-                      ifButton: true,
-                      onTap: () {
-                        ReminderBottomSheet.show(context);
-                      },
-                      title: "Remind Me",
-                      subTitle: "Set a reminder to receive alerts before this spark.",
-                      buttonName: "Set",
-                      iconName: Icons.notification_important,
-                    ),
-                    UIHelper.verticalSpace(16.h),
-                  ],
-                ),
+                  ),
+                  SparkCard(
+                    iconCircleColor: Color(0xFF009F50),
+                    ifButton: false,
+                    onTap: () {},
+                    title: "Delete Spark",
+                    subTitle: "Remove this reminder",
+                    buttonName: "Send Now",
+                    iconName: Icons.delete,
+                  ),
+                  UIHelper.verticalSpace(16.h),
+                  SparkCard(
+                    iconCircleColor: Color(0xFFEB690E),
+                    ifButton: true,
+                    onTap: () {
+                      ReminderBottomSheet.show(context);
+                    },
+                    title: "Remind Me",
+                    subTitle: "Set a reminder to receive alerts before this spark.",
+                    buttonName: "Set",
+                    iconName: Icons.notification_important,
+                  ),
+                  UIHelper.verticalSpace(16.h),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

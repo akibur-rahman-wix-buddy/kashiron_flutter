@@ -35,123 +35,121 @@ class SendFlowerCardScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CustomAppBar(
-              title: "Send Flowers & Card",
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Personalize Your Message",
-                      style: TextFontStyle.textStyle16InterW700.copyWith(
-                        color: Colors.white,
-                      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CustomAppBar(
+            title: "Send Flowers & Card",
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Personalize Your Message",
+                    style: TextFontStyle.textStyle16InterW700.copyWith(
+                      color: Colors.white,
                     ),
-                    UIHelper.verticalSpace(8.h),
-                    Text(
-                      "Write a heartfelt message to make your gift extra special.",
-                      style: TextFontStyle.textStyle16InterW700.copyWith(
-                        color: Colors.white60,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                  ),
+                  UIHelper.verticalSpace(8.h),
+                  Text(
+                    "Write a heartfelt message to make your gift extra special.",
+                    style: TextFontStyle.textStyle16InterW700.copyWith(
+                      color: Colors.white60,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
                     ),
-                    UIHelper.verticalSpace(16.h),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xff373b4c),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      padding: EdgeInsets.all(16.w),
-                      child: CustomTextField(
-                        borderColor: Colors.transparent,
-                        height: 120.h,
-                        hintText:
-                        "Write your personalized message here... E.g., Happy Birthday! Wishing you love and happiness.",
-                        controller: personalizationTextController,
-                        maxLength: 250,
-                      ),
+                  ),
+                  UIHelper.verticalSpace(16.h),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xff373b4c),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
-                    UIHelper.verticalSpace(16.h),
-                    Text(
-                      "Quick suggestions:",
-                      style: TextFontStyle.textStyle18InterW700.copyWith(
-                        color: Colors.white,
+                    padding: EdgeInsets.all(16.w),
+                    child: CustomTextField(
+                      borderColor: Colors.transparent,
+                      height: 120.h,
+                      hintText:
+                      "Write your personalized message here... E.g., Happy Birthday! Wishing you love and happiness.",
+                      controller: personalizationTextController,
+                      maxLength: 250,
+                    ),
+                  ),
+                  UIHelper.verticalSpace(16.h),
+                  Text(
+                    "Quick suggestions:",
+                    style: TextFontStyle.textStyle18InterW700.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                  UIHelper.verticalSpace(12.h),
+                  Wrap(
+                    spacing: 8.w,
+                    runSpacing: 8.h,
+                    children: [
+                      _buildSuggestionChip(
+                        "Thinking of you on your special day! 💕",
+                        onTap: () => _onSuggestionTap("Thinking of you on your special day! 💕"),
                       ),
-                    ),
-                    UIHelper.verticalSpace(12.h),
-                    Wrap(
-                      spacing: 8.w,
-                      runSpacing: 8.h,
-                      children: [
-                        _buildSuggestionChip(
-                          "Thinking of you on your special day! 💕",
-                          onTap: () => _onSuggestionTap("Thinking of you on your special day! 💕"),
-                        ),
-                        _buildSuggestionChip(
-                          "Wishing you love and happiness! 🌸",
-                          onTap: () => _onSuggestionTap("Wishing you love and happiness! 🌸"),
-                        ),
-                        _buildSuggestionChip(
-                          "Hope this brightens your day! 💐",
-                          onTap: () => _onSuggestionTap("Hope this brightens your day! 💐"),
-                        ),
-                        _buildSuggestionChip(
-                          "Sending warm wishes your way! 🌺",
-                          onTap: () => _onSuggestionTap("Sending warm wishes your way! 🌺"),
-                        ),
-                        _buildSuggestionChip(
-                          "You mean the world to me! ❤️",
-                          onTap: () => _onSuggestionTap("You mean the world to me! ❤️"),
-                        ),
-                        _buildSuggestionChip(
-                          "Celebrating you today! 🎉",
-                          onTap: () => _onSuggestionTap("Celebrating you today! 🎉"),
-                        ),
-                      ],
-                    ),
-                    UIHelper.verticalSpace(24.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CustomElevatedButton(
-                            text: "Continue",
-                            onPressed: () {
-                             NavigationService.navigateToReplacement(Routes.chooseDeliveryAddressSendFlowerCard);
-                              if (personalizationTextController.text.isEmpty) {
-                                // Show error or validation
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      "Please write a message before continuing",
-                                      style: TextFontStyle.textStyle14InterW400,
-                                    ),
-                                    backgroundColor: Colors.red,
+                      _buildSuggestionChip(
+                        "Wishing you love and happiness! 🌸",
+                        onTap: () => _onSuggestionTap("Wishing you love and happiness! 🌸"),
+                      ),
+                      _buildSuggestionChip(
+                        "Hope this brightens your day! 💐",
+                        onTap: () => _onSuggestionTap("Hope this brightens your day! 💐"),
+                      ),
+                      _buildSuggestionChip(
+                        "Sending warm wishes your way! 🌺",
+                        onTap: () => _onSuggestionTap("Sending warm wishes your way! 🌺"),
+                      ),
+                      _buildSuggestionChip(
+                        "You mean the world to me! ❤️",
+                        onTap: () => _onSuggestionTap("You mean the world to me! ❤️"),
+                      ),
+                      _buildSuggestionChip(
+                        "Celebrating you today! 🎉",
+                        onTap: () => _onSuggestionTap("Celebrating you today! 🎉"),
+                      ),
+                    ],
+                  ),
+                  UIHelper.verticalSpace(24.h),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomElevatedButton(
+                          text: "Continue",
+                          onPressed: () {
+                           NavigationService.navigateToReplacement(Routes.chooseDeliveryAddressSendFlowerCard);
+                            if (personalizationTextController.text.isEmpty) {
+                              // Show error or validation
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "Please write a message before continuing",
+                                    style: TextFontStyle.textStyle14InterW400,
                                   ),
-                                );
-                              } else {
-                                // Proceed with the flow
-                                print("Message: ${personalizationTextController.text}");
-                              }
-                            },
-                          ),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            } else {
+                              // Proceed with the flow
+                              print("Message: ${personalizationTextController.text}");
+                            }
+                          },
                         ),
-                      ],
-                    ),
-                    UIHelper.verticalSpace(16.h),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                  UIHelper.verticalSpace(16.h),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

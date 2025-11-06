@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../assets_helperfdg/app_colors.dart';
 import '../assets_helperfdg/app_fonts.dart';
-import '/helpers/di.dart';
+import 'di.dart';
 import '../common_widgets/custom_button.dart';
 import '../constants/app_constants.dart';
 

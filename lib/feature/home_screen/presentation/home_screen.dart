@@ -5,6 +5,7 @@ import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/feature/home_screen/widget/add_new_bottomsheet.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/endpoints.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 import '../widget/home_app_bar.dart';
 import '../widget/popular_gifts.dart';
@@ -110,6 +111,7 @@ class HomeScreen extends StatelessWidget {
                 UIHelper.verticalSpace(16.h),
                 /// ============================ Popular Gifts ====================== ///
                 PopularGifts(
+                  imageUrl: personImageUrl,
                   isLove: true,
                   value: 2600.toString(),
                   title: "Smart Watch",

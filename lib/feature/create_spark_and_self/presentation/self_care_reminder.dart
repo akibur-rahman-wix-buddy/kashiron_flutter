@@ -148,121 +148,119 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            CustomAppBar(
-              title: "Self Care Reminder",
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(12.w),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(8.w),
-                        padding: EdgeInsets.all(16.w),
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF2D3142),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.r),
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Reminder Title",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xff373b4c),
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              padding: EdgeInsets.all(16.w),
-                              child: CustomTextField(
-                                borderColor: Colors.transparent,
-                                height: 80.h,
-                                hintText:
-                                "Enter reminder title (e.g., Meditation session)",
-                                controller: sparkTitleController,
-                                maxLength: 30,
-                              ),
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Date",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            InkWell(
-                              onTap: _selectDate,
-                              child: AbsorbPointer(
-                                child: CustomTextField(
-                                  hintText: selectedDate != null
-                                      ? "${selectedDate!.month.toString().padLeft(2, '0')}/${selectedDate!.day.toString().padLeft(2, '0')}/${selectedDate!.year}"
-                                      : "mm/dd/yyyy",
-                                  rightIcon: AppIcons.calendar,
-                                  readOnly: true,
-                                  controller: dateController,
-                                ),
-                              ),
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Time",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            InkWell(
-                              onTap: _selectTime,
-                              child: AbsorbPointer(
-                                child: CustomTextField(
-                                  hintText: selectedTime != null
-                                      ? "${selectedTime!.hourOfPeriod}:${selectedTime!.minute.toString().padLeft(2, '0')} ${selectedTime!.period.name.toUpperCase()}"
-                                      : "hh:mm aa",
-                                  rightIcon: AppIcons.clock,
-                                  readOnly: true,
-                                  controller: timeController,
-                                ),
-                              ),
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Description",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            UIHelper.verticalSpace(16.h),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xff373b4c),
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              padding: EdgeInsets.all(16.w),
-                              child: CustomTextField(
-                                borderColor: Colors.transparent,
-                                height: 120.h,
-                                hintText: "What would you like to remember?",
-                                controller: sparkDescriptionController,
-                                maxLength: 500,
-                              ),
-                            ),
-                          ],
+      body: Column(
+        children: [
+          CustomAppBar(
+            title: "Self Care Reminder",
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(12.w),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(8.w),
+                      padding: EdgeInsets.all(16.w),
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF2D3142),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
-                    ],
-                  ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          UIHelper.verticalSpace(16.h),
+                          Text(
+                            "Reminder Title",
+                            style: TextFontStyle.textStyle16InterW700,
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xff373b4c),
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            padding: EdgeInsets.all(16.w),
+                            child: CustomTextField(
+                              borderColor: Colors.transparent,
+                              height: 80.h,
+                              hintText:
+                              "Enter reminder title (e.g., Meditation session)",
+                              controller: sparkTitleController,
+                              maxLength: 30,
+                            ),
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Text(
+                            "Date",
+                            style: TextFontStyle.textStyle16InterW700,
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          InkWell(
+                            onTap: _selectDate,
+                            child: AbsorbPointer(
+                              child: CustomTextField(
+                                hintText: selectedDate != null
+                                    ? "${selectedDate!.month.toString().padLeft(2, '0')}/${selectedDate!.day.toString().padLeft(2, '0')}/${selectedDate!.year}"
+                                    : "mm/dd/yyyy",
+                                rightIcon: AppIcons.calendar,
+                                readOnly: true,
+                                controller: dateController,
+                              ),
+                            ),
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Text(
+                            "Time",
+                            style: TextFontStyle.textStyle16InterW700,
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          InkWell(
+                            onTap: _selectTime,
+                            child: AbsorbPointer(
+                              child: CustomTextField(
+                                hintText: selectedTime != null
+                                    ? "${selectedTime!.hourOfPeriod}:${selectedTime!.minute.toString().padLeft(2, '0')} ${selectedTime!.period.name.toUpperCase()}"
+                                    : "hh:mm aa",
+                                rightIcon: AppIcons.clock,
+                                readOnly: true,
+                                controller: timeController,
+                              ),
+                            ),
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Text(
+                            "Description",
+                            style: TextFontStyle.textStyle16InterW700,
+                          ),
+                          UIHelper.verticalSpace(16.h),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xff373b4c),
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            padding: EdgeInsets.all(16.w),
+                            child: CustomTextField(
+                              borderColor: Colors.transparent,
+                              height: 120.h,
+                              hintText: "What would you like to remember?",
+                              controller: sparkDescriptionController,
+                              maxLength: 500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            UIHelper.verticalSpace(100.h)
-          ],
-        ),
+          ),
+          UIHelper.verticalSpace(100.h)
+        ],
       ),
     );
   }

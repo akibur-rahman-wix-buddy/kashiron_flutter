@@ -28,147 +28,145 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
-      body: SafeArea(
-        child: Column(
-          children: [
-            /// App Bar
-            CustomAppBar(
-              title: "Order Details",
-            ),
-            UIHelper.verticalSpace(16.h),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Column(
-                    children: [
+      body: Column(
+        children: [
+          /// App Bar
+          CustomAppBar(
+            title: "Order Details",
+          ),
+          UIHelper.verticalSpace(16.h),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 16.w),
+                child: Column(
+                  children: [
 
 
-                      ///>>>>>>>>>>>>>>>>>>> here is order info card >>>>>>>>>>>>>>>>>>>>>>>
+                    ///>>>>>>>>>>>>>>>>>>> here is order info card >>>>>>>>>>>>>>>>>>>>>>>
 
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16),
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF2D3142),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        ),
-                        child: Column(
-                          crossAxisAlignment:CrossAxisAlignment.start,
-                          children: [
-                            Text("Order Info",style: TextFontStyle.textStyle16InterW700,textAlign: TextAlign.start,),
-                            Divider(height: 20,color: Colors.white,),
-                            OrderDetailsCardRow(leftText: "Order ID",rightText: "Classic Cuts Barber Shop", ),
-                            OrderDetailsCardRow(leftText: "Order Date",rightText: "Jernome Bell", ),
-                            OrderDetailsCardRow(leftText: "Delivery Address",rightText: "123 main rode, Mirpor, Dhaka", ),
-                            OrderDetailsCardRow(leftText: "Phone number",rightText: "+8801324567890", ),
-                            UIHelper.verticalSpace(8.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(width:120.w,child: Text("Delivery Status",style: TextFontStyle.textStyle14InterW400.copyWith(color: Colors.white60),)),
-                                Container(padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-                                  decoration: ShapeDecoration(
-                                    color: const Color(0x14EA7B0C),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),child: Text("Pending",style: TextFontStyle.textStyle12InterW400.copyWith(color: Color(0xFFEA7B0C)),),
-                                )
-                              ],
-                            ),
-
-                          ],
-                        ),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF2D3142),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      UIHelper.verticalSpace(16.h),
-                      ///>>>>>>>>>>>>>>>>>>>>>>>>> here is gift item >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16),
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF2D3142),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        ),child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Column(
+                        crossAxisAlignment:CrossAxisAlignment.start,
                         children: [
-                          Text("Gift Items",style: TextFontStyle.textStyle16InterW700,textAlign: TextAlign.start,),
+                          Text("Order Info",style: TextFontStyle.textStyle16InterW700,textAlign: TextAlign.start,),
                           Divider(height: 20,color: Colors.white,),
+                          OrderDetailsCardRow(leftText: "Order ID",rightText: "Classic Cuts Barber Shop", ),
+                          OrderDetailsCardRow(leftText: "Order Date",rightText: "Jernome Bell", ),
+                          OrderDetailsCardRow(leftText: "Delivery Address",rightText: "123 main rode, Mirpor, Dhaka", ),
+                          OrderDetailsCardRow(leftText: "Phone number",rightText: "+8801324567890", ),
+                          UIHelper.verticalSpace(8.h),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ShimmerImage(imageUrl: personImageUrl, placeholder: AppImages.placeholderImageItem, height: 56.h, width: 72.w),
-                              UIHelper.verticalSpace(16.h),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text("Smart Watch",style: TextFontStyle.textStyle16InterW400,),
-                                  SizedBox(
-                                      width:220,child: Column(
-                                        children: [
-                                          ExpandableText(text: "Stay connected and active with this stylish Smart Watch. Track fitness, monitor heart rate and sle Stay connected and active with this stylish Smart Watch. Track fitness, monitor heart rate ",trimLength: 100,),
-                                          UIHelper.verticalSpace(8.h),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text("Qty:1",style: TextFontStyle.textStyle14InterW400.copyWith(color: Color(0xFFEF233C)),),
-                                              Text("\$24.00",style: TextFontStyle.textStyle14InterW400.copyWith(color: Color(0xFFEF233C)),)
-                                            ],
-                                          )
-                                        ],
-                                      )
+                              SizedBox(width:120.w,child: Text("Delivery Status",style: TextFontStyle.textStyle14InterW400.copyWith(color: Colors.white60),)),
+                              Container(padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                                decoration: ShapeDecoration(
+                                  color: const Color(0x14EA7B0C),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  
-
-                                ],
-                              ),
-
-
+                                ),child: Text("Pending",style: TextFontStyle.textStyle12InterW400.copyWith(color: Color(0xFFEA7B0C)),),
+                              )
                             ],
-                          )
+                          ),
 
                         ],
                       ),
-                      ),
-
-                      UIHelper.verticalSpace(16.h),
-                      ///>>>>>>>>>>>>>>>>>>> here is Payment Summary card >>>>>>>>>>>>>>>>>>>>>>>
-
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16),
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF2D3142),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        ),
-                        child: Column(
-                          crossAxisAlignment:CrossAxisAlignment.start,
+                    ),
+                    UIHelper.verticalSpace(16.h),
+                    ///>>>>>>>>>>>>>>>>>>>>>>>>> here is gift item >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF2D3142),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Gift Items",style: TextFontStyle.textStyle16InterW700,textAlign: TextAlign.start,),
+                        Divider(height: 20,color: Colors.white,),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text("Payment Summary",style: TextFontStyle.textStyle16InterW700,textAlign: TextAlign.start,),
-                            Divider(height: 20,color: Colors.white,),
-                            OrderDetailsCardRow(leftText: "Subtotal",rightText: "\$24.00", ),
-                            OrderDetailsCardRow(leftText: "VAT", rightText: "\$09.60", ),
-                            OrderDetailsCardRow(leftText: "Shipping",rightText: "\$00.00", ),
-                            OrderDetailsCardRow(leftText: "Total payment amount",rightText: "\$33.60",rightTextWeight: 120.00, ),
-                            UIHelper.verticalSpace(8.h),
+                            ShimmerImage(imageUrl: personImageUrl, placeholder: AppImages.placeholderImageItem, height: 56.h, width: 72.w),
+                            UIHelper.verticalSpace(16.h),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text("Smart Watch",style: TextFontStyle.textStyle16InterW400,),
+                                SizedBox(
+                                    width:220,child: Column(
+                                      children: [
+                                        ExpandableText(text: "Stay connected and active with this stylish Smart Watch. Track fitness, monitor heart rate and sle Stay connected and active with this stylish Smart Watch. Track fitness, monitor heart rate ",trimLength: 100,),
+                                        UIHelper.verticalSpace(8.h),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text("Qty:1",style: TextFontStyle.textStyle14InterW400.copyWith(color: Color(0xFFEF233C)),),
+                                            Text("\$24.00",style: TextFontStyle.textStyle14InterW400.copyWith(color: Color(0xFFEF233C)),)
+                                          ],
+                                        )
+                                      ],
+                                    )
+                                ),
+
+
+                              ],
+                            ),
+
 
                           ],
-                        ),
+                        )
+
+                      ],
+                    ),
+                    ),
+
+                    UIHelper.verticalSpace(16.h),
+                    ///>>>>>>>>>>>>>>>>>>> here is Payment Summary card >>>>>>>>>>>>>>>>>>>>>>>
+
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF2D3142),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
+                      child: Column(
+                        crossAxisAlignment:CrossAxisAlignment.start,
+                        children: [
+                          Text("Payment Summary",style: TextFontStyle.textStyle16InterW700,textAlign: TextAlign.start,),
+                          Divider(height: 20,color: Colors.white,),
+                          OrderDetailsCardRow(leftText: "Subtotal",rightText: "\$24.00", ),
+                          OrderDetailsCardRow(leftText: "VAT", rightText: "\$09.60", ),
+                          OrderDetailsCardRow(leftText: "Shipping",rightText: "\$00.00", ),
+                          OrderDetailsCardRow(leftText: "Total payment amount",rightText: "\$33.60",rightTextWeight: 120.00, ),
+                          UIHelper.verticalSpace(8.h),
+
+                        ],
+                      ),
+                    ),
 
 
-                    ],
-                  ),
+                  ],
                 ),
               ),
-            )
+            ),
+          )
 
 
-          ],
-        ),
+        ],
       ),
     );
   }

@@ -121,165 +121,163 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomAppBar(
-                title: "Gift Details",
-              ),
-              Padding(
-                padding: EdgeInsets.all(12.w),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(8.w),
-                      padding: EdgeInsets.all(16.w),
-                      decoration: ShapeDecoration(
-                        color: const Color(0xFF2D3142),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CustomAppBar(
+              title: "Gift Details",
+            ),
+            Padding(
+              padding: EdgeInsets.all(12.w),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(8.w),
+                    padding: EdgeInsets.all(16.w),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF2D3142),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          /// Main product image
-                          ShimmerImage(
-                            imageUrl: selectedImage,
-                            placeholder: AppImages.placeholderImageItem,
-                            height: 200.h,
-                            width: double.infinity,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /// Main product image
+                        ShimmerImage(
+                          imageUrl: selectedImage,
+                          placeholder: AppImages.placeholderImageItem,
+                          height: 200.h,
+                          width: double.infinity,
+                        ),
+                        UIHelper.verticalSpace(12.h),
+
+                        /// Product thumbnails
+                        SizedBox(
+                          height: 90.h,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: productImages.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    selectedImage = productImages[index];
+                                  });
+                                },
+                                child: _buildThumbnail(
+                                  productImages[index],
+                                  isSelected: selectedImage == productImages[index],
+                                ),
+                              );
+                            },
                           ),
-                          UIHelper.verticalSpace(12.h),
-                
-                          /// Product thumbnails
-                          SizedBox(
-                            height: 90.h,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: productImages.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedImage = productImages[index];
-                                    });
-                                  },
-                                  child: _buildThumbnail(
-                                    productImages[index],
-                                    isSelected: selectedImage == productImages[index],
+                        ),
+                        UIHelper.verticalSpace(16.h),
+
+                        /// Product Title + Wishlist
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Smart Popular Watch",
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _isFavorited = !_isFavorited;
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      _isFavorited
+                                          ? "Added to wishlist"
+                                          : "Removed from wishlist",
+                                    ),
                                   ),
                                 );
                               },
-                            ),
-                          ),
-                          UIHelper.verticalSpace(16.h),
-                
-                          /// Product Title + Wishlist
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Smart Popular Watch",
-                                style: TextStyle(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                              icon: Icon(
+                                _isFavorited
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: _isFavorited ? Colors.red : Colors.white,
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _isFavorited = !_isFavorited;
-                                  });
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        _isFavorited
-                                            ? "Added to wishlist"
-                                            : "Removed from wishlist",
-                                      ),
-                                    ),
-                                  );
-                                },
-                                icon: Icon(
-                                  _isFavorited
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: _isFavorited ? Colors.red : Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                
-                          /// Price
-                          Text(
-                            "\$${pricePerItem.toStringAsFixed(2)}",
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
                             ),
+                          ],
+                        ),
+
+                        /// Price
+                        Text(
+                          "\$${pricePerItem.toStringAsFixed(2)}",
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
                           ),
-                          UIHelper.verticalSpace(8.h),
-                
-                          /// Description with See More/See Less
+                        ),
+                        UIHelper.verticalSpace(8.h),
+
+                        /// Description with See More/See Less
 
 
-                          ExpandableText(text: description,
-                          trimLength: 150,),
+                        ExpandableText(text: description,
+                        trimLength: 150,),
 
 
-                          // description.length > 150
-                          //     ? Column(
-                          //   crossAxisAlignment: CrossAxisAlignment.start,
-                          //   children: [
-                          //     Text(
-                          //       _isExpanded
-                          //           ? description
-                          //           : '${description.substring(0, 150)}...',
-                          //       style: TextStyle(
-                          //         fontSize: 14.sp,
-                          //         color: Colors.white70,
-                          //         height: 1.4,
-                          //       ),
-                          //     ),
-                          //     TextButton(
-                          //       onPressed: () {
-                          //         setState(() {
-                          //           _isExpanded = !_isExpanded;
-                          //         });
-                          //       },
-                          //       child: Text(
-                          //         _isExpanded ? "See Less" : "See More",
-                          //         style: TextStyle(
-                          //           color: Colors.red,
-                          //           fontSize: 14.sp,
-                          //           fontWeight: FontWeight.bold,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // )
-                          //     : Text(
-                          //   description,
-                          //   style: TextStyle(
-                          //     fontSize: 14.sp,
-                          //     color: Colors.white70,
-                          //     height: 1.4,
-                          //   ),
-                          // ),
-                          UIHelper.verticalSpace(16.h),
-                        ],
-                      ),
+                        // description.length > 150
+                        //     ? Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     Text(
+                        //       _isExpanded
+                        //           ? description
+                        //           : '${description.substring(0, 150)}...',
+                        //       style: TextStyle(
+                        //         fontSize: 14.sp,
+                        //         color: Colors.white70,
+                        //         height: 1.4,
+                        //       ),
+                        //     ),
+                        //     TextButton(
+                        //       onPressed: () {
+                        //         setState(() {
+                        //           _isExpanded = !_isExpanded;
+                        //         });
+                        //       },
+                        //       child: Text(
+                        //         _isExpanded ? "See Less" : "See More",
+                        //         style: TextStyle(
+                        //           color: Colors.red,
+                        //           fontSize: 14.sp,
+                        //           fontWeight: FontWeight.bold,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // )
+                        //     : Text(
+                        //   description,
+                        //   style: TextStyle(
+                        //     fontSize: 14.sp,
+                        //     color: Colors.white70,
+                        //     height: 1.4,
+                        //   ),
+                        // ),
+                        UIHelper.verticalSpace(16.h),
+                      ],
                     ),
-                    UIHelper.verticalSpace(150.h), // Adjusted for floatingActionButton
-                  ],
-                ),
+                  ),
+                  UIHelper.verticalSpace(150.h), // Adjusted for floatingActionButton
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -107,8 +107,16 @@ class vipProfileAddToSparkCard extends StatelessWidget {
               )
             ],
           ),
+
           UIHelper.verticalSpace(8.h),
-          customButton(name: buttonName,icon:Icon(Icons.add,color: Colors.white,) ,color: Color(0xFF373B4C),height: 44.h, onCallBack: onAddSparkTap, context: context)
+
+          customButton(name: buttonName,
+
+padding:EdgeInsets.all(0),
+
+              icon:Icon(
+                
+                Icons.add,color: Colors.white,) ,color: Color(0xFF373B4C),height: 48.h, onCallBack: onAddSparkTap, context: context)
         ],
       ),
       ),

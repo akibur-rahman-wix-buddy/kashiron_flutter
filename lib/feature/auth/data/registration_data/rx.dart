@@ -1,0 +1,84 @@
+import 'dart:developer';
+import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:rxdart/streams.dart';
+import 'package:kashirons_flutter/helpers/toast.dart';
+import 'package:kashirons_flutter/networks/rx_base.dart';
+
+import 'api.dart';
+
+final class SignUpRx extends RxResponseInt<Map<String, dynamic>> {
+  final api = SignUpApi.instance;
+
+  SignUpRx({required super.empty, required super.dataFetcher});
+
+  ValueStream get getFileData => dataFetcher.stream;
+
+  Future<bool> signUp({
+
+    required String name,
+     XFile? avatar,
+    required String dateOfBirth,
+    required String email,
+
+  }) async {
+    try {
+      // Call the sign-in API
+      Map<String, dynamic> data =
+      await api.signInApi( email: email, name: name, avatar: avatar,dateOfBirth: dateOfBirth);
+
+      String message = data['message'];
+      log(">>>>>>>>>>>>>>> massage : $message");
+      await handleSuccessWithReturn(data);
+
+      return true;
+    } catch (error) {
+      // Handle error
+      return await handleErrorWithReturn(error);
+    }
+  }
+
+  @override
+  handleSuccessWithReturn(Map<String, dynamic> data) {
+
+
+    dataFetcher.sink.add(data);
+
+    return data;
+  }
+
+  @override
+  handleErrorWithReturn(dynamic error) {
+    if (error is DioException) {
+      if (error.response != null) {
+        if (error.response!.statusCode == 422) {
+          var errors = error.response!.data["message"];
+          if (errors is Map<String, dynamic>) {
+            // Combine all error messages into a single string
+            StringBuffer buffer = StringBuffer();
+            errors.forEach((key, value) {
+              if (value is List) {
+                for (var msg in value) {
+                  buffer.writeln(msg); // Add each error message
+                }
+              }
+            });
+            ToastUtil.showShortToast(buffer.toString());
+          } else {
+            ToastUtil.showShortToast("Something went wrong!");
+          }
+        } else {
+          ToastUtil.showShortToast(error.response!.data["errors"] ?? "Unknown error");
+        }
+      } else {
+        ToastUtil.showShortToast("No response data available");
+      }
+    }
+
+    log(error.toString());
+    dataFetcher.sink.addError(error);
+
+    return false;
+  }
+
+}

@@ -6,17 +6,19 @@ import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/widget/product_card.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/endpoints.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 
 
 
 class PopularGifts extends StatelessWidget {
   const PopularGifts({
-    super.key, required this.title, required this.value, required this.isLove,
+    super.key, required this.title, required this.value, required this.isLove, required this.imageUrl,
   });
 
   final String title;
   final String value;
+  final String imageUrl;
   final bool isLove;
 
   @override
@@ -29,7 +31,7 @@ class PopularGifts extends StatelessWidget {
         padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
 
-          return ProductCard(isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+          return ProductCard(imageUrl:imageUrl,isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
           ;
         },
       ),

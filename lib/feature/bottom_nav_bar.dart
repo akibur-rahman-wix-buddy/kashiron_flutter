@@ -62,7 +62,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
     return Scaffold(
       body: pages[selectedIndex],
       bottomNavigationBar: SizedBox(
-        height: 90.h,
+        height: 95.h,
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: AppColor.authBg,

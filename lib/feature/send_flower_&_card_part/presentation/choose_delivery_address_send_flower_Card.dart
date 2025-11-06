@@ -46,58 +46,56 @@ class _ChooseDeliveryAddressSendFlowerCardState extends State<ChooseDeliveryAddr
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CustomAppBar(
-              title: "Send Flowers & Card",
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Choose Delivery Address",
-                      style: TextFontStyle.textStyle16InterW700.copyWith(
-                        color: Colors.white,
-                      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CustomAppBar(
+            title: "Send Flowers & Card",
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Choose Delivery Address",
+                    style: TextFontStyle.textStyle16InterW700.copyWith(
+                      color: Colors.white,
                     ),
-                    UIHelper.verticalSpace(16.h),
+                  ),
+                  UIHelper.verticalSpace(16.h),
 
-                    // Address cards
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: addresses.length,
-                      separatorBuilder: (context, index) => UIHelper.verticalSpace(12.h),
-                      itemBuilder: (context, index) {
-                        final address = addresses[index];
-                        return ChooseDeliveryAddressCard(
-                          titleName: address['titleName'],
-                          address: address['address'],
-                          isVip: address['isVip'],
-                          isSelected: selectedIndex == index,
-                          onTap: () => _selectAddress(index),
-                        );
-                      },
-                    ),
+                  // Address cards
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: addresses.length,
+                    separatorBuilder: (context, index) => UIHelper.verticalSpace(12.h),
+                    itemBuilder: (context, index) {
+                      final address = addresses[index];
+                      return ChooseDeliveryAddressCard(
+                        titleName: address['titleName'],
+                        address: address['address'],
+                        isVip: address['isVip'],
+                        isSelected: selectedIndex == index,
+                        onTap: () => _selectAddress(index),
+                      );
+                    },
+                  ),
 
-                    /// Add New Address Button
-                   UIHelper.verticalSpace(24.h),
-                    _buildAddNewAddressButton(),
-                    Spacer(),
-                    CustomElevatedButton(text: "Continue", onPressed: (){
-                      NavigationService.navigateTo(Routes.chooseSendFlowerCard);
-                    })
-                  ],
-                ),
+                  /// Add New Address Button
+                 UIHelper.verticalSpace(24.h),
+                  _buildAddNewAddressButton(),
+                  Spacer(),
+                  CustomElevatedButton(text: "Continue", onPressed: (){
+                    NavigationService.navigateTo(Routes.chooseSendFlowerCard);
+                  })
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
