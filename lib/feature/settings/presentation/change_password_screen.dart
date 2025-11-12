@@ -7,7 +7,10 @@ import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_button.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+
+import '../../../networks/api_acess.dart' show changePasswordRx;
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -18,9 +21,11 @@ class ChangePasswordScreen extends StatefulWidget {
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   // Controllers
-  final TextEditingController currentPasswordController = TextEditingController();
+  final TextEditingController currentPasswordController =
+      TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   // Global form key
   final _formKey = GlobalKey<FormState>();
@@ -35,30 +40,55 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     super.dispose();
   }
 
-  void _onSaveChange() {
-    if (_formKey.currentState!.validate()) {
-      setState(() => isLoading = true);
+  Future<void> _onSaveChange() async {
+    if (!_formKey.currentState!.validate()) return;
 
-      // Simulate network call or API request
-      Future.delayed(const Duration(seconds: 2), () {
-        setState(() => isLoading = false);
+    setState(() => isLoading = true);
 
-        log("✅ Current Password: ${currentPasswordController.text}");
-        log("✅ New Password: ${newPasswordController.text}");
-        log("✅ Confirm Password: ${confirmPasswordController.text}");
+    try {
+      bool success = await changePasswordRx.ChangePasswordInfo(
+        currentPassword: currentPasswordController.text,
+        password: newPasswordController.text,
+        confirmPassword: confirmPasswordController.text,
+      );
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Password changed successfully!')),
-        );
+      log("✅ Current Password: ${currentPasswordController.text}");
+      log("✅ New Password: ${newPasswordController.text}");
+      log("✅ Confirm Password: ${confirmPasswordController.text}");
 
-        // Clear fields after success
+      if (!mounted) return; // Check if widget is still in tree
+
+      if (success) {
+        // Clear fields before navigation
         currentPasswordController.clear();
         newPasswordController.clear();
         confirmPasswordController.clear();
-      });
+
+        NavigationService.goBack;
+
+        // Show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Password changed successfully!')),
+        );
+      } else {
+        // Show error message for failed password change
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to change password. Please try again.')),
+        );
+      }
+    } catch (e) {
+      log("Error changing password: $e");
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred: ${e.toString()}')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,7 +200,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         name: isLoading ? "Saving..." : "Save Change",
                         borderColor: Colors.transparent,
                         height: 45,
-                        onCallBack: (){
+                        onCallBack: () {
                           isLoading ? null : _onSaveChange();
                         },
                         context: context,

@@ -15,7 +15,12 @@ import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_p
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/widget/add_their_location_widget.dart';
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/widget/cancel_save_button.dart';
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/widget/important_events_widget.dart';
+import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/model/relation_vip_data_model.dart';
+import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/model/vip_category_data_model.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
+import 'package:kashirons_flutter/helpers/toast.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/api_acess.dart';
 
 class AddVipProfilePartScreen extends StatefulWidget {
   const AddVipProfilePartScreen({super.key});
@@ -28,115 +33,146 @@ class AddVipProfilePartScreen extends StatefulWidget {
 class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
   final _profileImage = Rx<XFile?>(null);
   String? selectedRelationship;
+  int? selectedRelationshipId; // NEW: Store the relationship ID
   bool isOn = false;
+
+  // All controllers
   final TextEditingController searchController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController zipcodeController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController streemController = TextEditingController();
+  final TextEditingController streetAddressController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController anniversaryController = TextEditingController();
+
+  // Important Events controllers
+  final TextEditingController birthdayController = TextEditingController();
+  final TextEditingController specialNoteController = TextEditingController();
+
   final GlobalKey _relationshipFieldKey = GlobalKey();
   final _formKey = GlobalKey<FormState>();
 
-  List<String> allRelationships = [
-    'Husband',
-    'Wife',
-    'Father',
-    'Mother',
-    'Brother',
-    'Sister',
-    'Son',
-    'Daughter',
-    'Grandfather',
-    'Grandmother',
-    'Partner',
-    'Boyfriend',
-    'Girlfriend',
-    'Fiancé',
-    'Fiancée',
-    'Best Friend',
-    'Uncle',
-    'Aunt',
-    'Nephew',
-    'Niece',
-    'Father-in-law',
-    'Mother-in-law',
-    'Colleague',
-    'Boss',
-    'Business Partner',
-    'Mentor',
-    'Client',
-    'Employee',
-    'Friend (general)',
-    'Neighbor',
-    'Teacher',
-    'Doctor',
-    'Classmate',
-    'Roommate'
-  ];
-  List<String> filteredRelationships = [];
-  //===================================//
-  final Map<String, List<String>> categories = const {
+  List<RelationShipData>? relationshipCategories;
+  List<Relations> allRelations = []; // CHANGED: Store Relations objects instead of just names
+  List<Relations> filteredRelations = []; // CHANGED: Store filtered Relations objects
+  bool isLoadingRelationships = true;
+  bool isLoadingCategories = true;
+  String? errorMessage;
 
-    'Lifestyle & Creative': [
-      'Fashion/Style',
-      'Health & Beauty',
-      'Home & Decor',
-      'Wellness',
-      'Spa',
-      'Social Media'
-    ],
-    'Hobbies & Creative': [
-      'Art',
-      'DIY',
-      'Photography',
-      'Music',
-      'Dance',
-      'Film/TV',
-      'Reading',
-      'Writing'
-    ],
-    'Activities & Outdoors': ['Travel', 'Beach', 'Camping', 'Adventure', 'Gardening'],
-    'Food & Drink': ['Cooking', 'Coffee/Tea', 'Foodie', 'Wine/Cocktails', 'BBQ/Grilling'],
-    'Fitness & Sports': [
-      'Fitness',
-      'Running',
-      'Cycling',
-      'Swimming',
-      'Yoga',
-      'Tennis',
-      'Pickleball',
-      'Football',
-      'Golf',
-      'Baseball',
-      'Soccer'
-    ],
-    'Pets': ['Dogs', 'Cats', 'Birds', 'Fish', 'Reptiles', 'Small Pets'],
-    'Entertainment & Social': ['Partying', 'Podcasts'],
+  Map<String, List<Interests>> categories = {};
+  List<dynamic> selectedInterestIds = [];
 
-
-
-  };
   @override
   void initState() {
     super.initState();
-    filteredRelationships = allRelationships;
+    _loadRelationshipData();
+    _loadVipCategoryData();
     searchController.addListener(_filterRelationships);
+  }
+
+  Future<void> _loadRelationshipData() async {
+    setState(() {
+      isLoadingRelationships = true;
+      errorMessage = null;
+    });
+
+    try {
+      final data = await getVipRelationshipRx.getPeopleData();
+      if (data != null && data.data != null) {
+        setState(() {
+          relationshipCategories = data.data!;
+          // Extract all relations objects into a flat list
+          allRelations = relationshipCategories!
+              .expand<Relations>((category) => category.relations ?? <Relations>[])
+              .where((relation) => relation.name != null && relation.name!.isNotEmpty)
+              .toList();
+
+          filteredRelations = allRelations;
+          isLoadingRelationships = false;
+        });
+      } else {
+        setState(() {
+          isLoadingRelationships = false;
+          errorMessage = 'Failed to load relationships';
+        });
+      }
+    } catch (error) {
+      setState(() {
+        isLoadingRelationships = false;
+        errorMessage = 'Error loading relationships: $error';
+      });
+    }
+  }
+
+  Future<void> _loadVipCategoryData() async {
+    setState(() {
+      isLoadingCategories = true;
+      errorMessage = null;
+    });
+
+    try {
+      final result = await getVipCategoryRx.getPeopleData();
+
+      if (result != null && result.success == true && result.data != null) {
+        setState(() {
+          categories = _convertToCategoriesMap(result.data!);
+          isLoadingCategories = false;
+        });
+      } else {
+        setState(() {
+          errorMessage = result?.message ?? 'Failed to load categories';
+          isLoadingCategories = false;
+        });
+      }
+    } catch (error) {
+      setState(() {
+        errorMessage = 'Error loading categories: $error';
+        isLoadingCategories = false;
+      });
+    }
+  }
+
+  Map<String, List<Interests>> _convertToCategoriesMap(List<Data> dataList) {
+    final Map<String, List<Interests>> result = {};
+
+    for (final data in dataList) {
+      if (data.category != null && data.interests != null) {
+        final interestObjects = data.interests!
+            .where((interest) => interest.name != null && interest.id != null)
+            .toList();
+
+        if (interestObjects.isNotEmpty) {
+          result[data.category!] = interestObjects;
+        }
+      }
+    }
+
+    return result;
   }
 
   void _filterRelationships() {
     String query = searchController.text.toLowerCase();
     setState(() {
-      filteredRelationships = allRelationships
-          .where((relationship) => relationship.toLowerCase().contains(query))
+      filteredRelations = allRelations
+          .where((relation) => relation.name!.toLowerCase().contains(query))
           .toList();
     });
   }
 
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
+  // NEW: Method to handle relationship selection with both name and ID
+  void _onRelationshipSelected(String name, int id) {
+    setState(() {
+      selectedRelationship = name;
+      selectedRelationshipId = id;
+    });
+  }
+
+  // Method to handle interest selection
+  void _onInterestSelected(List<dynamic> selectedIds) {
+    setState(() {
+      selectedInterestIds = selectedIds;
+    });
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -153,7 +189,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
 
   void _showRelationshipMenu(BuildContext context) {
     final RenderBox? renderBox =
-        _relationshipFieldKey.currentContext?.findRenderObject() as RenderBox?;
+    _relationshipFieldKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox == null) return;
 
     final Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -199,71 +235,49 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                             vertical: 8.h, horizontal: 16.w),
                         hintText: 'Search relationships...',
                         hintTextSyle:
-                            TextFontStyle.textStyle10InterW400.copyWith(
+                        TextFontStyle.textStyle10InterW400.copyWith(
                           color: const Color(0xFF787A83),
                           fontSize: 14.sp,
                         ),
                       ),
                       UIHelper.verticalSpace(14.h),
-                      _buildPopupSection(
-                          '🏡 Family',
-                          [
-                            'Husband',
-                            'Wife',
-                            'Father',
-                            'Mother',
-                            'Brother',
-                            'Sister',
-                            'Son',
-                            'Daughter',
-                            'Grandfather',
-                            'Grandmother'
-                          ],
-                          setState),
-                      _buildPopupSection(
-                          '❤️ Personal / Close',
-                          [
-                            'Partner',
-                            'Boyfriend',
-                            'Girlfriend',
-                            'Fiancé',
-                            'Fiancée',
-                            'Best Friend'
-                          ],
-                          setState),
-                      _buildPopupSection(
-                          '👥 Relatives',
-                          [
-                            'Uncle',
-                            'Aunt',
-                            'Nephew',
-                            'Niece',
-                            'Father-in-law',
-                            'Mother-in-law'
-                          ],
-                          setState),
-                      _buildPopupSection(
-                          '💼 Professional',
-                          [
-                            'Colleague',
-                            'Boss',
-                            'Business Partner',
-                            'Mentor',
-                            'Client',
-                            'Employee'
-                          ],
-                          setState),
-                      _buildPopupSection(
-                          '🎉 Others',
-                          [
-                            'Friend (general)',
-                            'Neighbor',
-                            'Teacher',
-                            'Doctor',
-                            'Classmate',
-                            'Roommate'
-                          ],
-                          setState),
+
+                      if (relationshipCategories != null)
+                        ...relationshipCategories!.map((category) {
+                          String emoji = '•';
+                          switch (category.category?.name) {
+                            case 'Family':
+                              emoji = '🏡';
+                              break;
+                            case 'Personal / Close':
+                              emoji = '❤️';
+                              break;
+                            case 'Relatives':
+                              emoji = '👥';
+                              break;
+                            case 'Professional':
+                              emoji = '💼';
+                              break;
+                            case 'Others':
+                              emoji = '🎉';
+                              break;
+                            default:
+                              emoji = '•';
+                          }
+                          return _buildPopupSection(
+                            '$emoji ${category.category?.name ?? 'Unknown'}',
+                            category.relations ?? [],
+                            setState,
+                          );
+                        }).toList(),
+
+                      if (isLoadingRelationships)
+                        Padding(
+                          padding: EdgeInsets.all(16.w),
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -273,68 +287,249 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
         ),
       ],
     ).then((value) {
-      if (value != null) {
-        setState(() {
-          selectedRelationship = value;
-          searchController.clear();
-          filteredRelationships = allRelationships;
-        });
-      }
+      // Clear search when popup is closed
+      searchController.clear();
+      filteredRelations = allRelations;
     });
   }
 
   Widget _buildPopupSection(
-      String title, List<String> items, StateSetter setState) {
-    List<String> filteredItems =
-        items.where((item) => filteredRelationships.contains(item)).toList();
-    if (filteredItems.isEmpty) return const SizedBox.shrink();
+      String title, List<Relations> relations, StateSetter setState) {
+    bool isExpanded = true;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
-          decoration: ShapeDecoration(
-            color: const Color(0xFF373B4C),
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(width: 1, color: Color(0xFF3E4357)),
+    return StatefulBuilder(
+      builder: (BuildContext context, StateSetter localSetState) {
+        List<Relations> filteredItems =
+        relations.where((relation) => filteredRelations.contains(relation)).toList();
+        if (filteredItems.isEmpty) return const SizedBox.shrink();
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GestureDetector(
+              onTap: () {
+                localSetState(() {
+                  isExpanded = !isExpanded;
+                });
+              },
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+                decoration: ShapeDecoration(
+                  color: const Color(0xFF373B4C),
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(width: 1, color: Color(0xFF3E4357)),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(title,
+                        style: TextFontStyle.textStyle10InterW400.copyWith(
+                            fontSize: 12.sp, fontWeight: FontWeight.w500)),
+                    Row(
+                      children: [
+                        AnimatedRotation(
+                          duration: const Duration(milliseconds: 300),
+                          turns: isExpanded ? 0 : -0.5,
+                          child: SvgPicture.asset(
+                            AppIcons.searchiconcon,
+                            height: 20.h,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            if (isExpanded) ...[
+              UIHelper.verticalSpace(8.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: filteredItems
+                      .map((relation) => GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                      _onRelationshipSelected(relation.name!, relation.id!);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 7.h),
+                      child: Text(
+                        relation.name!,
+                        style: TextFontStyle.textStyle10InterW400
+                            .copyWith(fontSize: 14.sp),
+                      ),
+                    ),
+                  ),
+                  )
+                      .toList(),
+                ),
+              ),
+            ],
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildInterestsSection() {
+    if (isLoadingCategories) {
+      return Container(
+        padding: EdgeInsets.all(20.h),
+        child: Center(
+          child: Column(
             children: [
-              Text(title,
-                  style: TextFontStyle.textStyle10InterW400
-                      .copyWith(fontSize: 12.sp, fontWeight: FontWeight.w500)),
-              SvgPicture.asset(AppIcons.searchiconcon, height: 20.h),
+              CircularProgressIndicator(),
+              UIHelper.verticalSpace(10.h),
+              Text(
+                'Loading interests...',
+                style: TextFontStyle.textStyle10InterW400.copyWith(
+                  color: const Color(0xFF787A83),
+                ),
+              ),
             ],
           ),
         ),
-        UIHelper.verticalSpace(8.h),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: filteredItems
-                .map((item) => GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context, item);
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 7.h),
-                        child: Text(
-                          item,
-                          style: TextFontStyle.textStyle10InterW400
-                              .copyWith(fontSize: 14.sp),
-                        ),
-                      ),
-                    ))
-                .toList(),
-          ),
+      );
+    }
+
+    if (errorMessage != null) {
+      return Container(
+        padding: EdgeInsets.all(20.h),
+        child: Column(
+          children: [
+            Text(
+              errorMessage!,
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 16.sp,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            UIHelper.verticalSpace(16.h),
+            ElevatedButton(
+              onPressed: _loadVipCategoryData,
+              child: Text('Retry'),
+            ),
+          ],
         ),
-      ],
+      );
+    }
+
+    return InterestsWidget(
+      categories: categories,
+      onInterestsSelected: _onInterestSelected,
     );
+  }
+
+  // Method to get interest names from IDs for display
+  List<String> _getSelectedInterestNames() {
+    List<String> names = [];
+    categories.forEach((category, interests) {
+      for (var interest in interests) {
+        if (selectedInterestIds.contains(interest.id)) {
+          names.add(interest.name!);
+        }
+      }
+    });
+    return names;
+  }
+
+  // Method to collect and print all form data - UPDATED to use relationship ID
+  void _saveVipProfile() {
+    // Validate required fields
+    if (firstNameController.text.isEmpty) {
+      ToastUtil.showLongToast("Please enter full name");
+      return;
+    }
+
+    if (selectedRelationship == null || selectedRelationshipId == null) {
+      ToastUtil.showLongToast("Please select a relationship");
+      return;
+    }
+    if (birthdayController.text.isEmpty) {
+      ToastUtil.showLongToast("Please select birthday");
+      return;
+    }
+    if ( selectedInterestIds.isEmpty) {
+      ToastUtil.showLongToast("Please select interest category ");
+      return;
+    }
+
+    // Collect all data
+    final vipProfileData = {
+      'profileImage': _profileImage.value?.path ?? 'No image selected',
+      'firstName': firstNameController.text,
+      'relationship': selectedRelationship ?? 'Not selected',
+      'relationshipId': selectedRelationshipId ?? 'Not selected', // NEW: Include ID
+      'anniversary': anniversaryController.text.isNotEmpty ? anniversaryController.text : '',
+      'birthday': birthdayController.text.isNotEmpty ? birthdayController.text : 'Not set',
+      'specialNote': specialNoteController.text.isNotEmpty ? specialNoteController.text : 'No special notes',
+      'locationEnabled': isOn,
+      'streetAddress': streetAddressController.text,
+      'city': cityController.text,
+      'country': countryController.text,
+      'zipcode': zipcodeController.text,
+      'phone': phoneController.text,
+    };
+
+    // Print all values to console
+    print('=== VIP Profile Data ===');
+    vipProfileData.forEach((key, value) {
+      print('$key: $value');
+    });
+
+    // Print interests with IDs and names
+    if (selectedInterestIds.isEmpty) {
+      print('selectedInterests: No interests selected');
+    } else {
+      print('selectedInterestIds: $selectedInterestIds');
+      print('selectedInterestNames: ${_getSelectedInterestNames().join(", ")}');
+    }
+
+    print('=======================');
+
+    // Call API with relationship ID
+    createVipProfileRx.createVipProfileInfo(
+      name: firstNameController.text,
+      dateOfBirth: birthdayController.text.isNotEmpty ? birthdayController.text : 'Not set',
+      relationId: selectedRelationshipId, // CHANGED: Now using the ID instead of name
+      specialNotes: specialNoteController.text.isNotEmpty ? specialNoteController.text : 'No special notes',
+      streetAddress:  streetAddressController.text,
+      country: countryController.text,
+      city: cityController.text,
+      zipCode: zipcodeController.text,
+      phone:  phoneController.text,
+      interests: selectedInterestIds,
+      anniversaryDate: anniversaryController.text.isNotEmpty ? anniversaryController.text : 'Not set',
+    );
+
+    // Show success message
+    ToastUtil.showLongToast("VIP profile created successfully");
+
+    // Navigate back
+    // NavigationService.goBack;
+  }
+
+  @override
+  void dispose() {
+    // Dispose all controllers
+    searchController.dispose();
+    countryController.dispose();
+    cityController.dispose();
+    zipcodeController.dispose();
+    phoneController.dispose();
+    streetAddressController.dispose();
+    firstNameController.dispose();
+    anniversaryController.dispose();
+    birthdayController.dispose();
+    specialNoteController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -376,7 +571,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                             : null,
                         child: _profileImage.value == null
                             ? Icon(Icons.person,
-                                size: 50.r, color: Colors.white)
+                            size: 50.r, color: Colors.white)
                             : null,
                       );
                     }),
@@ -400,7 +595,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                                     },
                                     child: Text('Take Photo',
                                         style:
-                                            TextFontStyle.textStyle10InterW400),
+                                        TextFontStyle.textStyle10InterW400),
                                   ),
                                   UIHelper.verticalSpace(10.h),
                                   const Divider(color: Colors.grey),
@@ -412,7 +607,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                                     },
                                     child: Text('Select from library',
                                         style:
-                                            TextFontStyle.textStyle14InterW500),
+                                        TextFontStyle.textStyle14InterW500),
                                   ),
                                 ],
                               ),
@@ -435,26 +630,29 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                   style: TextFontStyle.textcA9A9A9Style12InterW400),
               UIHelper.verticalSpace(20.h),
 
-              /// ✅ Replaced container with custom widget
+              /// Basic Information Section
               BasicInformationSection(
                 selectedRelationship: selectedRelationship,
                 relationshipFieldKey: _relationshipFieldKey,
                 onTapRelationship: () => _showRelationshipMenu(context),
+                firstNameController: firstNameController,
+                anniversaryController: anniversaryController,
               ),
 
               UIHelper.verticalSpace(20.h),
 
-              ImportantEventsWidget(title: 'Important Events'),
-
+              /// Important Events Widget with controllers
+              ImportantEventsWidget(
+                title: 'Important Events',
+                birthday: birthdayController,
+                spacialNote: specialNoteController,
+              ),
 
               UIHelper.verticalSpace(20.h),
 
-
-
-
               AddTheirLocationWidget(
                 isOn: isOn,
-                streemController: streemController,
+                streetAddressController: streetAddressController,
                 countryController: countryController,
                 cityController: cityController,
                 zipcodeController: zipcodeController,
@@ -464,26 +662,29 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
 
               UIHelper.verticalSpace(20.h),
 
-              InterestsWidget(categories: categories),
+              _buildInterestsSection(),
+
               UIHelper.verticalSpace(20.h),
 
               Row(
                 children: [
-                  Expanded(child: CancelSaveButton(
-                      color: AppColor.c373B4C,
-
-                      title: 'Cancel')),
+                  Expanded(
+                    child: CancelSaveButton(
+                        onTap: () {
+                          NavigationService.goBack();
+                        },
+                        color: AppColor.c373B4C,
+                        title: 'Cancel'),
+                  ),
                   UIHelper.horizontalSpace(12.w),
-
-                  Expanded(child: CancelSaveButton(
-                      color: AppColor.cA4161A,
-                      title: 'Save VIP Profile'))
+                  Expanded(
+                    child: CancelSaveButton(
+                        onTap: _saveVipProfile,
+                        color: AppColor.buttonColor,
+                        title: 'Save VIP Profile'),
+                  ),
                 ],
               )
-
-
-
-
             ],
           ),
         ),
@@ -491,6 +692,3 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
     );
   }
 }
-
-
-

@@ -43,7 +43,15 @@ final class Endpoints {
 
  static String getVipRelationshipList () => "/api/relation/list";
  static String getVipInterestList () => "/api/interest/list";
+ static String getVipRelationList () => "/api/relation/list";
  static String createVip () => "/api/vip/create";
+
+
+ ///>>>>>>>>>>>>>>>>>>>>>>>>> profile section >>>>>>>>>>>>>>>>>>>>>>>>
+
+static String getUserProfileApiLink ()=> "/api/me";
+static String updateProfile ()=> "/api/profile/update";
+static String changePasswordApiLink()=> "/api/password/change";
 
 
 }

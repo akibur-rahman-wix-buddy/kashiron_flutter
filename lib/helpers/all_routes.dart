@@ -7,13 +7,19 @@ import 'package:kashirons_flutter/feature/brobrain_gift_list/presentation/brobra
 import 'package:kashirons_flutter/feature/brobrain_gift_list/presentation/gift_details_screen.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/presentation/create_spark_and_self_screen.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/presentation/self_care_reminder.dart';
+import 'package:kashirons_flutter/feature/notification_settings/presentation/settings_notification_screen.dart';
 import 'package:kashirons_flutter/feature/onboarding/presentation/onboarding_screen.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_delivery_address_send_flower_Card.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_flower_card.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/send_flower_&_card_screen.dart';
+import 'package:kashirons_flutter/feature/settings/presentation/change_password_screen.dart';
+import 'package:kashirons_flutter/feature/settings/presentation/delete_account_screen.dart';
+import 'package:kashirons_flutter/feature/settings/presentation/edit_profile_screen.dart';
 import 'package:kashirons_flutter/feature/settings/presentation/favorite_gifts_screen.dart';
 import 'package:kashirons_flutter/feature/settings/presentation/order_details_screen.dart';
 import 'package:kashirons_flutter/feature/settings/presentation/order_history.dart';
+import 'package:kashirons_flutter/feature/settings/presentation/privecy_policy_screen.dart';
+import 'package:kashirons_flutter/feature/settings/presentation/terms_condition_screen.dart';
 import 'package:kashirons_flutter/feature/settings/presentation/upcomming_spark_screen.dart';
 import 'package:kashirons_flutter/feature/spark/presentation/spark_details_screen.dart';
 import 'package:kashirons_flutter/feature/spark/presentation/vip_spark_details_screen.dart';
@@ -78,6 +84,12 @@ final class Routes {
   static const String orderDetailsScreen = "/orderDetailsScreen";
   static const String createSparkAndSelfScreen = "/createSparkAndSelfScreen";
   static const String selfCareReminderScreen = "/selfCareReminderScreen";
+  static const String editProfileScreen = "/editProfileScreen";
+  static const String changePasswordScreen = "/changePasswordScreen";
+  static const String settingsNotificationScreen = "/settingsNotificationScreen";
+  static const String termsAndConditionScreen = "/termsAndConditionScreen";
+  static const String privacyPolicyScreen = "/privacyPolicyScreen";
+  static const String deleteAccountScreen = "/deleteAccountScreen";
 
 
 
@@ -108,28 +120,59 @@ final class RouteGenerator {
             : CupertinoPageRoute(builder: (context) => SignUpScreen());
 
       case Routes.selfCareReminderScreen:
+
         return Platform.isAndroid
             ? _FadedTransitionRoute(
             widget: SelfCareReminderScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => SelfCareReminderScreen());
 
       case Routes.signupOtpScreen:
+        final Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: SignupOtpScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => SignupOtpScreen());
+            widget: SignupOtpScreen(email: args["email"],isForgetScreen: args["isForgetScreen"],), settings: settings)
+            : CupertinoPageRoute(builder: (context) => SignupOtpScreen(email: args["email"],isForgetScreen: args["isForgetScreen"],),);
+
+      case Routes.privacyPolicyScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: PrivacyPolicyScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => PrivacyPolicyScreen());
+
+      case Routes.editProfileScreen:
+
+        final Map args = settings.arguments as Map;
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: EditProfileScreen(data:args["data"] ,), settings: settings)
+            : CupertinoPageRoute(builder: (context) => EditProfileScreen(data:args["data"] ));
+
+      case Routes.deleteAccountScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: DeleteAccountScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => DeleteAccountScreen());
 
         case Routes.addVipProfilePartScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
             widget: AddVipProfilePartScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => AddVipProfilePartScreen());
-
-      case Routes.setPasswordScreen:
+        case Routes.settingsNotificationScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: SetPasswordScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => SetPasswordScreen());
+            widget: SettingsNotificationScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => SettingsNotificationScreen());
+
+      case Routes.setPasswordScreen:
+        final Map args = settings.arguments as Map;
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: SetPasswordScreen(setToken: args["setToken"],email: args["email"], isForget: args["isForget"],),
+            settings: settings)
+            : CupertinoPageRoute(
+            builder: (context) => SetPasswordScreen(setToken: args["setToken"],email: args["email"], isForget: args["isForget"]));
+
 
       case Routes.vipDetailsScreen:
         return Platform.isAndroid
@@ -148,6 +191,18 @@ final class RouteGenerator {
             ? _FadedTransitionRoute(
             widget: ForgotPasswordScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => ForgotPasswordScreen());
+
+      case Routes.changePasswordScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: ChangePasswordScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => ChangePasswordScreen());
+
+      case Routes.termsAndConditionScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+            widget: TermsAndConditionScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => TermsAndConditionScreen());
 
       case Routes.createSparkAndSelfScreen:
         return Platform.isAndroid
