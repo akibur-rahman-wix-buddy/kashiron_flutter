@@ -6,9 +6,12 @@ import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
+import 'package:kashirons_flutter/feature/create_spark_and_self/data/get_all_vip_api/rx.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/widget/vip_dropdown_list.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
+
+import '../../../networks/api_acess.dart';
 
 class CreateSparkAndSelfScreen extends StatefulWidget {
   const CreateSparkAndSelfScreen({Key? key}) : super(key: key);
@@ -26,11 +29,21 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
   String? _selectedOption;
   final GlobalKey _textFieldKey = GlobalKey();
 
+
+
   TextEditingController dateController = TextEditingController();
   DateTime? selectedDate;
 
   TextEditingController timeController = TextEditingController();
   TimeOfDay? selectedTime;
+
+
+  @override
+  void initState() {
+    getAllVipRx.getAllPeopleData();
+    super.initState();
+  }
+
 
   ///>>>>>>>>>>>>>>>>>>> here is the time picker >>>>>>>>>>>>>>>>>>>>>>
   Future<void> _selectTime() async {
@@ -238,7 +251,7 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                               borderColor: Colors.transparent,
                               height: 120.h,
                               hintText:
-                              "Write any extra details, instructions, or context for this sparks…",
+                              "Enter spark name (e.g., Call Mom about doctor’s visit",
                               controller: sparkTitleController,
                               maxLength: 500,
                             ),

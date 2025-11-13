@@ -466,7 +466,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
       'firstName': firstNameController.text,
       'relationship': selectedRelationship ?? 'Not selected',
       'relationshipId': selectedRelationshipId ?? 'Not selected', // NEW: Include ID
-      'anniversary': anniversaryController.text.isNotEmpty ? anniversaryController.text : 'Not set',
+      'anniversary': anniversaryController.text.isNotEmpty ? anniversaryController.text : '',
       'birthday': birthdayController.text.isNotEmpty ? birthdayController.text : 'Not set',
       'specialNote': specialNoteController.text.isNotEmpty ? specialNoteController.text : 'No special notes',
       'locationEnabled': isOn,

@@ -90,7 +90,7 @@ final class CreateVipProfileApi {
         "zip_code": zipCode,
         "phone": phone,
         "interests[]": interests,
-        "anniversary_date": anniversaryDate,
+        anniversaryDate.isEmpty ? '':  "anniversary_date": anniversaryDate,
       });
 
       // Add avatar file if exists

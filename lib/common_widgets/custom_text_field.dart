@@ -20,7 +20,6 @@ class CustomTextField extends StatefulWidget {
   final TextAlign? textAlign;
   final double? height;
   final GestureTapCallback? onTap;
-  final bool read;
   final dynamic radius;
   final dynamic maxLength;
   final VoidCallback? onRightTap;
@@ -47,7 +46,6 @@ class CustomTextField extends StatefulWidget {
     this.textSize,
     this.textAlign = TextAlign.start,
     this.height = 52.0,
-    this.read = false,
     this.onTap,
     this.onRightTap,
     this.inputType,
@@ -55,7 +53,7 @@ class CustomTextField extends StatefulWidget {
     this.maxLength,
     this.contentPadding,
     this.hintTextSyle,
-    this.readOnly,
+    this.readOnly ,
     this.rightIconWidget,
     this.maxLines,
   }) : super(key: key);
@@ -85,7 +83,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.inputType,
       controller: widget.controller,
       onChanged: widget.onChanged,
-      readOnly: widget.read,
+      readOnly: widget.readOnly ??false,
       obscureText: widget.isPassword && widget.obscureText,
       validator: widget.validator,
       style: TextStyle(

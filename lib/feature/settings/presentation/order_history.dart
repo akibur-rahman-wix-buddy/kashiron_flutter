@@ -23,8 +23,8 @@ class OrderHistoryScreen extends StatefulWidget {
 
 class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
 
-List<String> category = [ "All","Delivered","Pending"];
-int selectedCategoryIndex = 0;
+  List<String> category = [ "All","Delivered","Pending"];
+  int selectedCategoryIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -110,25 +110,25 @@ int selectedCategoryIndex = 0;
                   ),
                   UIHelper.verticalSpace(8.h),
 
-               Expanded(
-                 child: ListView.builder(
-                   itemCount: 10,
-                   shrinkWrap: true,
-                   primary: false,
-                   itemBuilder: (context,index) {
-                     return OrderHistoryCard(
-                       onTap: (){
-                         NavigationService.navigateTo(Routes.orderDetailsScreen);
-                       },
-                       price: "205",
-                       orderDateTime: "15 July 2025, 10:00 AM",
-                       orderId: "#BOK 782 085",
-                       status:"Pending",
-                       productName: "Smart Watch",
-                     );
-                   }
-                 ),
-               )
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: 10,
+                        shrinkWrap: true,
+                        primary: false,
+                        itemBuilder: (context,index) {
+                          return OrderHistoryCard(
+                            onTap: (){
+                              NavigationService.navigateTo(Routes.orderDetailsScreen);
+                            },
+                            price: "205",
+                            orderDateTime: "15 July 2025, 10:00 AM",
+                            orderId: "#BOK 782 085",
+                            status:"Pending",
+                            productName: "Smart Watch",
+                          );
+                        }
+                    ),
+                  )
                 ],
               ),
             ),

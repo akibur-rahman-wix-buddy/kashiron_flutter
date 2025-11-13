@@ -140,10 +140,12 @@ final class RouteGenerator {
             : CupertinoPageRoute(builder: (context) => PrivacyPolicyScreen());
 
       case Routes.editProfileScreen:
+
+        final Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: EditProfileScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => EditProfileScreen());
+            widget: EditProfileScreen(data:args["data"] ,), settings: settings)
+            : CupertinoPageRoute(builder: (context) => EditProfileScreen(data:args["data"] ));
 
       case Routes.deleteAccountScreen:
         return Platform.isAndroid

@@ -7,10 +7,12 @@ import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
+import 'package:kashirons_flutter/feature/settings/data/model/user_infi_data_model.dart';
 import 'package:kashirons_flutter/feature/settings/widget/logout_dialouge_box.dart';
 import 'package:kashirons_flutter/feature/settings/widget/setting_item_card.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
+import 'package:kashirons_flutter/helpers/toast.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
@@ -24,6 +26,41 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   bool isLoading = false;
+  GetUserProfileModelData? userProfileData;
+  String errorMessage = '';
+
+  @override
+  void initState() {
+    loadUserProfile();
+    super.initState();
+  }
+
+  Future<void> loadUserProfile() async {
+    setState(() {
+      isLoading = true;
+      errorMessage = '';
+    });
+
+    try {
+      final profileData = await getUserProfileRx.getProfileApiData();
+
+      setState(() {
+        userProfileData = profileData;
+        isLoading = false;
+      });
+
+      if (profileData == null) {
+        setState(() {
+          errorMessage = 'Failed to load user profile';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        errorMessage = 'Error: $e';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +112,13 @@ class _SettingScreenState extends State<SettingScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "name",
+                                              userProfileData?.data?.user?.name.toString()??"",
                                               style: TextFontStyle
                                                   .textStyle20InterW500
                                                   .copyWith(fontSize: 18),
                                             ),
                                             UIHelper.verticalSpace(8.h),
-                                            Text("jahidulislam3454@gmail.com",
+                                            Text(userProfileData?.data?.user?.email.toString()??"",
                                                 style: TextFontStyle
                                                     .textStyle10InterW400),
                                           ],
@@ -151,8 +188,10 @@ class _SettingScreenState extends State<SettingScreen> {
 
                         SettingsItemCard(
                           onTap: () {
-                            NavigationService.navigateTo(
-                                Routes.editProfileScreen);
+                            NavigationService.navigateToWithArgs(
+                                Routes.editProfileScreen,{
+                                  "data":userProfileData
+                            });
                           },
                           icon: AppIcons.profile,
                           title: "Edit Profile",

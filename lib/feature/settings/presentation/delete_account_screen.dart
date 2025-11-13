@@ -38,7 +38,9 @@ class DeleteAccountScreen extends StatelessWidget {
               UIHelper.verticalSpace(60),
               customButton(
                   name: "Yes, Delete My Account",
-                  onCallBack: () {},
+                  onCallBack: () {
+                    NavigationService.goBack;
+                  },
                   borderColor: Colors.transparent,
                   context: context),
               UIHelper.verticalSpace(24),
