@@ -78,6 +78,8 @@ final class CreateVipProfileApi {
     XFile? avatar,
   }) async {
     try {
+
+      print(">>>>>>>>>>>> anniversary date  ${anniversaryDate.toString()}");
       // Create FormData for multipart request
       FormData formData = FormData.fromMap({
         "relation_id": relationId,
@@ -90,7 +92,7 @@ final class CreateVipProfileApi {
         "zip_code": zipCode,
         "phone": phone,
         "interests[]": interests,
-        anniversaryDate.isEmpty ? '':  "anniversary_date": anniversaryDate,
+        anniversaryDate.isEmpty||anniversaryDate.toString() ==""|| anniversaryDate.toString()=="Not set" ? "":  "anniversary_date": anniversaryDate,
       });
 
       // Add avatar file if exists
@@ -109,7 +111,6 @@ final class CreateVipProfileApi {
 
       if (response.statusCode == 200) {
         final data = json.decode(json.encode(response.data));
-        ToastUtil.showShortToast('Register Successfully');
         return data;
       } else {
         throw DataSource.DEFAULT.getFailure();

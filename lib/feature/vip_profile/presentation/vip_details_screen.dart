@@ -147,7 +147,7 @@ class _VipDetailsScreenState extends State<VipDetailsScreen> {
                               spacing: 167,
                               children: [
                                 SizedBox(
-                                  width: 310,
+                                  width: 305,
                                   child: Text(
                                       textAlign: TextAlign.justify,
                                       'Jahidul Islam is cheerful and loves celebrating birthdays with family. Passionate about teaching and books, she also enjoys gardening. Flowers or a personalized book always make her smile on special occasions.',

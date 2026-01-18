@@ -55,6 +55,10 @@ final class CreateVipProfileRx extends RxResponseInt<Map<String, dynamic>> {
 
   @override
   handleSuccessWithReturn(Map<String, dynamic> data) {
+
+
+    ToastUtil.showLongToast(data['message']);
+
     dataFetcher.sink.add(data);
 
     return data;

@@ -312,109 +312,111 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
             key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20.h),
-                GestureDetector(
-                  onTap: () {
-                    NavigationService.goBack;
-                  },
-                  child: Icon(Icons.arrow_back_outlined, size: 24, color: AppColor.cEDEDED),
-                ),
-                SizedBox(height: 24.h),
-                Text(
-                  "Setup Password",
-                  style: TextFontStyle.textStyle16InterW400.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.cEDEDED
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20.h),
+                  GestureDetector(
+                    onTap: () {
+                      NavigationService.goBack;
+                    },
+                    child: Icon(Icons.arrow_back_outlined, size: 24, color: AppColor.cEDEDED),
                   ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  "Secure your account for future logins",
-                  textAlign: TextAlign.start,
-                  style: TextFontStyle.textStyle16InterW400.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xffa9a9a9)
+                  SizedBox(height: 24.h),
+                  Text(
+                    "Setup Password",
+                    style: TextFontStyle.textStyle16InterW400.copyWith(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.cEDEDED
+                    ),
                   ),
-                ),
-                SizedBox(height: 12.h),
-                _buildPasswordStrengthIndicator(),
-
-                SizedBox(height: 24.h),
-
-                CustomTextField(
-                  height: 52,
-                  isPassword: true,
-                  controller: passController,
-                  obscureText: passObscure,
-                  leftIcon: AppIcons.fieldLock,
-                  toggleVisibility: () {
-                    setState(() {
-                      passObscure = !passObscure;
-                    });
-                  },
-                  hintText: "Password",
-                  validator: _passwordValidator,
-                  onChanged: (value) {
-                    setState(() {}); // Rebuild to update strength indicator
-                  },
-                ),
-
-                SizedBox(height: 16.h),
-                CustomTextField(
-                  height: 52,
-                  leftIcon: AppIcons.fieldLock,
-                  obscureText: confirmObscure,
-                  controller: confirmController,
-                  toggleVisibility: () {
-                    setState(() {
-                      confirmObscure = !confirmObscure;
-                    });
-                  },
-                  isPassword: true,
-                  hintText: "Confirm Password",
-                  validator: _confirmPasswordValidator,
-                ),
-                SizedBox(height: 32.h),
-                CustomElevatedButton(
-                  text: isLoading ? "Setting Password..." : "Continue",
-                  onPressed: (){
-                    isLoading ? null : _submitForm();
-                  },
-                ),
-
-                // Password requirements
-                Container(
-                  margin: EdgeInsets.only(top: 16.h),
-                  padding: EdgeInsets.all(12.w),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(8),
+                  SizedBox(height: 4.h),
+                  Text(
+                    "Secure your account for future logins",
+                    textAlign: TextAlign.start,
+                    style: TextFontStyle.textStyle16InterW400.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xffa9a9a9)
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Password must contain:",
-                        style: TextStyle(
-                          color: AppColor.cEDEDED,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w600,
+                  SizedBox(height: 12.h),
+                  _buildPasswordStrengthIndicator(),
+              
+                  SizedBox(height: 24.h),
+              
+                  CustomTextField(
+                    height: 52,
+                    isPassword: true,
+                    controller: passController,
+                    obscureText: passObscure,
+                    leftIcon: AppIcons.fieldLock,
+                    toggleVisibility: () {
+                      setState(() {
+                        passObscure = !passObscure;
+                      });
+                    },
+                    hintText: "Password",
+                    validator: _passwordValidator,
+                    onChanged: (value) {
+                      setState(() {}); // Rebuild to update strength indicator
+                    },
+                  ),
+              
+                  SizedBox(height: 16.h),
+                  CustomTextField(
+                    height: 52,
+                    leftIcon: AppIcons.fieldLock,
+                    obscureText: confirmObscure,
+                    controller: confirmController,
+                    toggleVisibility: () {
+                      setState(() {
+                        confirmObscure = !confirmObscure;
+                      });
+                    },
+                    isPassword: true,
+                    hintText: "Confirm Password",
+                    validator: _confirmPasswordValidator,
+                  ),
+                  SizedBox(height: 32.h),
+                  CustomElevatedButton(
+                    text: isLoading ? "Setting Password..." : "Continue",
+                    onPressed: (){
+                      isLoading ? null : _submitForm();
+                    },
+                  ),
+              
+                  // Password requirements
+                  Container(
+                    margin: EdgeInsets.only(top: 16.h),
+                    padding: EdgeInsets.all(12.w),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Password must contain:",
+                          style: TextStyle(
+                            color: AppColor.cEDEDED,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 4.h),
-                      _buildRequirement("At least 8 characters", passController.text.length >= 8),
-                      _buildRequirement("One uppercase letter", RegExp(r'[A-Z]').hasMatch(passController.text)),
-                      _buildRequirement("One lowercase letter", RegExp(r'[a-z]').hasMatch(passController.text)),
-                      _buildRequirement("One number", RegExp(r'\d').hasMatch(passController.text)),
-                    ],
+                        SizedBox(height: 4.h),
+                        _buildRequirement("At least 8 characters", passController.text.length >= 8),
+                        _buildRequirement("One uppercase letter", RegExp(r'[A-Z]').hasMatch(passController.text)),
+                        _buildRequirement("One lowercase letter", RegExp(r'[a-z]').hasMatch(passController.text)),
+                        _buildRequirement("One number", RegExp(r'\d').hasMatch(passController.text)),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
