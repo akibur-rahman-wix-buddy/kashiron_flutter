@@ -164,7 +164,7 @@ class _SettingsNotificationScreenState extends State<SettingsNotificationScreen>
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SvgPicture.asset(AppIcons.calendar3),
+                                  SvgPicture.asset(AppIcons.calendar),
                                   UIHelper.horizontalSpace(8.w),
                                   Expanded(
                                     child: Column(

@@ -11,10 +11,14 @@ import '../../../assets_helperfdg/app_fonts.dart';
 
 
 
-class UpcomingSparks extends StatelessWidget {
-  const UpcomingSparks({
+class UpcomingSparksWidget extends StatelessWidget {
+  const UpcomingSparksWidget({
     super.key,
   });
+
+
+  // final dynamic positions;
+  // final dynamic day;
 
   @override
   Widget build(BuildContext context) {

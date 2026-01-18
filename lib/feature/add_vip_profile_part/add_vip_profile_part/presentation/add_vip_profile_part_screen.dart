@@ -508,8 +508,6 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
       anniversaryDate: anniversaryController.text.isNotEmpty ? anniversaryController.text : 'Not set',
     );
 
-    // Show success message
-    ToastUtil.showLongToast("VIP profile created successfully");
 
     // Navigate back
     // NavigationService.goBack;
@@ -544,7 +542,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
         title: Row(
           children: [
             const Spacer(),
-            Text('Add VIP Profile',
+            Text(' Add VIP Profile',
                 style: TextFontStyle.textStyle14InterW500
                     .copyWith(fontSize: 18.sp)),
             const Spacer(),

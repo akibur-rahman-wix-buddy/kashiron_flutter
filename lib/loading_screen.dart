@@ -34,13 +34,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
     print("First Time: $isFirstTime, Logged In: $isLoggedIn");
 
     if (isFirstTime== true) {
-      // First time user - show onboarding
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => OnboardingScreen()),
       );
     } else if (isLoggedIn) {
-      // User is logged in - go to main app
       String token = appData.read(kKeyAccessToken) ?? '';
       DioSingleton.instance.update(token);
 
@@ -49,13 +47,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
         MaterialPageRoute(builder: (context) => CustomBottomNavBar()),
       );
     } else {
-      // User is not first time and not logged in - go to login
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
       );
-      // Or use NavigationService if preferred:
-      // NavigationService.navigateToReplacement(Routes.loginScreen);
     }
 
     setState(() {
@@ -65,13 +60,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Show welcome screen while loading
     if (_isLoading) {
       return const WelcomeScreen();
     }
 
-    // This part will rarely be used as navigation happens in loadInitialData
-    // But it's kept as a fallback
     bool isFirstTime = appData.read(kKeyIsFirstTime) ?? true;
     bool isLoggedIn = appData.read(kKeyIsLoggedIn) ?? false;
 

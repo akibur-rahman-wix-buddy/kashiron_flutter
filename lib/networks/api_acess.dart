@@ -14,6 +14,8 @@ import 'package:kashirons_flutter/feature/auth/data/rx_sign_in/rx.dart';
 import 'package:kashirons_flutter/feature/auth/data/verify_otp/rx.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/data/get_all_vip_api/rx.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/model/get_all_vip_data_model.dart';
+import 'package:kashirons_flutter/feature/home_screen/data/home_data_rx/%20rx.dart';
+import 'package:kashirons_flutter/feature/home_screen/model/home_api_data_model.dart';
 import 'package:kashirons_flutter/feature/settings/data/change_password_api/rx.dart';
 import 'package:kashirons_flutter/feature/settings/data/get_user_profile_data_api/rx.dart';
 import 'package:kashirons_flutter/feature/settings/data/model/user_infi_data_model.dart';
@@ -89,6 +91,12 @@ ChangePasswordRx changePasswordRx = ChangePasswordRx(
 GetVipRelationshipRx getVipRelationshipRx = GetVipRelationshipRx(
   empty: RelationDataModel(),
   dataFetcher: BehaviorSubject<RelationDataModel>(),
+);
+
+
+HomeApiDataRx homeApiDataRx = HomeApiDataRx(
+  empty: HomeApiDataModel(),
+  dataFetcher: BehaviorSubject<HomeApiDataModel>(),
 );
 
 

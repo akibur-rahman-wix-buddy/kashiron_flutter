@@ -157,180 +157,182 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 30.h),
-              GestureDetector(
-                onTap: () {
-                  NavigationService.goBack();
-                },
-                child: Icon(
-                  Icons.arrow_back_outlined,
-                  size: 24,
-                  color: AppColor.cEDEDED,
-                ),
-              ),
-              SizedBox(height: 24.h),
-
-              Text(
-                "OTP Verification",
-                style: TextFontStyle.textStyle8InterW700.copyWith(
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.cEDEDED,
-                ),
-              ),
-              SizedBox(height: 4.h),
-              Text(
-                "To ensure the safety and reliability of our community, please enter the 4-digit OTP sent to ${widget.email.toString()}",
-                style: TextFontStyle.textStyle8InterW700.copyWith(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xffa9a9a9),
-                ),
-              ),
-              SizedBox(height: 24.h),
-
-              // OTP Field with Error Handling
-              Column(
-                children: [
-                  OtpTextField(
-                    // contentPadding: EdgeInsets.all(25),
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                    enabled: true,
-                    numberOfFields: _requiredOtpLength,
-                    fieldWidth: 45.92.w,
-                    fieldHeight: 45.92.h,
-                    borderRadius: BorderRadius.circular(7.38.r),
-                    showFieldAsBox: true,
-                    filled: true,
-                    fillColor: _hasOtpError ? Colors.red.withOpacity(0.1) : Color(0xff373B4C),
-                    borderWidth: 1.0.w,
-                    enabledBorderColor: _hasOtpError ? Colors.red : Color(0xff373B4C),
-                    borderColor: _hasOtpError ? Colors.red : Color(0xff373B4C),
-                    focusedBorderColor: _hasOtpError ? Colors.red : Color(0xffA4161A),
-                    textStyle: TextFontStyle.textStyle8InterW700.copyWith(
-                      color: AppColor.cFFFFFF,
-                      fontSize: 22,
-                    ),
-                    onCodeChanged: _onOtpChanged,
-                    onSubmit: _onOtpCompleted,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 30.h),
+                GestureDetector(
+                  onTap: () {
+                    NavigationService.goBack;
+                  },
+                  child: Icon(
+                    Icons.arrow_back_outlined,
+                    size: 24,
+                    color: AppColor.cEDEDED,
                   ),
-
-                  // Error message
-                  if (_hasOtpError)
-                    Padding(
-                      padding: EdgeInsets.only(top: 8.h),
-                      child: Row(
+                ),
+                SizedBox(height: 24.h),
+            
+                Text(
+                  "OTP Verification",
+                  style: TextFontStyle.textStyle8InterW700.copyWith(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.w500,
+                    color: AppColor.cEDEDED,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  "To ensure the safety and reliability of our community, please enter the 4-digit OTP sent to ${widget.email.toString()}",
+                  style: TextFontStyle.textStyle8InterW700.copyWith(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xffa9a9a9),
+                  ),
+                ),
+                SizedBox(height: 24.h),
+            
+                // OTP Field with Error Handling
+                Column(
+                  children: [
+                    OtpTextField(
+                      contentPadding: EdgeInsets.all(0),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            alignment: Alignment.topCenter,
+                      enabled: true,
+                      numberOfFields: _requiredOtpLength,
+                      fieldWidth: 45.92.w,
+                      fieldHeight: 45.92.h,
+                      borderRadius: BorderRadius.circular(7.38.r),
+                      showFieldAsBox: true,
+                      filled: true,
+                      fillColor: _hasOtpError ? Colors.red.withOpacity(0.1) : Color(0xff373B4C),
+                      borderWidth: 1.0.w,
+                      enabledBorderColor: _hasOtpError ? Colors.red : Color(0xff373B4C),
+                      borderColor: _hasOtpError ? Colors.red : Color(0xff373B4C),
+                      focusedBorderColor: _hasOtpError ? Colors.red : Color(0xffA4161A),
+                      textStyle: TextFontStyle.textStyle8InterW700.copyWith(
+                        color: AppColor.cFFFFFF,
+                        fontSize: 22,
+                      ),
+                      onCodeChanged: _onOtpChanged,
+                      onSubmit: _onOtpCompleted,
+                    ),
+            
+                    // Error message
+                    if (_hasOtpError)
+                      Padding(
+                        padding: EdgeInsets.only(top: 8.h),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.error_outline,
+                              color: Colors.red,
+                              size: 16.sp,
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              'OTP is required',
+                              style: TextFontStyle.textStyle8InterW700.copyWith(
+                                color: Colors.red,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+            
+                SizedBox(height: 18.h),
+            
+                // Resend Code Section
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: _canResend ? _resendCode : null,
+                          child: Text(
+                            isReSendLoading ?"Resending Code ...":'Resend Code',
+                            style: TextFontStyle.textStyle8InterW700.copyWith(
+                              color: _canResend ? Color(0xffA4161A) : Colors.grey,
+                              fontSize: 14.sp,
+                              decoration: _canResend ? TextDecoration.underline : TextDecoration.none,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 5.w),
+                        if (!_canResend)
+                          Text(
+                            'In $_start second${_start != 1 ? 's' : ''}',
+                            style: TextFontStyle.textStyle8InterW700.copyWith(
+                              color: Colors.white70,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+            
+                SizedBox(height: 32.h),
+            
+                // Verify Button
+                CustomElevatedButton(
+            
+                  text: "Verify",
+                  onPressed: _verifyOtp,
+                  isLoading: isLoading,
+                ),
+            
+                // OTP Info
+                SizedBox(height: 16.h),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(12.w),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         children: [
                           Icon(
-                            Icons.error_outline,
-                            color: Colors.red,
+                            Icons.info_outline,
+                            color: Colors.blue,
                             size: 16.sp,
                           ),
-                          SizedBox(width: 4.w),
+                          SizedBox(width: 8.w),
                           Text(
-                            'OTP is required',
+                            'OTP Information',
                             style: TextFontStyle.textStyle8InterW700.copyWith(
-                              color: Colors.red,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
+                              color: AppColor.cEDEDED,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
                       ),
-                    ),
-                ],
-              ),
-
-              SizedBox(height: 18.h),
-
-              // Resend Code Section
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: _canResend ? _resendCode : null,
-                        child: Text(
-                          isReSendLoading ?"Resending Code ...":'Resend Code',
-                          style: TextFontStyle.textStyle8InterW700.copyWith(
-                            color: _canResend ? Color(0xffA4161A) : Colors.grey,
-                            fontSize: 14.sp,
-                            decoration: _canResend ? TextDecoration.underline : TextDecoration.none,
-                          ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        '• Enter the 4-digit OTP sent to your email\n• OTP will expire after 50 seconds\n• Make sure to enter all 4 digits',
+                        style: TextFontStyle.textStyle8InterW700.copyWith(
+                          color: Colors.grey,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
-                      SizedBox(width: 5.w),
-                      if (!_canResend)
-                        Text(
-                          'In $_start second${_start != 1 ? 's' : ''}',
-                          style: TextFontStyle.textStyle8InterW700.copyWith(
-                            color: Colors.white70,
-                            fontSize: 14.sp,
-                          ),
-                        ),
                     ],
                   ),
-                ],
-              ),
-
-              SizedBox(height: 32.h),
-
-              // Verify Button
-              CustomElevatedButton(
-
-                text: "Verify",
-                onPressed: _verifyOtp,
-                isLoading: isLoading,
-              ),
-
-              // OTP Info
-              SizedBox(height: 16.h),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(12.w),
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8.r),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.info_outline,
-                          color: Colors.blue,
-                          size: 16.sp,
-                        ),
-                        SizedBox(width: 8.w),
-                        Text(
-                          'OTP Information',
-                          style: TextFontStyle.textStyle8InterW700.copyWith(
-                            color: AppColor.cEDEDED,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      '• Enter the 4-digit OTP sent to your email\n• OTP will expire after 50 seconds\n• Make sure to enter all 4 digits',
-                      style: TextFontStyle.textStyle8InterW700.copyWith(
-                        color: Colors.grey,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -34,8 +34,6 @@ import '../feature/auth/presentation/sign_up_screen.dart';
 import '../feature/auth/presentation/signup_otp_screen.dart';
 import '../feature/bottom_nav_bar.dart';
 
-
-
 final class Routes {
   static final Routes _routes = Routes._internal();
   Routes._internal();
@@ -51,31 +49,26 @@ final class Routes {
   static const String forgotPasswordScreen = '/forgotPasswordScreen';
   static const String resetPasswordScreen = '/resetPasswordScreen';
 
-
   // ################## all ##################
   static const String customBottomNavBar = '/customBottomNavBar';
-
 
   ///>>>>>>>>>>>>>>>>>>> spark section >>>>>>>>>>>>>>>>>>>>>>
 
   static const String sparkDetailsScreen = '/sparkDetailsScreen';
   static const String vipSparkDetailsScreen = '/vipSparkDetailsScreen';
 
-
   ///>>>>>>>>>>>>>>>>>>>>>>> send flower card section >>>>>>>>>>>>>
 
- static const String sendFlowerCardScreen = "/sendFlowerCardScreen";
- static const String chooseDeliveryAddressSendFlowerCard = "/chooseDeliveryAddressSendFlowerCard";
- static const String chooseSendFlowerCard = "/chooseSendFlowerCard";
- static const String productDetailScreen = "/productDetailScreen";
- static const String vipDetailsScreen = "/vipDetailsScreen";
- static const String createSparkScreen = "/createSparkScreen";
- static const String addVipProfilePartScreen = "/addVipProfilePartScreen";
+  static const String sendFlowerCardScreen = "/sendFlowerCardScreen";
+  static const String chooseDeliveryAddressSendFlowerCard =
+      "/chooseDeliveryAddressSendFlowerCard";
+  static const String chooseSendFlowerCard = "/chooseSendFlowerCard";
+  static const String productDetailScreen = "/productDetailScreen";
+  static const String vipDetailsScreen = "/vipDetailsScreen";
+  static const String createSparkScreen = "/createSparkScreen";
+  static const String addVipProfilePartScreen = "/addVipProfilePartScreen";
 
-
- ///>>>>>>>>>>>>>>>>>>>>>>>> settings section >>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
+  ///>>>>>>>>>>>>>>>>>>>>>>>> settings section >>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   static const String upcommingSparkScreen = "/upcommingSparkScreen";
   static const String brobrainGiftListScreen = "/brobrainGiftListScreen";
@@ -86,13 +79,11 @@ final class Routes {
   static const String selfCareReminderScreen = "/selfCareReminderScreen";
   static const String editProfileScreen = "/editProfileScreen";
   static const String changePasswordScreen = "/changePasswordScreen";
-  static const String settingsNotificationScreen = "/settingsNotificationScreen";
+  static const String settingsNotificationScreen =
+      "/settingsNotificationScreen";
   static const String termsAndConditionScreen = "/termsAndConditionScreen";
   static const String privacyPolicyScreen = "/privacyPolicyScreen";
   static const String deleteAccountScreen = "/deleteAccountScreen";
-
-
-
 }
 
 final class RouteGenerator {
@@ -101,10 +92,7 @@ final class RouteGenerator {
   static RouteGenerator get instance => _routeGenerator;
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
-
     switch (settings.name) {
-
-
       /// ========================== Auth ==================== ///
 
       case Routes.onboardingScreen:
@@ -115,206 +103,219 @@ final class RouteGenerator {
 
       case Routes.signUpScreen:
         return Platform.isAndroid
-            ? _FadedTransitionRoute(
-            widget: SignUpScreen(), settings: settings)
+            ? _FadedTransitionRoute(widget: SignUpScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => SignUpScreen());
 
       case Routes.selfCareReminderScreen:
-
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: SelfCareReminderScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => SelfCareReminderScreen());
+                widget: SelfCareReminderScreen(), settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => SelfCareReminderScreen());
 
       case Routes.signupOtpScreen:
         final Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: SignupOtpScreen(email: args["email"],isForgetScreen: args["isForgetScreen"],), settings: settings)
-            : CupertinoPageRoute(builder: (context) => SignupOtpScreen(email: args["email"],isForgetScreen: args["isForgetScreen"],),);
+                widget: SignupOtpScreen(
+                  email: args["email"],
+                  isForgetScreen: args["isForgetScreen"],
+                ),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => SignupOtpScreen(
+                  email: args["email"],
+                  isForgetScreen: args["isForgetScreen"],
+                ),
+              );
 
       case Routes.privacyPolicyScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: PrivacyPolicyScreen(), settings: settings)
+                widget: PrivacyPolicyScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => PrivacyPolicyScreen());
 
       case Routes.editProfileScreen:
-
         final Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: EditProfileScreen(data:args["data"] ,), settings: settings)
-            : CupertinoPageRoute(builder: (context) => EditProfileScreen(data:args["data"] ));
+                widget: EditProfileScreen(
+                  data: args["data"],
+                ),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => EditProfileScreen(data: args["data"]));
 
       case Routes.deleteAccountScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: DeleteAccountScreen(), settings: settings)
+                widget: DeleteAccountScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => DeleteAccountScreen());
 
-        case Routes.addVipProfilePartScreen:
+      case Routes.addVipProfilePartScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: AddVipProfilePartScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => AddVipProfilePartScreen());
-        case Routes.settingsNotificationScreen:
+                widget: AddVipProfilePartScreen(), settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => AddVipProfilePartScreen());
+      case Routes.settingsNotificationScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: SettingsNotificationScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => SettingsNotificationScreen());
+                widget: SettingsNotificationScreen(), settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => SettingsNotificationScreen());
 
       case Routes.setPasswordScreen:
         final Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: SetPasswordScreen(setToken: args["setToken"],email: args["email"], isForget: args["isForget"],),
-            settings: settings)
+                widget: SetPasswordScreen(
+                  setToken: args["setToken"],
+                  email: args["email"],
+                  isForget: args["isForget"],
+                ),
+                settings: settings)
             : CupertinoPageRoute(
-            builder: (context) => SetPasswordScreen(setToken: args["setToken"],email: args["email"], isForget: args["isForget"]));
-
+                builder: (context) => SetPasswordScreen(
+                    setToken: args["setToken"],
+                    email: args["email"],
+                    isForget: args["isForget"]));
 
       case Routes.vipDetailsScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: VipDetailsScreen(), settings: settings)
+                widget: VipDetailsScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => VipDetailsScreen());
 
       case Routes.loginScreen:
         return Platform.isAndroid
-            ? _FadedTransitionRoute(
-            widget: LoginScreen(), settings: settings)
+            ? _FadedTransitionRoute(widget: LoginScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => LoginScreen());
 
       case Routes.forgotPasswordScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: ForgotPasswordScreen(), settings: settings)
+                widget: ForgotPasswordScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => ForgotPasswordScreen());
 
       case Routes.changePasswordScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: ChangePasswordScreen(), settings: settings)
+                widget: ChangePasswordScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => ChangePasswordScreen());
 
       case Routes.termsAndConditionScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: TermsAndConditionScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => TermsAndConditionScreen());
+                widget: TermsAndConditionScreen(), settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => TermsAndConditionScreen());
 
       case Routes.createSparkAndSelfScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: CreateSparkAndSelfScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => CreateSparkAndSelfScreen());
+                widget: CreateSparkAndSelfScreen(), settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => CreateSparkAndSelfScreen());
 
       case Routes.createSparkScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: CreateSparkScreen(), settings: settings)
+                widget: CreateSparkScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => CreateSparkScreen());
 
       case Routes.forgotOtpScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: ForgotOtpScreen(), settings: settings)
+                widget: ForgotOtpScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => ForgotOtpScreen());
 
-        case Routes.resetPasswordScreen:
+      case Routes.resetPasswordScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: ResetPasswordScreen(), settings: settings)
+                widget: ResetPasswordScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => ResetPasswordScreen());
 
-        case Routes.upcommingSparkScreen:
+      case Routes.upcommingSparkScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: UpcommingSparkScreen(), settings: settings)
+                widget: UpcommingSparkScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => UpcommingSparkScreen());
 
-        case Routes.brobrainGiftListScreen:
+      case Routes.brobrainGiftListScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: BrobrainGiftListScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => BrobrainGiftListScreen());
+                widget: BrobrainGiftListScreen(), settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => BrobrainGiftListScreen());
 
-        case Routes.favoriteGiftsScreen:
+      case Routes.favoriteGiftsScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: FavoriteGiftsScreen(), settings: settings)
+                widget: FavoriteGiftsScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => FavoriteGiftsScreen());
 
-        case Routes.orderHistoryScreen:
+      case Routes.orderHistoryScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: OrderHistoryScreen(), settings: settings)
+                widget: OrderHistoryScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => OrderHistoryScreen());
 
-        case Routes.orderDetailsScreen:
+      case Routes.orderDetailsScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: OrderDetailsScreen(), settings: settings)
+                widget: OrderDetailsScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => OrderDetailsScreen());
 
-
-
-/// ================================= All ================================== ///
+      /// ================================= All ================================== ///
 
       case Routes.customBottomNavBar:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: CustomBottomNavBar(), settings: settings)
+                widget: CustomBottomNavBar(), settings: settings)
             : CupertinoPageRoute(builder: (context) => CustomBottomNavBar());
 
-/// ================================= spark section ================================== ///
+      /// ================================= spark section ================================== ///
 
       case Routes.sparkDetailsScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: SparkDetailsScreen(), settings: settings)
+                widget: SparkDetailsScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => SparkDetailsScreen());
 
-
-        case Routes.vipSparkDetailsScreen:
+      case Routes.vipSparkDetailsScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: VipSparkDetailsScreen(), settings: settings)
+                widget: VipSparkDetailsScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => VipSparkDetailsScreen());
 
-
-    ///>>>>>>>>>>>>>>>>>>>>>>> send flower card section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+      ///>>>>>>>>>>>>>>>>>>>>>>> send flower card section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
       case Routes.sendFlowerCardScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: SendFlowerCardScreen(), settings: settings)
+                widget: SendFlowerCardScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => SendFlowerCardScreen());
 
-
-        case Routes.chooseDeliveryAddressSendFlowerCard:
+      case Routes.chooseDeliveryAddressSendFlowerCard:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: ChooseDeliveryAddressSendFlowerCard(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => ChooseDeliveryAddressSendFlowerCard());
+                widget: ChooseDeliveryAddressSendFlowerCard(),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => ChooseDeliveryAddressSendFlowerCard());
 
-
-        case Routes.chooseSendFlowerCard:
+      case Routes.chooseSendFlowerCard:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: ChooseSendFlowerCard(), settings: settings)
+                widget: ChooseSendFlowerCard(), settings: settings)
             : CupertinoPageRoute(builder: (context) => ChooseSendFlowerCard());
 
-        case Routes.productDetailScreen:
+      case Routes.productDetailScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-            widget: ProductDetailScreen(), settings: settings)
+                widget: ProductDetailScreen(), settings: settings)
             : CupertinoPageRoute(builder: (context) => ProductDetailScreen());
-
-
-
 
       default:
         return null;
