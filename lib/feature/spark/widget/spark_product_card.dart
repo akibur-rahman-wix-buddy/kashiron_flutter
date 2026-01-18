@@ -29,8 +29,6 @@ class SparkProductCard extends StatefulWidget {
 class _SparkProductCardState extends State<SparkProductCard> {
   bool isFavorite = false;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,7 +48,6 @@ class _SparkProductCardState extends State<SparkProductCard> {
                 placeholder: AppImages.placeholderImageItem,
                 height: 120.h,
                 width: double.infinity,
-                borderRadius: 8,
               ),
 
               // Favorite icon
@@ -58,9 +55,9 @@ class _SparkProductCardState extends State<SparkProductCard> {
                 top: 10,
                 right: 10,
                 child: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
-                      isFavorite =!isFavorite;
+                      isFavorite = !isFavorite;
                     });
                   },
                   child: Container(
@@ -82,7 +79,6 @@ class _SparkProductCardState extends State<SparkProductCard> {
               ),
             ],
           ),
-
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -120,7 +116,8 @@ class _SparkProductCardState extends State<SparkProductCard> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(AppIcons.gift, height: 14.h, width: 14.w),
+                          SvgPicture.asset(AppIcons.gift,
+                              height: 14.h, width: 14.w),
                           UIHelper.horizontalSpace(4.w),
                           Text(
                             "Buy Gift",
@@ -143,9 +140,3 @@ class _SparkProductCardState extends State<SparkProductCard> {
     );
   }
 }
-
-
-
-
-
-

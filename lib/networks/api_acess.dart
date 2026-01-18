@@ -1,4 +1,3 @@
-
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/data/create_vip_profile_data/rx.dart';
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/data/get_vip_category_api/rx.dart';
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/data/get_vip_relationship_api/rx.dart';
@@ -21,6 +20,8 @@ import 'package:kashirons_flutter/feature/settings/data/get_user_profile_data_ap
 import 'package:kashirons_flutter/feature/settings/data/model/user_infi_data_model.dart';
 import 'package:kashirons_flutter/feature/settings/data/rx_logout/rx.dart';
 import 'package:kashirons_flutter/feature/settings/data/update_profile_api/rx.dart';
+import 'package:kashirons_flutter/feature/vip_profile/data/get_vip_profile_list/rx.dart';
+import 'package:kashirons_flutter/feature/vip_profile/model/vip_profile_list_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 SignInApiRx signInApiRxObj = SignInApiRx(
@@ -58,14 +59,10 @@ EmailForgetRx emailForgetRx = EmailForgetRx(
   dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
 );
 
-
 CreateVipProfileRx createVipProfileRx = CreateVipProfileRx(
   empty: <String, dynamic>{},
   dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
 );
-
-
-
 
 // OtpForgetRx otpForgetRx = OtpForgetRx(
 //   empty: <String, dynamic>{},
@@ -87,18 +84,15 @@ ChangePasswordRx changePasswordRx = ChangePasswordRx(
   dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
 );
 
-
 GetVipRelationshipRx getVipRelationshipRx = GetVipRelationshipRx(
   empty: RelationDataModel(),
   dataFetcher: BehaviorSubject<RelationDataModel>(),
 );
 
-
 HomeApiDataRx homeApiDataRx = HomeApiDataRx(
   empty: HomeApiDataModel(),
   dataFetcher: BehaviorSubject<HomeApiDataModel>(),
 );
-
 
 GetVipCategoryRx getVipCategoryRx = GetVipCategoryRx(
   empty: VipCategoryDataModel(),
@@ -108,9 +102,12 @@ GetUserProfileRx getUserProfileRx = GetUserProfileRx(
   empty: GetUserProfileModelData(),
   dataFetcher: BehaviorSubject<GetUserProfileModelData>(),
 );
-
-
+GetVipProfileListApiRx getVipProfileListApiRx = GetVipProfileListApiRx(
+  empty: VipProfileListModel(),
+  dataFetcher: BehaviorSubject<VipProfileListModel>(),
+);
 
 GetAllVipRx getAllVipRx = GetAllVipRx(
   empty: GetAllVipModelData(),
-  dataFetcher: BehaviorSubject<GetAllVipModelData>(),);
+  dataFetcher: BehaviorSubject<GetAllVipModelData>(),
+);

@@ -7,7 +7,7 @@ class ShimmerImage extends StatelessWidget {
   final String placeholder;
   final double height;
   final double width;
-  final double borderRadius;
+  final BorderRadiusGeometry? borderRadius;
 
   const ShimmerImage({
     super.key,
@@ -15,13 +15,13 @@ class ShimmerImage extends StatelessWidget {
     required this.placeholder,
     required this.height,
     required this.width,
-    this.borderRadius = 8,
+    this.borderRadius,
   });
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius),
+      borderRadius: borderRadius ?? BorderRadius.circular(8),
       child: CachedNetworkImage(
         imageUrl: imageUrl,
         height: height,

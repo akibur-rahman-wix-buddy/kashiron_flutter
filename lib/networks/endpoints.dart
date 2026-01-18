@@ -1,8 +1,8 @@
- // ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names
 
 const String url = "https://admin.brobrainapp.com";
-const String personImageUrl = "https://thumbs.dreamstime.com/b/portrait-adorable-cheerful-teenage-girl-wonderful-brown-hair-lot-freckles-cheerful-teenager-girl-freckles-264911980.jpg";
-
+const String personImageUrl =
+    "https://thumbs.dreamstime.com/b/portrait-adorable-cheerful-teenage-girl-wonderful-brown-hair-lot-freckles-cheerful-teenager-girl-freckles-264911980.jpg";
 
 final class NetworkConstants {
   NetworkConstants._();
@@ -37,25 +37,21 @@ final class Endpoints {
   static String forgetPasswordChangeApiLink() => "/api//set-password";
   static String logout() => "/api/logout";
 
-
-
   ///>>>>>>>>>>>>>>>>>>>>>>>>>>> vip section >>>>>>>>>>>>>>>>>>>>>>>>.
 
- static String getVipRelationshipList () => "/api/relation/list";
- static String getVipInterestList () => "/api/interest/list";
- static String getVipRelationList () => "/api/relation/list";
- static String createVip () => "/api/vip/create";
+  static String getVipRelationshipList() => "/api/relation/list";
+  static String getVipInterestList() => "/api/interest/list";
+  static String getVipRelationList() => "/api/relation/list";
+  static String createVip() => "/api/vip/create";
+  static String getVipProfileList() => "/api//vip/list";
 
+  ///>>>>>>>>>>>>>>>>>>>>>>>>> Home section >>>>>>>>>>>>>>>>>>>>>>>>
 
- ///>>>>>>>>>>>>>>>>>>>>>>>>> Home section >>>>>>>>>>>>>>>>>>>>>>>>
+  static String homeDataApiLink() => "/api/home_data";
 
-  static String homeDataApiLink () => "/api/home_data";
+  ///>>>>>>>>>>>>>>>>>>>>>>>>> profile section >>>>>>>>>>>>>>>>>>>>>>>>
 
- ///>>>>>>>>>>>>>>>>>>>>>>>>> profile section >>>>>>>>>>>>>>>>>>>>>>>>
-
-static String getUserProfileApiLink ()=> "/api/me";
-static String updateProfile ()=> "/api/profile/update";
-static String changePasswordApiLink()=> "/api/password/change";
-
-
+  static String getUserProfileApiLink() => "/api/me";
+  static String updateProfile() => "/api/profile/update";
+  static String changePasswordApiLink() => "/api/password/change";
 }

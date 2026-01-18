@@ -4,11 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/widget/product_card.dart';
-import 'package:kashirons_flutter/feature/home_screen/model/home_api_data_model.dart' hide UpcomingSparks;
+import 'package:kashirons_flutter/feature/home_screen/model/home_api_data_model.dart'
+    hide UpcomingSparks;
 import 'package:kashirons_flutter/feature/home_screen/widget/add_new_bottomsheet.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 import '../widget/home_app_bar.dart';
 import '../widget/top_section_data.dart';
@@ -28,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     homeApiDataRx.homeApiDataApiInfo();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,100 +127,139 @@ class _HomeScreenState extends State<HomeScreen> {
                     final data = homeData.data!;
 
                     return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// ============================ top cards  ====================== ///
-                      TopSectionData(
-                        birthday:data.vipBirthdaysThisMonth.toString(),
-                        sparks: data.thisWeekSparks.toString(),
-                        vip: data.totalVipProfiles.toString(),
-                      ),
-                      UIHelper.verticalSpace(20.h),
-                      Text(
-                        "Upcoming Sparks",
-                        style: TextFontStyle.textStyle16InterW400.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.cFFFFFF),
-                      ),
-                      UIHelper.verticalSpace(8.h),
-
-                      /// ============================ Upcoming Sparks ====================== ///
-                      UpcomingSparksWidget(),
-                      UIHelper.verticalSpace(8.h),
-                      Text(
-                        "Upcoming Birthday",
-                        style: TextFontStyle.textStyle16InterW400.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.cFFFFFF),
-                      ),
-                      UIHelper.verticalSpace(12.h),
-
-                      /// ============================ Birthday ====================== ///
-                      UpcomingBirthday(),
-                      UIHelper.verticalSpace(8.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Popular Gift",
-                            style: TextFontStyle.textStyle16InterW400.copyWith(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: AppColor.cFFFFFF),
-                          ),
-                          Text(
-                            "View all",
-                            style: TextFontStyle.textStyle16InterW400.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xffEF233C)),
-                          ),
-                        ],
-                      ),
-                      UIHelper.verticalSpace(4.h),
-                      Text(
-                        "Browse the most popular gifts on\nBrobrain lists",
-                        style: TextFontStyle.textStyle16InterW400.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff787A83)),
-                      ),
-                      UIHelper.verticalSpace(16.h),
-
-                      /// ============================ Popular Gifts ====================== ///
-                      SizedBox(
-                        height: 250,
-                        child: ListView.builder(
-                          itemCount: 4,
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (context, index) {
-                            return ProductCard(
-                              imageUrl: personImageUrl,
-                              isLoveValue: false,
-                              price: 250.toString(),
-                              productName: "Smart Watch",
-                              isBuyGiftClick: () {},
-                            );
-                            ;
-                          },
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /// ============================ top cards  ====================== ///
+                        TopSectionData(
+                          birthday: data.vipBirthdaysThisMonth.toString(),
+                          sparks: data.thisWeekSparks.toString(),
+                          vip: data.totalVipProfiles.toString(),
                         ),
-                      ),
+                        UIHelper.verticalSpace(20.h),
+                        Text(
+                          "Upcoming Sparks",
+                          style: TextFontStyle.textStyle16InterW400.copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: AppColor.cFFFFFF),
+                        ),
+                        UIHelper.verticalSpace(8.h),
 
-                      //
-                      // PopularGifts(
-                      //   imageUrl: personImageUrl,
-                      //   isLove: true,
-                      //   value: 2600.toString(),
-                      //   title: "Smart Watch",
-                      // ),
-                      UIHelper.verticalSpace(30.h),
-                    ],
-                  );
-                }
-              ),
+                        /// ============================ Upcoming Sparks ====================== ///
+                        UpcomingSparksWidget(
+                          upcomingSparks: data.upcomingSparks ?? [],
+                        ),
+                        UIHelper.verticalSpace(8.h),
+                        Text(
+                          "Upcoming Birthday",
+                          style: TextFontStyle.textStyle16InterW400.copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: AppColor.cFFFFFF),
+                        ),
+                        UIHelper.verticalSpace(12.h),
+
+                        /// ============================ Birthday ====================== ///
+                        UpcomingBirthday(
+                          upcomingBirthday: data.upcomingBirthdays!.toList(),
+                        ),
+                        UIHelper.verticalSpace(8.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Popular Gift",
+                              style: TextFontStyle.textStyle16InterW400
+                                  .copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.cFFFFFF),
+                            ),
+                            Text(
+                              "View all",
+                              style: TextFontStyle.textStyle16InterW400
+                                  .copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xffEF233C)),
+                            ),
+                          ],
+                        ),
+                        UIHelper.verticalSpace(4.h),
+                        Text(
+                          "Browse the most popular gifts on\nBrobrain lists",
+                          style: TextFontStyle.textStyle16InterW400.copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff787A83)),
+                        ),
+                        UIHelper.verticalSpace(16.h),
+
+                        /// ============================ Popular Gifts ====================== ///
+                        SizedBox(
+                          height: 252,
+                          child: ListView.builder(
+                            itemCount: data.popularGifts!.length,
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (context, index) {
+                              dynamic a = 10;
+
+                              print(a);
+                              print(a + a);
+
+                              int b = a.toInt();
+                              // int b = int.parse(a);
+
+                              print(b + b);
+
+                              print(a.runtimeType);
+
+                              return ProductCard(
+                                imageUrl:
+                                    data.popularGifts?[index].mainImage ?? " ",
+                                isLoveValue:
+                                    data.popularGifts?[index].isFavourite ??
+                                        false,
+                                price: data.popularGifts?[index].price?.amount
+                                        .toString() ??
+                                    " ",
+                                productName:
+                                    data.popularGifts?[index].title ?? " ",
+                                isBuyGiftClick: () async {
+                                  final url = data.popularGifts![index].url;
+
+                                  if (url == null || url.isEmpty) return;
+
+                                  final uri = Uri.parse(url);
+
+                                  if (!await launchUrl(
+                                    uri,
+                                    mode: LaunchMode.externalApplication,
+                                  )) {
+                                    debugPrint('Could not launch $url');
+                                  }
+                                },
+                                currency: data.popularGifts?[index].price
+                                        ?.currencyCode
+                                        .toString() ??
+                                    " ",
+                              );
+                            },
+                          ),
+                        ),
+
+                        //
+                        // PopularGifts(
+                        //   imageUrl: personImageUrl,
+                        //   isLove: true,
+                        //   value: 2600.toString(),
+                        //   title: "Smart Watch",
+                        // ),
+                        UIHelper.verticalSpace(30.h),
+                      ],
+                    );
+                  }),
             ),
           ))
         ],
