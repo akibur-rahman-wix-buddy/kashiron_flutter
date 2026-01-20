@@ -1,4 +1,14 @@
+// To parse this JSON data, do
+//
+//     final vipProfileListModel = vipProfileListModelFromJson(jsonString);
+
 import 'dart:convert';
+
+VipProfileListModel vipProfileListModelFromJson(String str) =>
+    VipProfileListModel.fromJson(json.decode(str));
+
+String vipProfileListModelToJson(VipProfileListModel data) =>
+    json.encode(data.toJson());
 
 class VipProfileListModel {
   bool? success;
@@ -13,91 +23,68 @@ class VipProfileListModel {
     this.code,
   });
 
-  factory VipProfileListModel.fromRawJson(String str) =>
-      VipProfileListModel.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory VipProfileListModel.fromJson(Map<String, dynamic> json) =>
       VipProfileListModel(
         success: json["success"],
         message: json["message"],
-        data: json["data"] == null
-            ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         code: json["code"],
       );
 
   Map<String, dynamic> toJson() => {
         "success": success,
         "message": message,
-        "data": data == null
-            ? []
-            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
         "code": code,
       };
 }
 
 class Datum {
-  String? name;
-  List<Vip>? vips;
+  String name;
+  List<Vip> vips;
   int? id;
 
   Datum({
-    this.name,
-    this.vips,
+    required this.name,
+    required this.vips,
     this.id,
   });
 
-  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         name: json["name"],
-        vips: json["vips"] == null
-            ? []
-            : List<Vip>.from(json["vips"]!.map((x) => Vip.fromJson(x))),
+        vips: List<Vip>.from(json["vips"].map((x) => Vip.fromJson(x))),
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "vips": vips == null
-            ? []
-            : List<dynamic>.from(vips!.map((x) => x.toJson())),
+        "vips": List<dynamic>.from(vips.map((x) => x.toJson())),
         "id": id,
       };
 }
 
 class Vip {
-  int? id;
-  String? name;
-  String? avatar;
-  Relation? relation;
-  int? sparkCount;
+  int id;
+  String name;
+  String avatar;
+  Relation relation;
+  int sparkCount;
   DateTime? anniversaryDate;
 
   Vip({
-    this.id,
-    this.name,
-    this.avatar,
-    this.relation,
-    this.sparkCount,
-    this.anniversaryDate,
+    required this.id,
+    required this.name,
+    required this.avatar,
+    required this.relation,
+    required this.sparkCount,
+    required this.anniversaryDate,
   });
-
-  factory Vip.fromRawJson(String str) => Vip.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
 
   factory Vip.fromJson(Map<String, dynamic> json) => Vip(
         id: json["id"],
         name: json["name"],
         avatar: json["avatar"],
-        relation: json["relation"] == null
-            ? null
-            : Relation.fromJson(json["relation"]),
+        relation: Relation.fromJson(json["relation"]),
         sparkCount: json["spark_count"],
         anniversaryDate: json["anniversary_date"] == null
             ? null
@@ -108,25 +95,20 @@ class Vip {
         "id": id,
         "name": name,
         "avatar": avatar,
-        "relation": relation?.toJson(),
+        "relation": relation.toJson(),
         "spark_count": sparkCount,
         "anniversary_date": anniversaryDate?.toIso8601String(),
       };
 }
 
 class Relation {
-  int? id;
-  String? name;
+  int id;
+  String name;
 
   Relation({
-    this.id,
-    this.name,
+    required this.id,
+    required this.name,
   });
-
-  factory Relation.fromRawJson(String str) =>
-      Relation.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
 
   factory Relation.fromJson(Map<String, dynamic> json) => Relation(
         id: json["id"],

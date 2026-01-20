@@ -36,7 +36,9 @@ import '../feature/bottom_nav_bar.dart';
 
 final class Routes {
   static final Routes _routes = Routes._internal();
+
   Routes._internal();
+
   static Routes get instance => _routes;
 
   // ################## Auth User ##################
@@ -88,7 +90,9 @@ final class Routes {
 
 final class RouteGenerator {
   static final RouteGenerator _routeGenerator = RouteGenerator._internal();
+
   RouteGenerator._internal();
+
   static RouteGenerator get instance => _routeGenerator;
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
@@ -182,10 +186,18 @@ final class RouteGenerator {
                     isForget: args["isForget"]));
 
       case Routes.vipDetailsScreen:
+        final Map args = settings.arguments as Map;
+
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-                widget: VipDetailsScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => VipDetailsScreen());
+                widget: VipDetailsScreen(
+                  id: args["id"],
+                ),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => VipDetailsScreen(
+                      id: args["id"],
+                    ));
 
       case Routes.loginScreen:
         return Platform.isAndroid
@@ -219,10 +231,17 @@ final class RouteGenerator {
                 builder: (context) => CreateSparkAndSelfScreen());
 
       case Routes.createSparkScreen:
+        final Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-                widget: CreateSparkScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => CreateSparkScreen());
+                widget: CreateSparkScreen(
+                  id: args["id"],
+                ),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => CreateSparkScreen(
+                      id: args["id"],
+                    ));
 
       case Routes.forgotOtpScreen:
         return Platform.isAndroid

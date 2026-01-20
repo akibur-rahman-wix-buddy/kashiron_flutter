@@ -6,6 +6,7 @@ const String personImageUrl =
 
 final class NetworkConstants {
   NetworkConstants._();
+
   static const ACCEPT = "Accept";
   static const APP_KEY = "App-Key";
   static const ACCEPT_LANGUAGE = "Accept-Language";
@@ -18,32 +19,53 @@ final class NetworkConstants {
 
 final class PaymentGateway {
   PaymentGateway._();
+
   static String gateway(String orderId) => "";
 }
 
 final class Endpoints {
   Endpoints._();
+
   //===================== Auth Part ============================================
   static String signUp() => "/api/register";
+
   static String logInUrl() => "/api/login";
+
   static String otpSendApi() => "/api/resend-otp";
+
   static String otpVerification() => "/api/verify-otp-password";
+
   static String getHobbyApiLink() => "/api/hobby/get";
+
   static String postHobbyApiLink() => "/api/hobby/store";
+
   static String postResendApiLink() => "/api/resend-otp";
+
   static String passwordUpdate() => "/api/password-update";
+
   static String otpForgetApiLink() => "verify-otp-password";
+
   static String forgetPassword() => "/api/forgot-password";
+
   static String forgetPasswordChangeApiLink() => "/api//set-password";
+
   static String logout() => "/api/logout";
 
   ///>>>>>>>>>>>>>>>>>>>>>>>>>>> vip section >>>>>>>>>>>>>>>>>>>>>>>>.
 
   static String getVipRelationshipList() => "/api/relation/list";
+
   static String getVipInterestList() => "/api/interest/list";
+
   static String getVipRelationList() => "/api/relation/list";
+
   static String createVip() => "/api/vip/create";
+
   static String getVipProfileList() => "/api//vip/list";
+
+  static String getVipProfile({required dynamic id}) => "/vip/$id";
+
+  static String sparkCreate() => "/spark/create";
 
   ///>>>>>>>>>>>>>>>>>>>>>>>>> Home section >>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -52,6 +74,8 @@ final class Endpoints {
   ///>>>>>>>>>>>>>>>>>>>>>>>>> profile section >>>>>>>>>>>>>>>>>>>>>>>>
 
   static String getUserProfileApiLink() => "/api/me";
+
   static String updateProfile() => "/api/profile/update";
+
   static String changePasswordApiLink() => "/api/password/change";
 }

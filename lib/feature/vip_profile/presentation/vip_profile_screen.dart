@@ -30,7 +30,6 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     getVipProfileListApiRx.getVipProfileList();
@@ -43,9 +42,9 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
     final allCategory = getVipProfileListApiRx.dataFetcher.value.data
         ?.firstWhere((item) => item.name == "All", orElse: null);
 
-    if (allCategory != null && allCategory.vips != null) {
+    if (allCategory != null) {
       setState(() {
-        vipListAll = allCategory.vips!;
+        vipListAll = allCategory.vips;
         if (query.isEmpty) {
           vipListFiltered = vipListAll;
         } else {
@@ -76,8 +75,6 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
             title: "VIP Profile",
             actionButton: Icon(Icons.add, color: Colors.white, size: 30),
           ),
-
-          // Wrap the content with Expanded
           StreamBuilder(
               stream: getVipProfileListApiRx.dataFetcher,
               builder: (context, snapshot) {
@@ -100,8 +97,8 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                   return const VipListShimmer();
                 }
 
-                final allDataLength =
-                    data.firstWhere((item) => item.name == "All").vips?.length;
+                late final allDataLength =
+                    data.firstWhere((item) => item.name == "All").vips.length;
 
                 final allDataCategory = data.firstWhere(
                     (item) => item.name == "All",
@@ -126,7 +123,6 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                           ),
                           UIHelper.verticalSpace(16.h),
 
-                          /// Search section
                           CustomTextField(
                             controller: searchTextController,
                             hintText: "Search VIP name…",
@@ -219,10 +215,8 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: selectedIndex == 0
                                 ? vipListFiltered.length
-                                : data[selectedIndex].vips?.length ??
-                                    0, // null-safe
+                                : data[selectedIndex].vips.length ?? 0,
                             itemBuilder: (context, index) {
-                              // Use filtered list if 'All' category is selected, else use normal list
                               final listData = selectedIndex == 0
                                   ? vipListFiltered
                                   : data[selectedIndex].vips ?? [];
@@ -233,10 +227,12 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                                 children: [
                                   vipProfileAddToSparkCard(
                                     onCardTap: () {
-                                      NavigationService.navigateTo(
-                                          Routes.vipDetailsScreen);
+                                      NavigationService.navigateToWithArgs(
+                                          Routes.vipDetailsScreen,
+                                          {"id": vip.id.toString()});
                                     },
-                                    type: vip.relation?.name ?? "", // null-safe
+                                    type: vip.relation?.name ?? "",
+                                    // null-safe
                                     name: vip.name ?? "",
                                     birthdayDate:
                                         vip.anniversaryDate?.toString() ?? "",

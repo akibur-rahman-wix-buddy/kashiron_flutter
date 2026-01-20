@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -13,17 +12,19 @@ import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
+import 'package:kashirons_flutter/networks/api_acess.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 
 class CreateSparkScreen extends StatefulWidget {
-  const CreateSparkScreen({Key? key}) : super(key: key);
+  final dynamic id;
+
+  const CreateSparkScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   State<CreateSparkScreen> createState() => _CreateSparkScreenState();
 }
 
 class _CreateSparkScreenState extends State<CreateSparkScreen> {
-
   TextEditingController sparkTitleTextController = TextEditingController();
   TextEditingController sparkDescriptionController = TextEditingController();
 
@@ -32,7 +33,8 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
 
   TextEditingController timeController = TextEditingController();
   TimeOfDay? selectedTime;
-///>>>>>>>>>>>>>>>>>>> here is the time picker >>>>>>>>>>>>>>>>>>>>>>
+
+  ///>>>>>>>>>>>>>>>>>>> here is the time picker >>>>>>>>>>>>>>>>>>>>>>
   Future<void> _selectTime() async {
     print("⏰ Time picker tapped!");
 
@@ -61,13 +63,17 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
     if (picked != null) {
       setState(() {
         selectedTime = picked;
-        timeController.text = "${picked.hourOfPeriod}:${picked.minute.toString().padLeft(2, '0')} ${picked.period.name.toUpperCase()}";
+
+        final formattedTime = "${picked.hour.toString().padLeft(2, '0')}:"
+            "${picked.minute.toString().padLeft(2, '0')}";
+
+        timeController.text = formattedTime;
       });
     }
   }
+
   ///>>>>>>>>>>>>>>>>>>> here is the date picker >>>>>>>>>>>>>>>>>>>>>>
   Future<void> _selectDate() async {
-
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate ?? DateTime.now(),
@@ -96,17 +102,25 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
       setState(() {
         selectedDate = picked;
         // Format the date as mm/dd/yyyy
-        dateController.text = "${picked.month.toString().padLeft(2, '0')}/${picked.day.toString().padLeft(2, '0')}/${picked.year}";
+        dateController.text =
+            "${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}";
       });
     }
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>here is the id : ${widget.id}");
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
       floatingActionButton: Container(
         padding: EdgeInsets.all(16.w),
         margin: EdgeInsets.symmetric(horizontal: 12.w),
@@ -118,7 +132,6 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             UIHelper.verticalSpace(16.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,24 +141,24 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                   backgroundColor: Color(0xFF373B4C),
                   width: 140.w,
                   text: "Cancel",
-
-
-                  onPressed: () {
-
-                  },
+                  onPressed: () {},
                 ),
                 CustomElevatedButton(
                   padding: EdgeInsets.all(0),
                   width: 140.w,
                   text: "Save",
-
-                  onPressed: () {
-
+                  onPressed: () async {
                     log(">>>>>>>>>>>>>>>>>>>> this is title${sparkTitleTextController.text} ");
                     log(">>>>>>>>>>>>>>>>>>>> this is description${sparkDescriptionController.text} ");
                     log(">>>>>>>>>>>>>>>>>>>> this is date${dateController.text} ");
                     log(">>>>>>>>>>>>>>>>>>>> this is time${timeController.text} ");
 
+                    bool success = await sparkCreateApiRx.sparkCreate(
+                        vip_id: widget.id.toString(),
+                        title: sparkTitleTextController.text,
+                        description: sparkDescriptionController.text,
+                        date: dateController.text,
+                        time: timeController.text);
                   },
                 ),
               ],
@@ -174,169 +187,198 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16),
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF373B4C),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFF373B4C),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                        ),child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              shimmerClipOvalWidget(
-                                height: 50.h,
-                                weight: 50.w,
-                                networkImageLink:personImageUrl ,
-                              ),
-                              UIHelper.horizontalSpace(8.w),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("name",style: TextFontStyle.textStyle20InterW500.copyWith(fontSize: 18),),
-
-                                  UIHelper.verticalSpace(8.h),
-
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                    decoration: ShapeDecoration(
-                                      color: const Color(0xFF373B4C),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                    ),
-                                    child: Text(
-                                        "brother",
-                                        style: TextFontStyle.textStyle10InterW400
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                          UIHelper.verticalSpace(8.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.calendar_month,color: Colors.white,),
+                                  shimmerClipOvalWidget(
+                                    height: 50.h,
+                                    weight: 50.w,
+                                    networkImageLink: personImageUrl,
+                                  ),
                                   UIHelper.horizontalSpace(8.w),
-                                  Text("Birthday: ${"10 august"}",style: TextFontStyle.textStyle10InterW400,)
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "name",
+                                        style: TextFontStyle
+                                            .textStyle20InterW500
+                                            .copyWith(fontSize: 18),
+                                      ),
+                                      UIHelper.verticalSpace(8.h),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 4),
+                                        decoration: ShapeDecoration(
+                                          color: const Color(0xFF373B4C),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        ),
+                                        child: Text("brother",
+                                            style: TextFontStyle
+                                                .textStyle10InterW400),
+                                      )
+                                    ],
+                                  )
                                 ],
                               ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                                decoration: ShapeDecoration(
-                                  color: const Color(0xFF2D3142),
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      width: 1,
-                                      color: const Color(0xFF373B4C),
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
+                              UIHelper.verticalSpace(8.h),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.calendar_month,
+                                        color: Colors.white,
+                                      ),
+                                      UIHelper.horizontalSpace(8.w),
+                                      Text(
+                                        "Birthday: ${"10 august"}",
+                                        style:
+                                            TextFontStyle.textStyle10InterW400,
+                                      )
+                                    ],
                                   ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  spacing: 6,
-                                  children: [
-                                    Text(
-                                        "10" ,
-                                        textAlign: TextAlign.center,
-                                        style: TextFontStyle.textStyle12InterW600.copyWith(color: Color(0xFFEF233C),)
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 7),
+                                    decoration: ShapeDecoration(
+                                      color: const Color(0xFF2D3142),
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                          width: 1,
+                                          color: const Color(0xFF373B4C),
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                     ),
-                                    Text(
-                                        'spark',
-                                        style: TextFontStyle.textStyle12InterW600
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      spacing: 6,
+                                      children: [
+                                        Text("10",
+                                            textAlign: TextAlign.center,
+                                            style: TextFontStyle
+                                                .textStyle12InterW600
+                                                .copyWith(
+                                              color: Color(0xFFEF233C),
+                                            )),
+                                        Text('spark',
+                                            style: TextFontStyle
+                                                .textStyle12InterW600),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              )
+                                  )
+                                ],
+                              ),
                             ],
                           ),
-                         ],
-                      ),
-                      ),
-                      UIHelper.verticalSpace(16.h),
-                      Text("Spark Title",style: TextFontStyle.textStyle16InterW700,),
-                      UIHelper.verticalSpace(16.h),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xff373b4c),
-                          borderRadius: BorderRadius.circular(12.r),
                         ),
-                        padding: EdgeInsets.all(16.w),
-                        child: CustomTextField(
-                          borderColor: Colors.transparent,
-                          height: 120.h,
-                          hintText:
-                          "Enter heads-up or spark name (e.g., Call Mom about doctor’s visit",
-                          controller: sparkTitleTextController,
-                          maxLength: 30,
+                        UIHelper.verticalSpace(16.h),
+                        Text(
+                          "Spark Title",
+                          style: TextFontStyle.textStyle16InterW700,
                         ),
-                      ),
-
-                      UIHelper.verticalSpace(16.h),
-                      Text("Date",style: TextFontStyle.textStyle16InterW700,),
-                      UIHelper.verticalSpace(16.h),
-                      InkWell(
-                        onTap: _selectDate,
-                        child: AbsorbPointer(
+                        UIHelper.verticalSpace(16.h),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xff373b4c),
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          padding: EdgeInsets.all(16.w),
                           child: CustomTextField(
-                            hintText: selectedDate != null
-                                ? "${selectedDate!.month.toString().padLeft(2, '0')}/${selectedDate!.day.toString().padLeft(2, '0')}/${selectedDate!.year}"
-                                : "mm/dd/yyyy",
-                            rightIcon: AppIcons.calendar,
-                             readOnly: true,
-                            controller: dateController,
+                            borderColor: Colors.transparent,
+                            height: 120.h,
+                            hintText:
+                                "Enter heads-up or spark name (e.g., Call Mom about doctor’s visit",
+                            controller: sparkTitleTextController,
+                            maxLength: 30,
                           ),
                         ),
-                      ),
-                      UIHelper.verticalSpace(16.h),
-                      Text("Time",style: TextFontStyle.textStyle16InterW700,),
-                      UIHelper.verticalSpace(16.h),
-                      InkWell(
-                        onTap: _selectTime,
-                        child: AbsorbPointer(
-                          child: CustomTextField(
-                            hintText: selectedTime != null
-                                ? "${selectedTime!.hourOfPeriod}:${selectedTime!.minute.toString().padLeft(2, '0')} ${selectedTime!.period.name.toUpperCase()}"
-                                : "hh:mm aa",
-                            rightIcon: AppIcons.clock,
-                            readOnly: true,
-                            controller: timeController,
+                        UIHelper.verticalSpace(16.h),
+                        Text(
+                          "Date",
+                          style: TextFontStyle.textStyle16InterW700,
+                        ),
+                        UIHelper.verticalSpace(16.h),
+                        InkWell(
+                          onTap: _selectDate,
+                          child: AbsorbPointer(
+                            child: CustomTextField(
+                              hintText: selectedDate != null
+                                  ? "${selectedDate!.month.toString().padLeft(2, '0')}/${selectedDate!.day.toString().padLeft(2, '0')}/${selectedDate!.year}"
+                                  : "mm/dd/yyyy",
+                              rightIcon: AppIcons.calendar,
+                              readOnly: true,
+                              controller: dateController,
+                            ),
                           ),
                         ),
-                      ),
-                      UIHelper.verticalSpace(16.h),
-                      Text("Sparks Notes / Description",style: TextFontStyle.textStyle16InterW700,),
-                      UIHelper.verticalSpace(16.h),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xff373b4c),
-                          borderRadius: BorderRadius.circular(12.r),
+                        UIHelper.verticalSpace(16.h),
+                        Text(
+                          "Time",
+                          style: TextFontStyle.textStyle16InterW700,
                         ),
-                        padding: EdgeInsets.all(16.w),
-                        child: CustomTextField(
-                          borderColor: Colors.transparent,
-                          height: 120.h,
-                          hintText:
-                          "Write any extra details, instructions, or context for this sparks…",
-                          controller: sparkDescriptionController,
-                          maxLength: 500,
+                        UIHelper.verticalSpace(16.h),
+                        InkWell(
+                          onTap: _selectTime,
+                          child: AbsorbPointer(
+                            child: CustomTextField(
+                              hintText: selectedTime != null
+                                  ? "${selectedTime!.hourOfPeriod}:${selectedTime!.minute.toString().padLeft(2, '0')} ${selectedTime!.period.name.toUpperCase()}"
+                                  : "hh:mm aa",
+                              rightIcon: AppIcons.clock,
+                              readOnly: true,
+                              controller: timeController,
+                            ),
+                          ),
                         ),
-                      ),
-
-                    ],
+                        UIHelper.verticalSpace(16.h),
+                        Text(
+                          "Sparks Notes / Description",
+                          style: TextFontStyle.textStyle16InterW700,
+                        ),
+                        UIHelper.verticalSpace(16.h),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xff373b4c),
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          padding: EdgeInsets.all(16.w),
+                          child: CustomTextField(
+                            borderColor: Colors.transparent,
+                            height: 120.h,
+                            hintText:
+                                "Write any extra details, instructions, or context for this sparks…",
+                            controller: sparkDescriptionController,
+                            maxLength: 500,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  UIHelper.verticalSpace(150.h), // Adjusted for floatingActionButton
+                  UIHelper.verticalSpace(150.h),
+                  // Adjusted for floatingActionButton
                 ],
               ),
             ),
@@ -345,6 +387,4 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
       ),
     );
   }
-
-
 }
