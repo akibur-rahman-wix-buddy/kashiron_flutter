@@ -6,6 +6,8 @@ import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
+import 'package:kashirons_flutter/feature/vip_profile/model/vip_profile_list_model.dart';
+import 'package:kashirons_flutter/feature/vip_profile/widget/vip_list_shimmer.dart';
 import 'package:kashirons_flutter/feature/vip_profile/widget/vip_profile_add_to_spark_card.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
@@ -21,12 +23,41 @@ class VipProfileScreen extends StatefulWidget {
 
 class _VipProfileScreenState extends State<VipProfileScreen> {
   TextEditingController searchTextController = TextEditingController();
+  int selectedIndex = 0;
+
+  List vipListAll = [];
+  List vipListFiltered = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     getVipProfileListApiRx.getVipProfileList();
+    searchTextController.addListener(() {
+      filterVipList(searchTextController.text);
+    });
+  }
+
+  void filterVipList(String query) {
+    final allCategory = getVipProfileListApiRx.dataFetcher.value.data
+        ?.firstWhere((item) => item.name == "All", orElse: null);
+
+    if (allCategory != null && allCategory.vips != null) {
+      setState(() {
+        vipListAll = allCategory.vips!;
+        if (query.isEmpty) {
+          vipListFiltered = vipListAll;
+        } else {
+          vipListFiltered = vipListAll
+              .where((vip) => vip.name
+                  .toString()
+                  .toLowerCase()
+                  .contains(query.toLowerCase()))
+              .toList();
+        }
+      });
+    }
   }
 
   @override
@@ -51,6 +82,35 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
               stream: getVipProfileListApiRx.dataFetcher,
               builder: (context, snapshot) {
                 final data = snapshot.data?.data ?? [];
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const VipListShimmer();
+                }
+
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Something went wrong',
+                      style: TextFontStyle.textStyle14InterW400c787A83
+                          .copyWith(color: Colors.redAccent),
+                    ),
+                  );
+                }
+
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return const VipListShimmer();
+                }
+
+                final allDataLength =
+                    data.firstWhere((item) => item.name == "All").vips?.length;
+
+                final allDataCategory = data.firstWhere(
+                    (item) => item.name == "All",
+                    orElse: () => Datum(name: "All", vips: []));
+
+                if (vipListAll.isEmpty) {
+                  vipListAll = allDataCategory.vips ?? [];
+                  vipListFiltered = vipListAll;
+                }
 
                 return Expanded(
                   child: Padding(
@@ -61,13 +121,14 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "You have 12 VIPs in your list",
+                            "You have ${allDataLength.toString()} VIPs in your list",
                             style: TextFontStyle.textStyle12InterW400,
                           ),
                           UIHelper.verticalSpace(16.h),
 
                           /// Search section
                           CustomTextField(
+                            controller: searchTextController,
                             hintText: "Search VIP name…",
                             leftIcon: AppIcons.search,
                           ),
@@ -93,17 +154,20 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                               primary: false,
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
-                              itemCount: 10,
+                              itemCount: data.length,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: EdgeInsets.all(5.h),
                                   child: ElevatedButton(
                                     onPressed: () {
+                                      setState(() {
+                                        selectedIndex = index;
+                                      });
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
-                                            content: Text(
-                                                "Selected Category ${index + 1}")),
+                                            content:
+                                                Text(data[index].name ?? " ")),
                                       );
                                     },
                                     style: ElevatedButton.styleFrom(
@@ -131,7 +195,7 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                                         ),
                                         SizedBox(width: 6.w),
                                         Text(
-                                          'Category ${index + 1}',
+                                          data[index].name ?? " ",
                                           style: TextFontStyle
                                               .textStyle12InterW400
                                               .copyWith(
@@ -150,15 +214,20 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                           UIHelper.verticalSpace(16.h),
 
                           ListView.builder(
-                            itemCount: data[0].vips!.length,
-                            shrinkWrap: true,
-                            physics:
-                                const NeverScrollableScrollPhysics(), // Add this
-                            primary: false,
                             padding: EdgeInsets.zero,
-
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: selectedIndex == 0
+                                ? vipListFiltered.length
+                                : data[selectedIndex].vips?.length ??
+                                    0, // null-safe
                             itemBuilder: (context, index) {
-                              final familyData = data[0].vips;
+                              // Use filtered list if 'All' category is selected, else use normal list
+                              final listData = selectedIndex == 0
+                                  ? vipListFiltered
+                                  : data[selectedIndex].vips ?? [];
+
+                              final vip = listData[index];
 
                               return Column(
                                 children: [
@@ -167,23 +236,17 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                                       NavigationService.navigateTo(
                                           Routes.vipDetailsScreen);
                                     },
-                                    type: familyData![index]
-                                        .relation!
-                                        .name
-                                        .toString(),
-                                    name: familyData[index].name.toString(),
-                                    birthdayDate: familyData[index]
-                                        .anniversaryDate
-                                        .toString(),
+                                    type: vip.relation?.name ?? "", // null-safe
+                                    name: vip.name ?? "",
+                                    birthdayDate:
+                                        vip.anniversaryDate?.toString() ?? "",
                                     onAddSparkTap: () {},
                                     sparkNumber:
-                                        familyData[index].sparkCount.toString(),
+                                        vip.sparkCount?.toString() ?? "0",
                                     buttonName: 'Add Heads-Up',
-                                    imageUrl:
-                                        familyData[index].avatar.toString(),
+                                    imageUrl: vip.avatar ?? "",
                                   ),
-                                  UIHelper.verticalSpace(
-                                      8.h), // Add spacing between cards
+                                  UIHelper.verticalSpace(8.h),
                                 ],
                               );
                             },

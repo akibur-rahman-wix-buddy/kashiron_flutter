@@ -39,14 +39,14 @@ class VipProfileListModel {
 }
 
 class Datum {
-  int? id;
   String? name;
   List<Vip>? vips;
+  int? id;
 
   Datum({
-    this.id,
     this.name,
     this.vips,
+    this.id,
   });
 
   factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
@@ -54,19 +54,19 @@ class Datum {
   String toRawJson() => json.encode(toJson());
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        id: json["id"],
         name: json["name"],
         vips: json["vips"] == null
             ? []
             : List<Vip>.from(json["vips"]!.map((x) => Vip.fromJson(x))),
+        id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
         "name": name,
         "vips": vips == null
             ? []
             : List<dynamic>.from(vips!.map((x) => x.toJson())),
+        "id": id,
       };
 }
 

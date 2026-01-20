@@ -203,18 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.zero,
                             itemBuilder: (context, index) {
-                              dynamic a = 10;
-
-                              print(a);
-                              print(a + a);
-
-                              int b = a.toInt();
-                              // int b = int.parse(a);
-
-                              print(b + b);
-
-                              print(a.runtimeType);
-
                               return ProductCard(
                                 imageUrl:
                                     data.popularGifts?[index].mainImage ?? " ",
