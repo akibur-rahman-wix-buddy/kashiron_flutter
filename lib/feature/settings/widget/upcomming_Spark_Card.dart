@@ -8,7 +8,15 @@ import 'package:kashirons_flutter/networks/endpoints.dart';
 
 class UpcommingSparkCard extends StatelessWidget {
   const UpcommingSparkCard({
-    super.key, required this.titleName, required this.relationship, required this.image, required this.day, required this.date, required this.description, required this.saveOnTap, required this.cancelOnTap,
+    super.key,
+    required this.titleName,
+    required this.relationship,
+    required this.image,
+    required this.day,
+    required this.date,
+    required this.description,
+    required this.saveOnTap,
+    required this.cancelOnTap,
   });
 
   final String titleName;
@@ -20,8 +28,6 @@ class UpcommingSparkCard extends StatelessWidget {
   final VoidCallback saveOnTap;
   final VoidCallback cancelOnTap;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,66 +37,79 @@ class UpcommingSparkCard extends StatelessWidget {
       decoration: ShapeDecoration(
         color: const Color(0xFF2D3142),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(titleName,style: TextFontStyle.textStyle20InterW500,),
-            Text(day,style: TextFontStyle.textStyle12InterW400.copyWith(color: Color(0xFF3AB415)),)
-
-          ],
-        ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                shimmerClipOvalWidget(
-
-                  height: 15,
-                  weight: 15,
-                  networkImageLink:personImageUrl,
-                ),
-                UIHelper.horizontalSpace(8.w),
-                Text(relationship,style: TextFontStyle.textStyle12InterW400.copyWith(color: Colors.white60),)
-
-              ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                titleName,
+                style: TextFontStyle.textStyle20InterW500,
+              ),
+              Text(
+                day,
+                style: TextFontStyle.textStyle12InterW400
+                    .copyWith(color: Color(0xFF3AB415)),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  shimmerClipOvalWidget(
+                    height: 15,
+                    weight: 15,
+                    networkImageLink: personImageUrl,
+                  ),
+                  UIHelper.horizontalSpace(8.w),
+                  Text(
+                    relationship,
+                    style: TextFontStyle.textStyle12InterW400
+                        .copyWith(color: Colors.white60),
+                  )
+                ],
+              ),
+              Text(
+                date,
+                style: TextFontStyle.textStyle12InterW400,
+              )
+            ],
+          ),
+          UIHelper.verticalSpace(8.h),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              description,
+              style: TextFontStyle.textStyle12InterW400,
             ),
-            Text(date,style: TextFontStyle.textStyle12InterW400,)
-          ],
-        ),
-        UIHelper.verticalSpace(8.h),
-        Text(description,style: TextFontStyle.textStyle12InterW400),
-        UIHelper.verticalSpace(16.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CustomElevatedButton(
-              padding: EdgeInsets.all(0),
-              backgroundColor: Color(0xFF373B4C),
-              width: 140.w,
-              height: 48.0,
-
-              text: "Cancel",
-
-
-              onPressed:
-              cancelOnTap,
-            ),
-            CustomElevatedButton(
-              padding: EdgeInsets.all(0),
-              width: 140.w,
-              text: "Save",
-              height: 48.0,
-              onPressed: saveOnTap,
-            ),
-          ],
-        ),
-      ],
-    ),
+          ),
+          UIHelper.verticalSpace(16.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomElevatedButton(
+                padding: EdgeInsets.all(0),
+                backgroundColor: Color(0xFF373B4C),
+                width: 140.w,
+                height: 48.0,
+                text: "Cancel",
+                onPressed: cancelOnTap,
+              ),
+              CustomElevatedButton(
+                padding: EdgeInsets.all(0),
+                width: 140.w,
+                text: "Save",
+                height: 48.0,
+                onPressed: saveOnTap,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

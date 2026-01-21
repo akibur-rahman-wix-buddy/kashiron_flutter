@@ -40,7 +40,7 @@ class UpcomingSparksWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        upcomingSparks[index].title ?? " ",
+                        upcomingSparks[index].title.toString(),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextFontStyle.textStyle16InterW400.copyWith(
@@ -50,7 +50,7 @@ class UpcomingSparksWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      upcomingSparks[index].daysLeft ?? " ",
+                      upcomingSparks[index].daysLeft.toString(),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextFontStyle.textStyle16InterW400.copyWith(
@@ -76,7 +76,7 @@ class UpcomingSparksWidget extends StatelessWidget {
                         ),
                         UIHelper.horizontalSpace(8.w),
                         Text(
-                          upcomingSparks[index].vipName ?? " ",
+                          upcomingSparks[index].vipName.toString(),
                           style: TextFontStyle.textStyle16InterW400.copyWith(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
@@ -85,7 +85,7 @@ class UpcomingSparksWidget extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      upcomingSparks[index].formattedDate ?? " ",
+                      upcomingSparks[index].formattedDate.toString() ?? " ",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextFontStyle.textStyle16InterW400.copyWith(
@@ -99,7 +99,7 @@ class UpcomingSparksWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    upcomingSparks[index].description ?? " ",
+                    upcomingSparks[index].description.toString() ?? " ",
                     style: TextFontStyle.textStyle16InterW400.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,

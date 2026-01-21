@@ -120,7 +120,7 @@ class _ProductCardState extends State<ProductCard> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
-                        "${widget.currency} - ${widget.price}",
+                        "${widget.currency.toString()} - ${widget.price}",
                         style: TextFontStyle.textStyle16InterW400.copyWith(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,

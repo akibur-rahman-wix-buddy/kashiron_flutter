@@ -199,23 +199,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 252,
                           child: ListView.builder(
-                            itemCount: data.popularGifts!.length,
+                            itemCount:
+                                data.popularGifts!.original?.data?.length,
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.zero,
                             itemBuilder: (context, index) {
                               return ProductCard(
-                                imageUrl:
-                                    data.popularGifts?[index].mainImage ?? " ",
-                                isLoveValue:
-                                    data.popularGifts?[index].isFavourite ??
-                                        false,
-                                price: data.popularGifts?[index].price?.amount
+                                imageUrl: data.popularGifts?.original
+                                        ?.data?[index].mainImage ??
+                                    " ",
+                                isLoveValue: data.popularGifts?.original
+                                        ?.data?[index].isFavourite ??
+                                    false,
+                                price: data.popularGifts?.original?.data?[index]
+                                        .price?.amount
                                         .toString() ??
                                     " ",
-                                productName:
-                                    data.popularGifts?[index].title ?? " ",
+                                productName: data.popularGifts?.original
+                                        ?.data?[index].title ??
+                                    " ",
                                 isBuyGiftClick: () async {
-                                  final url = data.popularGifts![index].url;
+                                  final url = data
+                                      .popularGifts?.original?.data?[index].url;
 
                                   if (url == null || url.isEmpty) return;
 
@@ -228,8 +233,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     debugPrint('Could not launch $url');
                                   }
                                 },
-                                currency: data.popularGifts?[index].price
-                                        ?.currencyCode
+                                currency: data.popularGifts?.original
+                                        ?.data?[index].price?.currencyCode
                                         .toString() ??
                                     " ",
                               );

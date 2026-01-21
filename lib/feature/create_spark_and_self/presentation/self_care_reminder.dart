@@ -8,13 +8,13 @@ import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
+import 'package:kashirons_flutter/networks/api_acess.dart';
 
 class SelfCareReminderScreen extends StatefulWidget {
   const SelfCareReminderScreen({Key? key}) : super(key: key);
 
   @override
-  State<SelfCareReminderScreen> createState() =>
-      _SelfCareReminderScreenState();
+  State<SelfCareReminderScreen> createState() => _SelfCareReminderScreenState();
 }
 
 class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
@@ -61,7 +61,7 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
       setState(() {
         selectedTime = picked;
         timeController.text =
-        "${picked.hourOfPeriod}:${picked.minute.toString().padLeft(2, '0')} ${picked.period.name.toUpperCase()}";
+            "${picked.hourOfPeriod}:${picked.minute.toString().padLeft(2, '0')} ${picked.period.name.toUpperCase()}";
       });
     }
   }
@@ -97,9 +97,15 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
         selectedDate = picked;
         // Format the date as mm/dd/yyyy
         dateController.text =
-        "${picked.month.toString().padLeft(2, '0')}/${picked.day.toString().padLeft(2, '0')}/${picked.year}";
+            "${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}";
       });
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -107,7 +113,7 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
       floatingActionButtonLocation:
-      FloatingActionButtonLocation.miniCenterFloat,
+          FloatingActionButtonLocation.miniCenterFloat,
       floatingActionButton: Container(
         padding: EdgeInsets.all(16.w),
         margin: EdgeInsets.symmetric(horizontal: 12.w),
@@ -141,6 +147,12 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
                     log(">>>>>>>>>>>>>>>>>>>> Date: ${dateController.text}");
                     log(">>>>>>>>>>>>>>>>>>>> Time: ${timeController.text}");
                     log(">>>>>>>>>>>>>>>>>>>> Gift Suggestion Needed: ${_selectedOption ?? 'Not selected'}");
+
+                    selfReminderApiRx.selfReminder(
+                        title: sparkTitleController.text,
+                        description: sparkDescriptionController.text,
+                        date: dateController.text,
+                        time: timeController.text);
                   },
                 ),
               ],
@@ -172,7 +184,6 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
                             UIHelper.verticalSpace(16.h),
                             Text(
                               "Reminder Title",
@@ -189,7 +200,7 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
                                 borderColor: Colors.transparent,
                                 height: 80.h,
                                 hintText:
-                                "Enter reminder title (e.g., Meditation session)",
+                                    "Enter reminder title (e.g., Meditation session)",
                                 controller: sparkTitleController,
                                 maxLength: 30,
                               ),

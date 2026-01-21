@@ -4,28 +4,26 @@ import 'package:kashirons_flutter/networks/dio/dio.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 import 'package:kashirons_flutter/networks/exception_handler/data_source.dart';
 
-final class SparkCreateApi {
-  static final SparkCreateApi _singleton = SparkCreateApi._internal();
+final class SelfReminderApi {
+  static final SelfReminderApi _singleton = SelfReminderApi._internal();
 
-  SparkCreateApi._internal();
+  SelfReminderApi._internal();
 
-  static SparkCreateApi get instance => _singleton;
+  static SelfReminderApi get instance => _singleton;
 
-  Future<Map<String, dynamic>> sparkCreateApi(
-      {required String vip_id,
-      required String title,
+  Future<Map<String, dynamic>> selfReminderApi(
+      {required String title,
       required String description,
       required String date,
       required String time}) async {
     try {
       Map<String, dynamic> data = {
-        "vip_id": vip_id,
         "title": title,
         "description": description,
         "date": date,
         "time": time,
       };
-      Response response = (await postHttp(Endpoints.sparkCreate(), data));
+      Response response = (await postHttp(Endpoints.selfReminder(), data));
 
       if (response.statusCode == 200) {
         final data = json.decode(json.encode(response.data));

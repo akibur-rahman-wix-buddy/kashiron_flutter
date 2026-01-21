@@ -10,13 +10,16 @@ import 'package:kashirons_flutter/feature/auth/data/reset_password/rx.dart';
 import 'package:kashirons_flutter/feature/auth/data/rx_resend_code_sent/rx.dart';
 import 'package:kashirons_flutter/feature/auth/data/rx_sign_in/rx.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/data/get_all_vip_api/rx.dart';
+import 'package:kashirons_flutter/feature/create_spark_and_self/data/self_care_reminder/rx.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/model/get_all_vip_data_model.dart';
 import 'package:kashirons_flutter/feature/home_screen/data/home_data_rx/%20rx.dart';
 import 'package:kashirons_flutter/feature/home_screen/model/home_api_data_model.dart';
 import 'package:kashirons_flutter/feature/settings/data/change_password_api/rx.dart';
 import 'package:kashirons_flutter/feature/settings/data/get_user_profile_data_api/rx.dart';
+import 'package:kashirons_flutter/feature/settings/data/model/upcomng_sparks.dart';
 import 'package:kashirons_flutter/feature/settings/data/model/user_infi_data_model.dart';
 import 'package:kashirons_flutter/feature/settings/data/rx_logout/rx.dart';
+import 'package:kashirons_flutter/feature/settings/data/upcoming_sparks/rx.dart';
 import 'package:kashirons_flutter/feature/settings/data/update_profile_api/rx.dart';
 import 'package:kashirons_flutter/feature/vip_profile/data/get_vip_profile/rx.dart';
 import 'package:kashirons_flutter/feature/vip_profile/data/get_vip_profile_list/rx.dart';
@@ -118,7 +121,17 @@ SparkCreateApiRx sparkCreateApiRx = SparkCreateApiRx(
   dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
 );
 
+SelfReminderApiRx selfReminderApiRx = SelfReminderApiRx(
+  empty: <String, dynamic>{},
+  dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
+);
+
 GetAllVipRx getAllVipRx = GetAllVipRx(
   empty: GetAllVipModelData(),
   dataFetcher: BehaviorSubject<GetAllVipModelData>(),
+);
+
+UpcomingSparksApiRx upcomingSparksApiRx = UpcomingSparksApiRx(
+  empty: UpcomingSparksModel(),
+  dataFetcher: BehaviorSubject<UpcomingSparksModel>(),
 );

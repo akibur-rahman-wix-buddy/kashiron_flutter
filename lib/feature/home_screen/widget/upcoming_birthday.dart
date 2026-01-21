@@ -44,7 +44,7 @@ class UpcomingBirthday extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            upcomingBirthday[index].name ?? " ",
+                            upcomingBirthday[index].name.toString(),
                             style: TextFontStyle.textStyle16InterW400.copyWith(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,

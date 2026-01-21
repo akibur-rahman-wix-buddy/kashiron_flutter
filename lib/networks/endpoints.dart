@@ -70,6 +70,7 @@ final class Endpoints {
   ///>>>>>>>>>>>>>>>>>>>>>>>>> Home section >>>>>>>>>>>>>>>>>>>>>>>>
 
   static String homeDataApiLink() => "/api/home_data";
+  static String selfReminder() => "/api/self-reminder";
 
   ///>>>>>>>>>>>>>>>>>>>>>>>>> profile section >>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -78,4 +79,5 @@ final class Endpoints {
   static String updateProfile() => "/api/profile/update";
 
   static String changePasswordApiLink() => "/api/password/change";
+  static String upcomingSparks() => "/api/upcoming/spark";
 }
