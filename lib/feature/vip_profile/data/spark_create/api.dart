@@ -27,7 +27,7 @@ final class SparkCreateApi {
       };
       Response response = (await postHttp(Endpoints.sparkCreate(), data));
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(json.encode(response.data));
         return data;
       } else {

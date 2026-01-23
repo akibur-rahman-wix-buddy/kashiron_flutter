@@ -7,6 +7,7 @@ import 'package:kashirons_flutter/feature/brobrain_gift_list/presentation/brobra
 import 'package:kashirons_flutter/feature/brobrain_gift_list/presentation/gift_details_screen.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/presentation/create_spark_and_self_screen.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/presentation/self_care_reminder.dart';
+import 'package:kashirons_flutter/feature/notification/presentation/notification_screen.dart';
 import 'package:kashirons_flutter/feature/notification_settings/presentation/settings_notification_screen.dart';
 import 'package:kashirons_flutter/feature/onboarding/presentation/onboarding_screen.dart';
 import 'package:kashirons_flutter/feature/send_flower_&_card_part/presentation/choose_delivery_address_send_flower_Card.dart';
@@ -53,6 +54,7 @@ final class Routes {
 
   // ################## all ##################
   static const String customBottomNavBar = '/customBottomNavBar';
+  static const String notificationScreen = '/notificationScreen';
 
   ///>>>>>>>>>>>>>>>>>>> spark section >>>>>>>>>>>>>>>>>>>>>>
 
@@ -303,10 +305,19 @@ final class RouteGenerator {
             : CupertinoPageRoute(builder: (context) => SparkDetailsScreen());
 
       case Routes.vipSparkDetailsScreen:
+        final Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-                widget: VipSparkDetailsScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => VipSparkDetailsScreen());
+                widget: VipSparkDetailsScreen(
+                  id: args["id"],
+                  vip_id: args["vip_id"],
+                ),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => VipSparkDetailsScreen(
+                      id: args["id"],
+                      vip_id: args["vip_id"],
+                    ));
 
       ///>>>>>>>>>>>>>>>>>>>>>>> send flower card section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -331,10 +342,24 @@ final class RouteGenerator {
             : CupertinoPageRoute(builder: (context) => ChooseSendFlowerCard());
 
       case Routes.productDetailScreen:
+        final Map args = settings.arguments as Map;
+
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-                widget: ProductDetailScreen(), settings: settings)
-            : CupertinoPageRoute(builder: (context) => ProductDetailScreen());
+                widget: ProductDetailScreen(
+                  id: args["id"],
+                ),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => ProductDetailScreen(
+                      id: args["id"],
+                    ));
+
+      case Routes.notificationScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+                widget: NotificationScreen(), settings: settings)
+            : CupertinoPageRoute(builder: (context) => NotificationScreen());
 
       default:
         return null;

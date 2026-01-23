@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -5,8 +7,9 @@ import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/widget/product_card.dart';
 import 'package:kashirons_flutter/feature/home_screen/model/home_api_data_model.dart'
-    hide UpcomingSparks;
+    hide UpcomingSparks, UpcomingBirthday;
 import 'package:kashirons_flutter/feature/home_screen/widget/add_new_bottomsheet.dart';
+import 'package:kashirons_flutter/feature/home_screen/widget/home_shimmer.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
@@ -29,6 +32,30 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     homeApiDataRx.homeApiDataApiInfo();
     super.initState();
+  }
+
+  void _onViewAllTap() {
+    // TODO: Add your navigation logic here
+    // For example:
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => PopularGiftsScreen()));
+
+    // Or show a snackbar/dialog for now
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('View all popular gifts'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+
+    // If you want to navigate to a new screen, uncomment and implement:
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => AllPopularGiftsScreen(
+    //       gifts: data.popularGifts?.original?.data ?? [],
+    //     ),
+    //   ),
+    // );
   }
 
   @override
@@ -79,26 +106,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, snapshot) {
                     // First check for connection state
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return SizedBox(
-                        height: 100.h,
-                        child: Center(
+                      return Center(
+                        child: SizedBox(
+                          height: 24.h,
+                          width: 24.w,
                           child: CircularProgressIndicator(
                             color: AppColor.cFFFFFF,
-                            strokeWidth: 2.w,
                           ),
                         ),
                       );
                     }
 
-                    // Check for errors
-                    if (snapshot.hasError) {
-                      return Text(
-                        "Error: ${snapshot.error}",
-                        style: TextStyle(color: AppColor.cFFFFFF),
-                      );
-                    }
-
-                    // Check if we have data
                     if (!snapshot.hasData) {
                       return Text(
                         "No data available",
@@ -108,7 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     final homeData = snapshot.data!;
 
-                    // Check if the API call was successful
                     if (homeData.success != true) {
                       return Text(
                         homeData.message ?? "API call failed",
@@ -116,7 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }
 
-                    // Check if data object exists
                     if (homeData.data == null) {
                       return Text(
                         "No data available",
@@ -147,7 +163,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         /// ============================ Upcoming Sparks ====================== ///
                         UpcomingSparksWidget(
-                          upcomingSparks: data.upcomingSparks ?? [],
+                          upcomingSparks:
+                              data.upcomingSparks?.original?.data ?? [],
                         ),
                         UIHelper.verticalSpace(8.h),
                         Text(
@@ -161,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         /// ============================ Birthday ====================== ///
                         UpcomingBirthday(
-                          upcomingBirthday: data.upcomingBirthdays!.toList(),
+                          upcomingBirthday: data.upcomingBirthdays!,
                         ),
                         UIHelper.verticalSpace(8.h),
                         Row(
@@ -175,13 +192,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontWeight: FontWeight.w500,
                                       color: AppColor.cFFFFFF),
                             ),
-                            Text(
-                              "View all",
-                              style: TextFontStyle.textStyle16InterW400
-                                  .copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xffEF233C)),
+                            GestureDetector(
+                              onTap: _onViewAllTap,
+                              child: Text(
+                                "View all",
+                                style: TextFontStyle.textStyle16InterW400
+                                    .copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xffEF233C)),
+                              ),
                             ),
                           ],
                         ),
@@ -205,6 +225,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: EdgeInsets.zero,
                             itemBuilder: (context, index) {
                               return ProductCard(
+                                id: data.popularGifts?.original?.data?[index].id
+                                    .toString(),
                                 imageUrl: data.popularGifts?.original
                                         ?.data?[index].mainImage ??
                                     " ",
@@ -233,22 +255,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     debugPrint('Could not launch $url');
                                   }
                                 },
-                                currency: data.popularGifts?.original
-                                        ?.data?[index].price?.currencyCode
-                                        .toString() ??
-                                    " ",
+                                // currency: data.popularGifts?.original
+                                //         ?.data?[index].price?.currencyCode
+                                //         .toString() ??
+                                //     " ",
                               );
                             },
                           ),
                         ),
 
-                        //
-                        // PopularGifts(
-                        //   imageUrl: personImageUrl,
-                        //   isLove: true,
-                        //   value: 2600.toString(),
-                        //   title: "Smart Watch",
-                        // ),
                         UIHelper.verticalSpace(30.h),
                       ],
                     );

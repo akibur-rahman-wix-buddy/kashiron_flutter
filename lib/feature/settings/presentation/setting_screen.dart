@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
-import 'package:kashirons_flutter/feature/settings/data/model/user_infi_data_model.dart';
+import 'package:kashirons_flutter/feature/settings/model/user_infi_data_model.dart';
 import 'package:kashirons_flutter/feature/settings/widget/logout_dialouge_box.dart';
 import 'package:kashirons_flutter/feature/settings/widget/setting_item_card.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
-import 'package:kashirons_flutter/helpers/toast.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
@@ -112,13 +109,19 @@ class _SettingScreenState extends State<SettingScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              userProfileData?.data?.user?.name.toString()??"",
+                                              userProfileData?.data?.user?.name
+                                                      .toString() ??
+                                                  "",
                                               style: TextFontStyle
                                                   .textStyle20InterW500
                                                   .copyWith(fontSize: 18),
                                             ),
                                             UIHelper.verticalSpace(8.h),
-                                            Text(userProfileData?.data?.user?.email.toString()??"",
+                                            Text(
+                                                userProfileData
+                                                        ?.data?.user?.email
+                                                        .toString() ??
+                                                    "",
                                                 style: TextFontStyle
                                                     .textStyle10InterW400),
                                           ],
@@ -189,9 +192,8 @@ class _SettingScreenState extends State<SettingScreen> {
                         SettingsItemCard(
                           onTap: () {
                             NavigationService.navigateToWithArgs(
-                                Routes.editProfileScreen,{
-                                  "data":userProfileData
-                            });
+                                Routes.editProfileScreen,
+                                {"data": userProfileData});
                           },
                           icon: AppIcons.profile,
                           title: "Edit Profile",
@@ -248,7 +250,6 @@ class _SettingScreenState extends State<SettingScreen> {
                         SettingsItemCard(
                           onTap: () {
                             LogoutDialog.showLogoutDialog(
-
                               context: context,
                               onLogout: () async {
                                 setState(() {

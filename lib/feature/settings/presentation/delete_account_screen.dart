@@ -3,8 +3,10 @@ import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_button.dart';
+import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/api_acess.dart';
 
 class DeleteAccountScreen extends StatelessWidget {
   const DeleteAccountScreen({super.key});
@@ -38,8 +40,11 @@ class DeleteAccountScreen extends StatelessWidget {
               UIHelper.verticalSpace(60),
               customButton(
                   name: "Yes, Delete My Account",
-                  onCallBack: () {
-                    NavigationService.goBack;
+                  onCallBack: () async {
+                    bool success = await deleteUserApiRx.deleteUser();
+                    if (success) {
+                      NavigationService.navigateTo(Routes.loginScreen);
+                    }
                   },
                   borderColor: Colors.transparent,
                   context: context),

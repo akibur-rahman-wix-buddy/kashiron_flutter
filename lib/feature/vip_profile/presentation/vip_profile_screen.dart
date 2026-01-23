@@ -73,7 +73,11 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
               width: 24,
             ),
             title: "VIP Profile",
-            actionButton: Icon(Icons.add, color: Colors.white, size: 30),
+            actionButton: GestureDetector(
+                onTap: () {
+                  NavigationService.navigateTo(Routes.addVipProfilePartScreen);
+                },
+                child: Icon(Icons.add, color: Colors.white, size: 30)),
           ),
           StreamBuilder(
               stream: getVipProfileListApiRx.dataFetcher,

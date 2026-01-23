@@ -1,19 +1,17 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
-import 'package:kashirons_flutter/common_widgets/custom_button.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
+import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
-import 'package:kashirons_flutter/networks/endpoints.dart';
 
 class CreateSparkScreen extends StatefulWidget {
   final dynamic id;
@@ -112,6 +110,7 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getVipProfileApiRx.getVipProfile(id: widget.id);
     log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>here is the id : ${widget.id}");
   }
 
@@ -159,6 +158,11 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                         description: sparkDescriptionController.text,
                         date: dateController.text,
                         time: timeController.text);
+
+                    if (success) {
+                      NavigationService.navigateToUntilReplacement(
+                          Routes.customBottomNavBar);
+                    }
                   },
                 ),
               ],
@@ -188,112 +192,121 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(16),
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF373B4C),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  shimmerClipOvalWidget(
-                                    height: 50.h,
-                                    weight: 50.w,
-                                    networkImageLink: personImageUrl,
+                        StreamBuilder(
+                            stream: getVipProfileApiRx.dataFetcher,
+                            builder: (context, snapshot) {
+                              final data = snapshot.data?.data;
+
+                              return Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(16),
+                                decoration: ShapeDecoration(
+                                  color: const Color(0xFF373B4C),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  UIHelper.horizontalSpace(8.w),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "name",
-                                        style: TextFontStyle
-                                            .textStyle20InterW500
-                                            .copyWith(fontSize: 18),
-                                      ),
-                                      UIHelper.verticalSpace(8.h),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 4),
-                                        decoration: ShapeDecoration(
-                                          color: const Color(0xFF373B4C),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        ),
-                                        child: Text("brother",
-                                            style: TextFontStyle
-                                                .textStyle10InterW400),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                              UIHelper.verticalSpace(8.h),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.calendar_month,
-                                        color: Colors.white,
-                                      ),
-                                      UIHelper.horizontalSpace(8.w),
-                                      Text(
-                                        "Birthday: ${"10 august"}",
-                                        style:
-                                            TextFontStyle.textStyle10InterW400,
-                                      )
-                                    ],
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 7),
-                                    decoration: ShapeDecoration(
-                                      color: const Color(0xFF2D3142),
-                                      shape: RoundedRectangleBorder(
-                                        side: BorderSide(
-                                          width: 1,
-                                          color: const Color(0xFF373B4C),
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      spacing: 6,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
                                       children: [
-                                        Text("10",
-                                            textAlign: TextAlign.center,
-                                            style: TextFontStyle
-                                                .textStyle12InterW600
-                                                .copyWith(
-                                              color: Color(0xFFEF233C),
-                                            )),
-                                        Text('spark',
-                                            style: TextFontStyle
-                                                .textStyle12InterW600),
+                                        shimmerClipOvalWidget(
+                                          height: 50.h,
+                                          weight: 50.w,
+                                          networkImageLink: data!.avatar,
+                                        ),
+                                        UIHelper.horizontalSpace(8.w),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.name,
+                                              style: TextFontStyle
+                                                  .textStyle20InterW500
+                                                  .copyWith(fontSize: 18),
+                                            ),
+                                            UIHelper.verticalSpace(8.h),
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 4),
+                                              decoration: ShapeDecoration(
+                                                color: const Color(0xFF373B4C),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                              ),
+                                              child: Text(data.relation.name,
+                                                  style: TextFontStyle
+                                                      .textStyle10InterW400),
+                                            )
+                                          ],
+                                        )
                                       ],
                                     ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                                    UIHelper.verticalSpace(8.h),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.calendar_month,
+                                              color: Colors.white,
+                                            ),
+                                            UIHelper.horizontalSpace(8.w),
+                                            Text(
+                                              "Birthday: ${data.birthday}",
+                                              style: TextFontStyle
+                                                  .textStyle10InterW400,
+                                            )
+                                          ],
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 7),
+                                          decoration: ShapeDecoration(
+                                            color: const Color(0xFF2D3142),
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                width: 1,
+                                                color: const Color(0xFF373B4C),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            spacing: 6,
+                                            children: [
+                                              Text(data.sparkCount.toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextFontStyle
+                                                      .textStyle12InterW600
+                                                      .copyWith(
+                                                    color: Color(0xFFEF233C),
+                                                  )),
+                                              Text('spark',
+                                                  style: TextFontStyle
+                                                      .textStyle12InterW600),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
                         UIHelper.verticalSpace(16.h),
                         Text(
                           "Spark Title",

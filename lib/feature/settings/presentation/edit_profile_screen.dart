@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -13,12 +12,13 @@ import 'package:kashirons_flutter/common_widgets/custom_button.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
 import 'package:kashirons_flutter/feature/bottom_nav_bar.dart';
-import 'package:kashirons_flutter/feature/settings/data/model/user_infi_data_model.dart';
+import 'package:kashirons_flutter/feature/settings/model/user_infi_data_model.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/toast.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
+
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key, required this.data});
   final GetUserProfileModelData data;
@@ -87,7 +87,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   }
 
-
   Future<void> _pickImage() async {
     showModalBottomSheet(
       context: context,
@@ -104,10 +103,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.photo_library, color: Colors.red),
-                title: Text('Choose from Gallery', style: TextFontStyle.textStyle16InterW700),
+                title: Text('Choose from Gallery',
+                    style: TextFontStyle.textStyle16InterW700),
                 onTap: () async {
                   Navigator.pop(context);
-                  final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                  final XFile? image =
+                      await _picker.pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     setState(() => _pickedImage = image);
                   }
@@ -115,10 +116,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.camera_alt, color: Colors.red),
-                title: Text('Take a Photo', style: TextFontStyle.textStyle16InterW700),
+                title: Text('Take a Photo',
+                    style: TextFontStyle.textStyle16InterW700),
                 onTap: () async {
                   Navigator.pop(context);
-                  final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+                  final XFile? image =
+                      await _picker.pickImage(source: ImageSource.camera);
                   if (image != null) {
                     setState(() => _pickedImage = image);
                   }
@@ -167,12 +170,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Future<void> _saveChanges() async {
     // Validate inputs
-    if (firstNameController.text.isEmpty || firstNameController.text == "Enter Your name") {
+    if (firstNameController.text.isEmpty ||
+        firstNameController.text == "Enter Your name") {
       _showErrorSnackBar("Please enter your name");
       return;
     }
 
-    if (emailController.text.isEmpty || emailController.text == "Enter Your email") {
+    if (emailController.text.isEmpty ||
+        emailController.text == "Enter Your email") {
       _showErrorSnackBar("Please enter your email");
       return;
     }
@@ -182,7 +187,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       return;
     }
 
-    if (dateController.text.isEmpty || dateController.text == "Select your birthday") {
+    if (dateController.text.isEmpty ||
+        dateController.text == "Select your birthday") {
       _showErrorSnackBar("Please select your date of birth");
       return;
     }
@@ -210,22 +216,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         log("Image Path: ${_pickedImage!.path}");
       }
 
-
-     bool success = await updateProfileRx.updateProfileInfo(
+      bool success = await updateProfileRx.updateProfileInfo(
         name: firstNameController.text,
         dateOfBirth: apiFormattedDate, // Use API formatted date
         avatar: _pickedImage != null ? XFile(_pickedImage!.path) : null,
       );
 
-      if(success){
-
-        Get.to(CustomBottomNavBar(initialIndex: 2,));
+      if (success) {
+        Get.to(CustomBottomNavBar(
+          initialIndex: 2,
+        ));
         ToastUtil.showLongToast("Profile updated successfully!");
-
       }
-
-
-
     } catch (e) {
       log("Error updating profile: $e");
       _showErrorSnackBar("Failed to update profile. Please try again.");
@@ -239,7 +241,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   bool _isValidEmail(String email) {
-    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    final emailRegex =
+        RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     return emailRegex.hasMatch(email);
   }
 
@@ -342,7 +345,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     UIHelper.verticalSpace(16.h),
                     Align(
                       alignment: Alignment.center,
-                      child: Text("Change Photo", style: TextFontStyle.textStyle16InterW700),
+                      child: Text("Change Photo",
+                          style: TextFontStyle.textStyle16InterW700),
                     ),
                     UIHelper.verticalSpace(16.h),
 
@@ -358,7 +362,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                     UIHelper.verticalSpace(16.h),
                     // Email Field
-                    Text("Email Address", style: TextFontStyle.textStyle14InterW500),
+                    Text("Email Address",
+                        style: TextFontStyle.textStyle14InterW500),
                     UIHelper.verticalSpace(8.h),
                     CustomTextField(
                       readOnly: true,
@@ -370,7 +375,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                     UIHelper.verticalSpace(16.h),
                     // Date of Birth Field
-                    Text("Date of Birth", style: TextFontStyle.textStyle14InterW500),
+                    Text("Date of Birth",
+                        style: TextFontStyle.textStyle14InterW500),
                     UIHelper.verticalSpace(8.h),
                     InkWell(
                       onTap: _selectDate,
@@ -389,12 +395,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     _isLoading
                         ? const Center(child: CircularProgressIndicator())
                         : customButton(
-                      name: "Save Changes",
-                      borderColor: Colors.transparent,
-                      height: 45,
-                      onCallBack: _saveChanges,
-                      context: context,
-                    ),
+                            name: "Save Changes",
+                            borderColor: Colors.transparent,
+                            height: 45,
+                            onCallBack: _saveChanges,
+                            context: context,
+                          ),
                   ],
                 ),
               ),

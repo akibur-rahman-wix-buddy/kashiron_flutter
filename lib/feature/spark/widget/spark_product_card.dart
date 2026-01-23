@@ -7,12 +7,14 @@ import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/api_acess.dart';
 
 class SparkProductCard extends StatefulWidget {
   final String title;
   final double price;
   final String image;
   final VoidCallback onBuyTap;
+  final String id;
 
   const SparkProductCard({
     Key? key,
@@ -20,6 +22,7 @@ class SparkProductCard extends StatefulWidget {
     required this.price,
     required this.image,
     required this.onBuyTap,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -56,6 +59,8 @@ class _SparkProductCardState extends State<SparkProductCard> {
                 right: 10,
                 child: GestureDetector(
                   onTap: () {
+                    favoriteToggleApiRx.favoriteToggle(id: widget.id);
+
                     setState(() {
                       isFavorite = !isFavorite;
                     });

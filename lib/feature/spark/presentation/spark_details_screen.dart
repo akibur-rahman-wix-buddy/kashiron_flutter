@@ -24,14 +24,14 @@ class SparkDetailsScreen extends StatelessWidget {
           ),
           Expanded(
             child: Column(
-
               children: [
                 /// ============================ Fixed Header Section ====================== ///
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 16.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -40,28 +40,28 @@ class SparkDetailsScreen extends StatelessWidget {
                             image: PlaceholderNetworkImageUrl,
                             name: "Samantha Usry",
                             description:
-                            "Don't miss their special day—send love, wishes, and joy that make birthdays truly unforgettable!",
+                                "Don't miss their special day—send love, wishes, and joy that make birthdays truly unforgettable!",
                             leftDate: "September 6, 2025",
                             relation: "Mother",
                             leftTime: "2 days left",
                           ),
-
                         ],
                       ),
                     ),
+
                     ///>>>>>>>>>>>>>>>>>>>>>> option section >>>>>>>>>>>>>>>>>>>>>>>>
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                       child: Text(
                         "Option",
                         style: TextFontStyle.textStyle18InterW700,
                       ),
                     ),
                     SparkCard(
-
-                      iconCircleColor:Color(0xFF3B82F6),
+                      iconCircleColor: Color(0xFF3B82F6),
                       ifButton: false,
-                      onTap:  (){},
+                      onTap: () {},
                       title: "Edit Spark",
                       subTitle: "Modify details and timing",
                       buttonName: "Send Now",
@@ -69,10 +69,9 @@ class SparkDetailsScreen extends StatelessWidget {
                     ),
                     UIHelper.verticalSpace(16.h),
                     SparkCard(
-
-                      iconCircleColor:Color(0xFF009F50),
+                      iconCircleColor: Color(0xFF009F50),
                       ifButton: false,
-                      onTap:  (){},
+                      onTap: () {},
                       title: "Delete Spark",
                       subTitle: "Remove this reminder",
                       buttonName: "Send Now",
@@ -80,15 +79,15 @@ class SparkDetailsScreen extends StatelessWidget {
                     ),
                     UIHelper.verticalSpace(16.h),
                     SparkCard(
-                      iconCircleColor:Color(0xFFEB690E),
+                      iconCircleColor: Color(0xFFEB690E),
                       ifButton: true,
-                      onTap:  (){
+                      onTap: () {
                         ReminderBottomSheet.show(context);
                       },
                       title: "Remind Me",
-                      subTitle: "Set a reminder to receive alerts before this spark.",
+                      subTitle:
+                          "Set a reminder to receive alerts before this spark.",
                       buttonName: "Set",
-
                       iconName: Icons.notification_important,
                     ),
                   ],

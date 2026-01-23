@@ -69,8 +69,11 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
     if (picked != null) {
       setState(() {
         selectedTime = picked;
-        timeController.text =
-            "${picked.hourOfPeriod}:${picked.minute.toString().padLeft(2, '0')} ${picked.period.name.toUpperCase()}";
+
+        final hour = picked.hour.toString().padLeft(2, '0');
+        final minute = picked.minute.toString().padLeft(2, '0');
+
+        timeController.text = "$hour:$minute";
       });
     }
   }
@@ -106,10 +109,13 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
         selectedDate = picked;
         // Format the date as mm/dd/yyyy
         dateController.text =
-            "${picked.month.toString().padLeft(2, '0')}/${picked.day.toString().padLeft(2, '0')}/${picked.year}";
+            "${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}";
       });
     }
   }
+
+  late String selectedVipId = '';
+  late String selectedVipName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +149,14 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                     padding: EdgeInsets.all(0),
                     width: 140.w,
                     text: "Save",
-                    onPressed: () {
+                    onPressed: () async {
+                      bool success = await sparkCreateApiRx.sparkCreate(
+                          vip_id: vipProfileController.text,
+                          title: sparkTitleController.text,
+                          description: sparkDescriptionController.text,
+                          date: dateController.text,
+                          time: timeController.text);
+
                       log(">>>>>>>>>>>>>>>>>>>> VIP Profile: ${vipProfileController.text}");
                       log(">>>>>>>>>>>>>>>>>>>> Spark Title: ${sparkTitleController.text}");
                       log(">>>>>>>>>>>>>>>>>>>> Description: ${sparkDescriptionController.text}");

@@ -51,6 +51,8 @@ final class Endpoints {
 
   static String logout() => "/api/logout";
 
+  static String favoriteToggle() => "/api/favourite/toggle";
+
   ///>>>>>>>>>>>>>>>>>>>>>>>>>>> vip section >>>>>>>>>>>>>>>>>>>>>>>>.
 
   static String getVipRelationshipList() => "/api/relation/list";
@@ -65,12 +67,18 @@ final class Endpoints {
 
   static String getVipProfile({required dynamic id}) => "/vip/$id";
 
-  static String sparkCreate() => "/spark/create";
+  static String sparkCreate() => "/api/spark/create";
+
+  static String sparkDetails({required dynamic id}) => "/api/spark/$id";
+  static String sparkDelete({required dynamic id}) => "/api/spark/$id";
+  static String interestWiseProduct({required dynamic id}) =>
+      "/api/vip/$id/interest-products";
 
   ///>>>>>>>>>>>>>>>>>>>>>>>>> Home section >>>>>>>>>>>>>>>>>>>>>>>>
 
   static String homeDataApiLink() => "/api/home_data";
   static String selfReminder() => "/api/self-reminder";
+  static String getNotification() => "/api/notification";
 
   ///>>>>>>>>>>>>>>>>>>>>>>>>> profile section >>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -80,4 +88,9 @@ final class Endpoints {
 
   static String changePasswordApiLink() => "/api/password/change";
   static String upcomingSparks() => "/api/upcoming/spark";
+  static String favoriteGifts() => "/api/favourite/products";
+  static String deleteUser() => "/api/delete/user";
+  static String notificationToggle({required String id}) =>
+      "/api/notification/$id/mark-view";
+  static String giftDetailsApi({required String id}) => "/api/product/$id";
 }

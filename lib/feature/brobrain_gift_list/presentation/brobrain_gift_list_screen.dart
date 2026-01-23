@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
@@ -56,7 +55,8 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                     onPressed: () {
                       // Define tap action here (e.g., select category)
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Selected Category ${index + 1}")),
+                        SnackBar(
+                            content: Text("Selected Category ${index + 1}")),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -94,16 +94,12 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
-
-                    ///>>>>>>>>>>>>> here is the mose popular section >>>>>>>>>>>>>>>>>>
                     BrobrainRowCard(
                       title: "Most Popular",
-                      onCLickViewAll: (){},
+                      onCLickViewAll: () {},
                     ),
                     UIHelper.verticalSpace(16.h),
 
-                    /// Horizontal Gifts List with fixed height
                     SizedBox(
                       height: 230.h,
                       child: ListView.builder(
@@ -112,7 +108,11 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                         itemBuilder: (context, index) {
                           return ProductCard(
                             imageUrl: personImageUrl,
-                            isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                            isLoveValue: false,
+                            price: 250.toString(),
+                            productName: "Smart Watch",
+                            isBuyGiftClick: () {},
+                          );
                         },
                       ),
                     ),
@@ -120,11 +120,10 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                     UIHelper.verticalSpace(8.h),
 
                     ///>>>>>>>>>>>>> here is women  section >>>>>>>>>>>>>>>>>>
-
 
                     BrobrainRowCard(
                       title: "For Women",
-                      onCLickViewAll: (){},
+                      onCLickViewAll: () {},
                     ),
                     UIHelper.verticalSpace(8.h),
 
@@ -137,19 +136,22 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                         itemBuilder: (context, index) {
                           return ProductCard(
                             imageUrl: personImageUrl,
-                            isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                            isLoveValue: false,
+                            price: 250.toString(),
+                            productName: "Smart Watch",
+                            isBuyGiftClick: () {},
+                          );
                         },
                       ),
                     ),
 
-
                     UIHelper.verticalSpace(16.h),
-                    ///>>>>>>>>>>>>> here is women  section >>>>>>>>>>>>>>>>>>
 
+                    ///>>>>>>>>>>>>> here is women  section >>>>>>>>>>>>>>>>>>
 
                     BrobrainRowCard(
                       title: "For wan",
-                      onCLickViewAll: (){},
+                      onCLickViewAll: () {},
                     ),
                     UIHelper.verticalSpace(8.h),
 
@@ -162,17 +164,21 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                         itemBuilder: (context, index) {
                           return ProductCard(
                             imageUrl: personImageUrl,
-                            isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                            isLoveValue: false,
+                            price: 250.toString(),
+                            productName: "Smart Watch",
+                            isBuyGiftClick: () {},
+                          );
                         },
                       ),
                     ),
                     UIHelper.verticalSpace(16.h),
-                    ///>>>>>>>>>>>>> here is Baby section >>>>>>>>>>>>>>>>>>
 
+                    ///>>>>>>>>>>>>> here is Baby section >>>>>>>>>>>>>>>>>>
 
                     BrobrainRowCard(
                       title: "Baby",
-                      onCLickViewAll: (){},
+                      onCLickViewAll: () {},
                     ),
                     UIHelper.verticalSpace(8.h),
 
@@ -183,15 +189,16 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return ProductCard(        imageUrl: personImageUrl,isLoveValue: false,price: 260.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+                          return ProductCard(
+                            imageUrl: personImageUrl,
+                            isLoveValue: false,
+                            price: 260.toString(),
+                            productName: "Smart Watch",
+                            isBuyGiftClick: () {},
+                          );
                         },
                       ),
                     ),
-
-
-
-
-
                   ],
                 ),
               ),
@@ -205,10 +212,12 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
 
 class BrobrainRowCard extends StatelessWidget {
   const BrobrainRowCard({
-    super.key, required this.title, required this.onCLickViewAll,
+    super.key,
+    required this.title,
+    required this.onCLickViewAll,
   });
-final String title;
-final VoidCallback onCLickViewAll;
+  final String title;
+  final VoidCallback onCLickViewAll;
   @override
   Widget build(BuildContext context) {
     return Row(

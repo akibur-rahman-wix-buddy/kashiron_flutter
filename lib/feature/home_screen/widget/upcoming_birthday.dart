@@ -8,7 +8,7 @@ import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 
 class UpcomingBirthday extends StatelessWidget {
-  final List<UpcomingBirthdayData> upcomingBirthday;
+  final dynamic upcomingBirthday;
 
   const UpcomingBirthday({
     super.key,

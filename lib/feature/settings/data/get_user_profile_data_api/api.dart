@@ -1,12 +1,8 @@
-
 import 'dart:developer';
-import 'package:kashirons_flutter/feature/create_spark_and_self/model/get_all_vip_data_model.dart';
-import 'package:kashirons_flutter/feature/settings/data/model/user_infi_data_model.dart';
+import 'package:kashirons_flutter/feature/settings/model/user_infi_data_model.dart';
 import 'package:kashirons_flutter/networks/dio/dio.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 import 'package:kashirons_flutter/networks/exception_handler/data_source.dart';
-
-
 
 final class GetUserProfileApi {
   static final GetUserProfileApi _singleton = GetUserProfileApi._internal();
@@ -15,9 +11,8 @@ final class GetUserProfileApi {
   static GetUserProfileApi get instance => _singleton;
 
   Future<GetUserProfileModelData> getUserPeopleInfo() async {
-
     try {
-      final response = await getHttp(Endpoints.getUserProfileApiLink() );
+      final response = await getHttp(Endpoints.getUserProfileApiLink());
       if (response.statusCode == 200) {
         return GetUserProfileModelData.fromJson(response.data);
       } else {

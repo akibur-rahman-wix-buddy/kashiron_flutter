@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:kashirons_flutter/constants/app_constants.dart';
-import 'package:kashirons_flutter/feature/settings/data/model/upcomng_sparks.dart';
+import 'package:kashirons_flutter/feature/settings/model/upcomng_sparks.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/di.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';

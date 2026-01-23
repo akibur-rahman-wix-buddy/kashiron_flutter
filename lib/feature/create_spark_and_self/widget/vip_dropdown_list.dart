@@ -506,8 +506,6 @@
 //   }
 // }
 
-
-
 import 'package:flutter/material.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/model/get_all_vip_data_model.dart';
@@ -523,7 +521,8 @@ class VipDropdown {
     VoidCallback? onVipSelected,
     VoidCallback? onValueChanged,
   }) {
-    final RenderBox renderBox = textFieldKey.currentContext!.findRenderObject() as RenderBox;
+    final RenderBox renderBox =
+        textFieldKey.currentContext!.findRenderObject() as RenderBox;
     final Size size = renderBox.size;
     final Offset offset = renderBox.localToGlobal(Offset.zero);
 
@@ -551,7 +550,7 @@ class VipDropdown {
 class _VipDropdownContent extends StatefulWidget {
   final Offset position;
   final double width;
-  final TextEditingController controller;
+  final dynamic controller;
   final VoidCallback? onVipSelected;
   final VoidCallback onClose;
 
@@ -599,9 +598,11 @@ class _VipDropdownContentState extends State<_VipDropdownContent> {
                     onChanged: (value) => setState(() => searchQuery = value),
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search, color: Colors.white60, size: 20),
+                      prefixIcon: const Icon(Icons.search,
+                          color: Colors.white60, size: 20),
                       hintText: "Search VIP name...",
-                      hintStyle: const TextStyle(color: Colors.white54, fontSize: 14),
+                      hintStyle:
+                          const TextStyle(color: Colors.white54, fontSize: 14),
                       filled: true,
                       fillColor: Colors.white.withOpacity(0.08),
                       border: OutlineInputBorder(
@@ -616,8 +617,10 @@ class _VipDropdownContentState extends State<_VipDropdownContent> {
                     child: StreamBuilder<GetAllVipModelData>(
                       stream: getAllVipRx.dataFetcher,
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
                           return const Center(
                             child: Text(
@@ -641,13 +644,16 @@ class _VipDropdownContentState extends State<_VipDropdownContent> {
                             child: Column(
                               children: categories.map((categoryData) {
                                 // Filter relations based on search query
-                                final filteredRelations = categoryData.relations!
-                                    .where((relation) =>
-                                    relation.name!.toLowerCase().contains(searchQuery.toLowerCase()))
+                                final filteredRelations = categoryData
+                                    .relations!
+                                    .where((relation) => relation.name!
+                                        .toLowerCase()
+                                        .contains(searchQuery.toLowerCase()))
                                     .toList();
 
                                 // Don't show category if no relations match the search
-                                if (filteredRelations.isEmpty) return const SizedBox();
+                                if (filteredRelations.isEmpty)
+                                  return const SizedBox();
 
                                 return Theme(
                                   data: Theme.of(context).copyWith(
@@ -662,13 +668,16 @@ class _VipDropdownContentState extends State<_VipDropdownContent> {
                                     title: Row(
                                       children: [
                                         Icon(
-                                          _getCategoryIcon(categoryData.category?.name ?? ""),
+                                          _getCategoryIcon(
+                                              categoryData.category?.name ??
+                                                  ""),
                                           color: Colors.white,
                                           size: 18,
                                         ),
                                         const SizedBox(width: 6),
                                         Text(
-                                          categoryData.category?.name ?? "Unknown Category",
+                                          categoryData.category?.name ??
+                                              "Unknown Category",
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
@@ -677,7 +686,8 @@ class _VipDropdownContentState extends State<_VipDropdownContent> {
                                         ),
                                       ],
                                     ),
-                                    children: filteredRelations.map<Widget>((relation) {
+                                    children: filteredRelations
+                                        .map<Widget>((relation) {
                                       return ListTile(
                                         leading: shimmerClipOvalWidget(
                                           height: 35,
@@ -686,14 +696,19 @@ class _VipDropdownContentState extends State<_VipDropdownContent> {
                                         ),
                                         title: Text(
                                           relation.name ?? "Unknown Name",
-                                          style: const TextStyle(color: Colors.white),
+                                          style: const TextStyle(
+                                              color: Colors.white),
                                         ),
                                         subtitle: Text(
-                                          relation.name ?? "", // Using name as role for now
-                                          style: const TextStyle(color: Colors.white54, fontSize: 12),
+                                          relation.name ??
+                                              "", // Using name as role for now
+                                          style: const TextStyle(
+                                              color: Colors.white54,
+                                              fontSize: 12),
                                         ),
                                         onTap: () {
-                                          widget.controller.text = relation.name ?? "";
+                                          widget.controller.text =
+                                              relation.id.toString();
                                           widget.onVipSelected?.call();
                                           widget.onClose();
                                         },

@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:kashirons_flutter/feature/settings/data/model/upcomng_sparks.dart';
+import 'package:kashirons_flutter/feature/settings/model/upcomng_sparks.dart';
 import 'package:kashirons_flutter/networks/dio/dio.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 import 'package:kashirons_flutter/networks/exception_handler/data_source.dart';

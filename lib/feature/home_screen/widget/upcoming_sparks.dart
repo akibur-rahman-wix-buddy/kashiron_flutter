@@ -5,58 +5,91 @@ import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_container.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
 import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
-import 'package:kashirons_flutter/feature/home_screen/model/home_api_data_model.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 
 class UpcomingSparksWidget extends StatelessWidget {
-  final List<UpcomingSpark> upcomingSparks;
+  final dynamic upcomingSparks;
 
   const UpcomingSparksWidget({
     super.key,
     required this.upcomingSparks,
   });
 
-  // final dynamic positions;
-  // final dynamic day;
-
   @override
   Widget build(BuildContext context) {
+    // First, flatten the list of all sparks from all date groups
+    List<dynamic> allSparks = [];
+    List<String> sparkDates = [];
+
+    for (var dateGroup in upcomingSparks) {
+      if (dateGroup.sparks != null && dateGroup.sparks!.isNotEmpty) {
+        for (var spark in dateGroup.sparks!) {
+          allSparks.add(spark);
+          // Get the formatted date for this spark (Today/Tomorrow/Date)
+          if (dateGroup.isToday == true) {
+            sparkDates.add("Today");
+          } else if (dateGroup.isTomorrow == true) {
+            sparkDates.add("Tomorrow");
+          } else {
+            sparkDates.add(dateGroup.date ?? "");
+          }
+        }
+      }
+    }
+
+    if (allSparks.isEmpty) {
+      return Center(
+        child: Text(
+          "No upcoming sparks",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14.sp,
+          ),
+        ),
+      );
+    }
+
     return ListView.builder(
-        padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: upcomingSparks.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: CustomContainer(
-                child: Column(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: allSparks.length,
+      itemBuilder: (context, index) {
+        final spark = allSparks[index];
+        final dateText = sparkDates[index];
+
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: CustomContainer(
+            child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: Text(
-                        upcomingSparks[index].title.toString(),
+                        spark.title?.toString() ?? "No Title",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextFontStyle.textStyle16InterW400.copyWith(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.cFFFFFF),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.cFFFFFF,
+                        ),
                       ),
                     ),
                     Text(
-                      upcomingSparks[index].daysLeft.toString(),
+                      spark.daysLeft?.toString() ?? "",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextFontStyle.textStyle16InterW400.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xff3BB515)),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xff3BB515),
+                      ),
                     ),
                   ],
                 ),
@@ -71,27 +104,31 @@ class UpcomingSparksWidget extends StatelessWidget {
                             placeholder: AppImages.demoAvatar,
                             height: 20.h,
                             width: 20.w,
-                            imageUrl: upcomingSparks[index].vipAvatar ?? " ",
+                            imageUrl: spark.vip?.avatar ??
+                                spark.createdBy?.avatar ??
+                                "",
                           ),
                         ),
                         UIHelper.horizontalSpace(8.w),
                         Text(
-                          upcomingSparks[index].vipName.toString(),
+                          spark.vip?.name?.toString() ?? "No VIP",
                           style: TextFontStyle.textStyle16InterW400.copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xffaaacb4)),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xffaaacb4),
+                          ),
                         ),
                       ],
                     ),
                     Text(
-                      upcomingSparks[index].formattedDate.toString() ?? " ",
+                      dateText, // Use the calculated date text
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextFontStyle.textStyle16InterW400.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xffDFE0E5)),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xffDFE0E5),
+                      ),
                     ),
                   ],
                 ),
@@ -99,11 +136,12 @@ class UpcomingSparksWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    upcomingSparks[index].description.toString() ?? " ",
+                    spark.description?.toString() ?? "No Description",
                     style: TextFontStyle.textStyle16InterW400.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xffaaacb4)),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xffaaacb4),
+                    ),
                   ),
                 ),
                 UIHelper.verticalSpace(14.h),
@@ -111,37 +149,48 @@ class UpcomingSparksWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                        child: CustomElevatedButton(
-                            padding: EdgeInsets.all(12),
-                            backgroundColor: Color(0xff353A4E),
-                            height: 40.h,
-                            text: "View Details",
-                            textStyle: TextFontStyle.textStyle10InterW400
-                                .copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                    color: AppColor.cFFFFFF),
-                            onPressed: () {
-                              NavigationService.navigateTo(
-                                  Routes.vipSparkDetailsScreen);
-                            })),
+                      child: CustomElevatedButton(
+                        padding: const EdgeInsets.all(12),
+                        backgroundColor: const Color(0xff353A4E),
+                        height: 40.h,
+                        text: "View Details",
+                        textStyle: TextFontStyle.textStyle10InterW400.copyWith(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: AppColor.cFFFFFF,
+                        ),
+                        onPressed: () {
+                          NavigationService.navigateToWithArgs(
+                            Routes.vipSparkDetailsScreen,
+                            {
+                              "id": spark.id.toString(),
+                              "vip_id": spark.vip.id.toString()
+                            },
+                          );
+                        },
+                      ),
+                    ),
                     UIHelper.horizontalSpace(12.w),
                     Expanded(
-                        child: CustomElevatedButton(
-                            padding: EdgeInsets.all(12),
-                            height: 40.h,
-                            text: "Remind Me",
-                            textStyle: TextFontStyle.textStyle10InterW400
-                                .copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                    color: AppColor.cFFFFFF),
-                            onPressed: () {})),
+                      child: CustomElevatedButton(
+                        padding: const EdgeInsets.all(12),
+                        height: 40.h,
+                        text: "Remind Me",
+                        textStyle: TextFontStyle.textStyle10InterW400.copyWith(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: AppColor.cFFFFFF,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
                   ],
-                )
+                ),
               ],
-            )),
-          );
-        });
+            ),
+          ),
+        );
+      },
+    );
   }
 }

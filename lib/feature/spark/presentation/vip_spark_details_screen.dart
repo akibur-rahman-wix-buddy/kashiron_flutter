@@ -4,20 +4,45 @@ import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/constants/app_constants.dart';
+import 'package:kashirons_flutter/feature/spark/model/interest_wise_product_model.dart';
+import 'package:kashirons_flutter/feature/spark/model/spark_show_model.dart';
 import 'package:kashirons_flutter/feature/spark/widget/SparkBottomCard.dart';
 import 'package:kashirons_flutter/feature/spark/widget/reminder_bottom_sheet.dart';
 import 'package:kashirons_flutter/feature/spark/widget/reroll_gifts_button.dart';
+import 'package:kashirons_flutter/feature/spark/widget/spark_delete_dialogue.dart';
 import 'package:kashirons_flutter/feature/spark/widget/spark_hading_card.dart';
 import 'package:kashirons_flutter/feature/spark/widget/spark_product_card.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/api_acess.dart';
 
-class VipSparkDetailsScreen extends StatelessWidget {
-  const VipSparkDetailsScreen({super.key});
+class VipSparkDetailsScreen extends StatefulWidget {
+  final String id;
+  final String vip_id;
+
+  const VipSparkDetailsScreen(
+      {super.key, required this.id, required this.vip_id});
+
+  @override
+  State<VipSparkDetailsScreen> createState() => _VipSparkDetailsScreenState();
+}
+
+class _VipSparkDetailsScreenState extends State<VipSparkDetailsScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    vipSparksDetailsApiRx.getVipSparksDetails(id: widget.id.toString());
+
+    interestWiseProductApiRx.getInterestWideProducts(
+        id: widget.vip_id.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool isLoading = false;
+
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
       body: Column(
@@ -36,19 +61,40 @@ class VipSparkDetailsScreen extends StatelessWidget {
                 children: [
                   /// ============================ Fixed Header Section ====================== ///
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SparkHadingCard(
-                          title: "Mom's Birthday 🎂 ",
-                          image: PlaceholderNetworkImageUrl,
-                          name: "Samantha Usry",
-                          description:
-                          "Don't miss their special day—send love, wishes, and joy that make birthdays truly unforgettable!",
-                          leftDate: "September 6, 2025",
-                          relation: "Mother",
-                          leftTime: "2 days left",
+                        StreamBuilder<SparkShowModel>(
+                          stream: vipSparksDetailsApiRx.dataFetcher,
+                          builder: (context, snapshot) {
+                            // 1️⃣ Loading / no data yet
+                            if (!snapshot.hasData || snapshot.data == null) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+
+                            final model = snapshot.data!;
+                            final data = model.data;
+
+                            // 2️⃣ API returned but data is null
+                            if (data == null || data.vip == null) {
+                              return const SizedBox(); // or error widget
+                            }
+
+                            // 3️⃣ SAFE to use now
+                            return SparkHadingCard(
+                              title: data.title ?? '',
+                              image: data.vip?.avatar ?? '',
+                              name: data.vip?.name ?? '',
+                              description: data.description ?? '',
+                              leftDate: data.formattedDate ?? '',
+                              relation: data.vip?.relation?.name ?? '',
+                              leftTime: data.daysStatus ?? '',
+                            );
+                          },
                         ),
 
                         UIHelper.verticalSpace(16.h),
@@ -59,7 +105,8 @@ class VipSparkDetailsScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Gift Ideas for Mother",
@@ -88,24 +135,56 @@ class VipSparkDetailsScreen extends StatelessWidget {
                   /// ============================ GridView Section ====================== ///
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 16,
-                        childAspectRatio: 100 / 145,
-                      ),
-                      itemCount: 6,
-                      padding: const EdgeInsets.only(bottom: 16),
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return SparkProductCard(
-                          title: "Smart Watch",
-                          price: 100,
-                          image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D",
-                          onBuyTap: () {
-                            print("Buy gift tapped for index $index");
+                    child: StreamBuilder<VipInterestWiseProductModel>(
+                      stream: interestWiseProductApiRx.dataFetcher,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+
+                        if (snapshot.hasError) {
+                          return const Center(
+                              child: Text("Something went wrong"));
+                        }
+
+                        if (!snapshot.hasData ||
+                            snapshot.data == null ||
+                            snapshot.data!.data == null ||
+                            snapshot.data!.data!.isEmpty) {
+                          return const Center(child: Text("No products found"));
+                        }
+
+                        final products = snapshot.data!.data!;
+
+                        return GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 16,
+                            childAspectRatio: 100 / 145,
+                          ),
+                          itemCount: products.length,
+                          padding: const EdgeInsets.only(bottom: 16),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final data = products[index];
+
+                            return SparkProductCard(
+                              title: data.title ?? "",
+                              price:
+                                  double.tryParse(data.price?.amount ?? '0') ??
+                                      0.0,
+                              image:
+                                  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?fm=jpg&q=60&w=3000",
+                              onBuyTap: () {
+                                print("Buy gift tapped for index $index");
+                              },
+                              id: data.productId.toString(),
+                            );
                           },
                         );
                       },
@@ -114,7 +193,8 @@ class VipSparkDetailsScreen extends StatelessWidget {
 
                   /// "Surprise Flowers" Text at the bottom
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                     child: Text(
                       "Surprise Flowers",
                       style: TextFontStyle.textStyle18InterW700,
@@ -129,14 +209,14 @@ class VipSparkDetailsScreen extends StatelessWidget {
                     title: "Send Flowers & Card",
                     subTitle: "Deliver fresh flowers with a personalized card ",
                     buttonName: "Send Now",
-                    
                     iconName: Icons.settings,
                   ),
 
                   ///>>>>>>>>>>>>>>>>>>>>>> option section >>>>>>>>>>>>>>>>>>>>>>>>
                   UIHelper.verticalSpace(16),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                     child: Text(
                       "Option",
                       style: TextFontStyle.textStyle18InterW700,
@@ -145,7 +225,29 @@ class VipSparkDetailsScreen extends StatelessWidget {
                   SparkCard(
                     iconCircleColor: Color(0xFF009F50),
                     ifButton: false,
-                    onTap: () {},
+                    onTap: () {
+                      SparkDeleteDialog.showLogoutDialog(
+                        context: context,
+                        onLogout: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          bool success = await sparkDeleteApiRx.sparkDelete(
+                              id: widget.id.toString());
+                          if (success) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            NavigationService.navigateTo(
+                                Routes.customBottomNavBar);
+                          }
+                          setState(() {
+                            isLoading = false;
+                          });
+                        },
+                        isLoading: isLoading,
+                      );
+                    },
                     title: "Delete Spark",
                     subTitle: "Remove this reminder",
                     buttonName: "Send Now",
@@ -159,7 +261,8 @@ class VipSparkDetailsScreen extends StatelessWidget {
                       ReminderBottomSheet.show(context);
                     },
                     title: "Remind Me",
-                    subTitle: "Set a reminder to receive alerts before this spark.",
+                    subTitle:
+                        "Set a reminder to receive alerts before this spark.",
                     buttonName: "Set",
                     iconName: Icons.notification_important,
                   ),

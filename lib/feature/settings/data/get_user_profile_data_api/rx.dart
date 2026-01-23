@@ -1,13 +1,7 @@
-
-
-
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:kashirons_flutter/constants/app_constants.dart';
-import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/model/relation_vip_data_model.dart';
-import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/model/vip_category_data_model.dart';
-import 'package:kashirons_flutter/feature/create_spark_and_self/model/get_all_vip_data_model.dart';
-import 'package:kashirons_flutter/feature/settings/data/model/user_infi_data_model.dart';
+import 'package:kashirons_flutter/feature/settings/model/user_infi_data_model.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/di.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
@@ -15,7 +9,6 @@ import 'package:kashirons_flutter/helpers/toast.dart';
 import 'package:kashirons_flutter/networks/rx_base.dart';
 import 'package:rxdart/rxdart.dart';
 import 'api.dart';
-
 
 final class GetUserProfileRx extends RxResponseInt<GetUserProfileModelData> {
   final api = GetUserProfileApi.instance;
@@ -27,10 +20,11 @@ final class GetUserProfileRx extends RxResponseInt<GetUserProfileModelData> {
   void clearData() {
     dataFetcher.sink.add(empty); // Add empty data to clear UI
   }
-  Future<GetUserProfileModelData?> getProfileApiData( ) async {
+
+  Future<GetUserProfileModelData?> getProfileApiData() async {
     try {
       clearData();
-      final  data = await api.getUserPeopleInfo();
+      final data = await api.getUserPeopleInfo();
       return handleSuccessWithReturn(data);
     } catch (error) {
       return handleErrorWithReturn(error);
@@ -46,7 +40,6 @@ final class GetUserProfileRx extends RxResponseInt<GetUserProfileModelData> {
           "An unknown error occurred.";
 
       if (statusCode == 401) {
-
         appData.write(kKeyIsLoggedIn, false);
         NavigationService.navigateToUntilReplacement(Routes.loginScreen);
       } else {
@@ -61,4 +54,3 @@ final class GetUserProfileRx extends RxResponseInt<GetUserProfileModelData> {
     return null;
   }
 }
-

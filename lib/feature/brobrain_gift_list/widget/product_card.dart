@@ -9,22 +9,25 @@ import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
+import 'package:kashirons_flutter/networks/api_acess.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard(
+  ProductCard(
       {super.key,
       required this.productName,
       required this.price,
       required this.isLoveValue,
       required this.isBuyGiftClick,
       required this.imageUrl,
-      this.currency});
+      this.currency,
+      this.id});
   final String productName;
   final String price;
   final String imageUrl;
   final String? currency;
   final bool isLoveValue;
+  String? id;
   final VoidCallback isBuyGiftClick;
 
   @override
@@ -45,7 +48,9 @@ class _ProductCardState extends State<ProductCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        NavigationService.navigateTo(Routes.productDetailScreen);
+        NavigationService.navigateToWithArgs(Routes.productDetailScreen, {
+          "id": widget.id,
+        });
       },
       child: Padding(
         padding: EdgeInsets.only(right: 16),
@@ -87,6 +92,9 @@ class _ProductCardState extends State<ProductCard> {
                       ]),
                       child: GestureDetector(
                           onTap: () {
+                            favoriteToggleApiRx.favoriteToggle(
+                                id: widget.id.toString());
+
                             setState(() {
                               isLove = !isLove;
                             });
@@ -120,7 +128,7 @@ class _ProductCardState extends State<ProductCard> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
-                        "${widget.currency.toString()} - ${widget.price}",
+                        "USD - ${widget.price}",
                         style: TextFontStyle.textStyle16InterW400.copyWith(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
