@@ -13,6 +13,7 @@ import 'package:kashirons_flutter/feature/home_screen/widget/home_shimmer.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 import '../widget/home_app_bar.dart';
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     homeApiDataRx.homeApiDataApiInfo();
+    getUserProfileRx.getProfileApiData();
     super.initState();
   }
 
@@ -95,7 +97,35 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           /// ============================ App bar ====================== ///
-          HomeAppBar(),
+          StreamBuilder(
+            stream: getUserProfileRx.dataFetcher,
+            builder: (context, snapshot) {
+              // Loading
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return homeAppBarShimmer();
+              }
+
+              // Error
+              if (snapshot.hasError) {
+                return homeAppBarShimmer(); // or error UI
+              }
+
+              // Null / Empty data
+              if (!snapshot.hasData ||
+                  snapshot.data == null ||
+                  snapshot.data!.data == null ||
+                  snapshot.data!.data!.user == null) {
+                return homeAppBarShimmer();
+              }
+
+              // Safe access
+              final user = snapshot.data!.data!.user!;
+
+              return HomeAppBar(
+                user: user,
+              );
+            },
+          ),
           UIHelper.verticalSpace(20.h),
           Expanded(
               child: SingleChildScrollView(
@@ -274,4 +304,87 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+Widget homeAppBarShimmer() {
+  return Container(
+    height: 124.h,
+    width: double.infinity,
+    color: const Color(0xFF2E3445), // same dark background
+    child: Column(
+      children: [
+        SizedBox(height: 60.h),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              /// Left side (Avatar + Text)
+              Row(
+                children: [
+                  Shimmer.fromColors(
+                    baseColor: Colors.grey.shade700,
+                    highlightColor: Colors.grey.shade500,
+                    child: Container(
+                      height: 44.h,
+                      width: 44.w,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Shimmer.fromColors(
+                        baseColor: Colors.grey.shade700,
+                        highlightColor: Colors.grey.shade500,
+                        child: Container(
+                          height: 12.h,
+                          width: 110.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 6.h),
+                      Shimmer.fromColors(
+                        baseColor: Colors.grey.shade700,
+                        highlightColor: Colors.grey.shade500,
+                        child: Container(
+                          height: 10.h,
+                          width: 140.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              /// Right side (Notification Icon)
+              Shimmer.fromColors(
+                baseColor: Colors.grey.shade700,
+                highlightColor: Colors.grey.shade500,
+                child: Container(
+                  height: 36.h,
+                  width: 36.w,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }
