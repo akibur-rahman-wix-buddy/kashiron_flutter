@@ -97,16 +97,16 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                   );
                 }
 
-                if (!snapshot.hasData || snapshot.data == null) {
+                if (data.isEmpty) {
                   return const VipListShimmer();
                 }
 
-                late final allDataLength =
-                    data.firstWhere((item) => item.name == "All").vips.length;
-
                 final allDataCategory = data.firstWhere(
-                    (item) => item.name == "All",
-                    orElse: () => Datum(name: "All", vips: []));
+                  (item) => item.name == "All",
+                  orElse: () => Datum(name: "All", vips: []),
+                );
+
+                final allDataLength = allDataCategory.vips?.length ?? 0;
 
                 if (vipListAll.isEmpty) {
                   vipListAll = allDataCategory.vips ?? [];

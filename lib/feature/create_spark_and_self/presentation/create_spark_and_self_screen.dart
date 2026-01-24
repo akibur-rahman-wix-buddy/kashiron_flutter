@@ -7,6 +7,8 @@ import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/widget/vip_dropdown_list.dart';
+import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
 
@@ -143,7 +145,9 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                     backgroundColor: Color(0xFF373B4C),
                     width: 140.w,
                     text: "Cancel",
-                    onPressed: () {},
+                    onPressed: () {
+                      NavigationService.goBack;
+                    },
                   ),
                   CustomElevatedButton(
                     padding: EdgeInsets.all(0),
@@ -156,6 +160,10 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                           description: sparkDescriptionController.text,
                           date: dateController.text,
                           time: timeController.text);
+
+                      if (success) {
+                        NavigationService.navigateTo(Routes.customBottomNavBar);
+                      }
 
                       log(">>>>>>>>>>>>>>>>>>>> VIP Profile: ${vipProfileController.text}");
                       log(">>>>>>>>>>>>>>>>>>>> Spark Title: ${sparkTitleController.text}");

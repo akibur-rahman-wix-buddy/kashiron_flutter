@@ -50,13 +50,7 @@ class _UpcommingSparkScreenState extends State<UpcommingSparkScreen> {
                     snapshot.data == null ||
                     snapshot.data!.data == null) {
                   return Center(
-                    child: Text(
-                      "No data available",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                      ),
-                    ),
+                    child: CircularProgressIndicator(),
                   );
                 }
 

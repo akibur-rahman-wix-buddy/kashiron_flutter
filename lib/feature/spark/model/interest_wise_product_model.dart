@@ -52,6 +52,7 @@ class Datum {
   String? category;
   String? availability;
   String? condition;
+  bool? isFavourite;
 
   Datum({
     this.productId,
@@ -67,6 +68,7 @@ class Datum {
     this.category,
     this.availability,
     this.condition,
+    this.isFavourite,
   });
 
   factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
@@ -89,6 +91,7 @@ class Datum {
         category: json["category"],
         availability: json["availability"],
         condition: json["condition"],
+        isFavourite: json["is_favourite"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -107,6 +110,7 @@ class Datum {
         "category": category,
         "availability": availability,
         "condition": condition,
+        "is_favourite": isFavourite,
       };
 }
 

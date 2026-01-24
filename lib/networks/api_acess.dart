@@ -11,7 +11,10 @@ import 'package:kashirons_flutter/feature/auth/data/rx_resend_code_sent/rx.dart'
 import 'package:kashirons_flutter/feature/auth/data/rx_sign_in/rx.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/data/favorite_toggle/rx.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/data/gift_details/rx.dart';
+import 'package:kashirons_flutter/feature/brobrain_gift_list/data/popular_products/rx.dart';
+import 'package:kashirons_flutter/feature/brobrain_gift_list/data/search_prooduct/rx.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/model/gift_details_model.dart';
+import 'package:kashirons_flutter/feature/brobrain_gift_list/model/popular_products_model.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/data/get_all_vip_api/rx.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/data/self_care_reminder/rx.dart';
 import 'package:kashirons_flutter/feature/create_spark_and_self/model/get_all_vip_data_model.dart';
@@ -28,10 +31,12 @@ import 'package:kashirons_flutter/feature/settings/data/rx_logout/rx.dart';
 import 'package:kashirons_flutter/feature/settings/data/upcoming_sparks/rx.dart';
 import 'package:kashirons_flutter/feature/settings/data/update_profile_api/rx.dart';
 import 'package:kashirons_flutter/feature/settings/model/favorite_gifts_model.dart';
+import 'package:kashirons_flutter/feature/brobrain_gift_list/model/search_products_model.dart';
 import 'package:kashirons_flutter/feature/settings/model/upcomng_sparks.dart';
 import 'package:kashirons_flutter/feature/settings/model/user_infi_data_model.dart';
 import 'package:kashirons_flutter/feature/spark/data/interesert_wise_product/rx.dart';
 import 'package:kashirons_flutter/feature/spark/data/spark_delete/rx.dart';
+import 'package:kashirons_flutter/feature/spark/data/spark_update/rx.dart';
 import 'package:kashirons_flutter/feature/spark/data/vip_spark_details/rx.dart';
 import 'package:kashirons_flutter/feature/spark/model/interest_wise_product_model.dart';
 import 'package:kashirons_flutter/feature/spark/model/spark_show_model.dart';
@@ -150,6 +155,11 @@ SparkDeleteApiRx sparkDeleteApiRx = SparkDeleteApiRx(
   dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
 );
 
+SparkUpdateApiRx sparkUpdateApiRx = SparkUpdateApiRx(
+  empty: <String, dynamic>{},
+  dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
+);
+
 FavoriteToggleApiRx favoriteToggleApiRx = FavoriteToggleApiRx(
   empty: <String, dynamic>{},
   dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
@@ -195,4 +205,14 @@ InterestWiseProductApiRx interestWiseProductApiRx = InterestWiseProductApiRx(
 GiftDetailsApiRx giftDetailsApiRx = GiftDetailsApiRx(
   empty: GiftDetailsModel(),
   dataFetcher: BehaviorSubject<GiftDetailsModel>(),
+);
+
+SearchProductApiRx searchProductApiRx = SearchProductApiRx(
+  empty: SearchProductsModel(),
+  dataFetcher: BehaviorSubject<SearchProductsModel>(),
+);
+
+PopularProductsApiRx popularProductsApiRx = PopularProductsApiRx(
+  empty: PopularProductsModel(),
+  dataFetcher: BehaviorSubject<PopularProductsModel>(),
 );

@@ -70,7 +70,11 @@ final class Endpoints {
   static String sparkCreate() => "/api/spark/create";
 
   static String sparkDetails({required dynamic id}) => "/api/spark/$id";
+
   static String sparkDelete({required dynamic id}) => "/api/spark/$id";
+
+  static String sparkUpdate({required dynamic id}) => "/api/spark/$id";
+
   static String interestWiseProduct({required dynamic id}) =>
       "/api/vip/$id/interest-products";
 
@@ -85,6 +89,7 @@ final class Endpoints {
   static String getUserProfileApiLink() => "/api/me";
 
   static String updateProfile() => "/api/profile/update";
+  static String popularProducts() => "/api/local/etsy/popular-products";
 
   static String changePasswordApiLink() => "/api/password/change";
   static String upcomingSparks() => "/api/upcoming/spark";
@@ -93,4 +98,7 @@ final class Endpoints {
   static String notificationToggle({required String id}) =>
       "/api/notification/$id/mark-view";
   static String giftDetailsApi({required String id}) => "/api/product/$id";
+
+  static String searchProduct({required String keyword}) =>
+      "/api/local/etsy/search-products?keyword=$keyword";
 }

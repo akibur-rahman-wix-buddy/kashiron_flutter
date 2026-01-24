@@ -15,6 +15,7 @@ class SparkProductCard extends StatefulWidget {
   final String image;
   final VoidCallback onBuyTap;
   final String id;
+  final bool isFavorite;
 
   const SparkProductCard({
     Key? key,
@@ -23,6 +24,7 @@ class SparkProductCard extends StatefulWidget {
     required this.image,
     required this.onBuyTap,
     required this.id,
+    required this.isFavorite,
   }) : super(key: key);
 
   @override
@@ -74,7 +76,9 @@ class _SparkProductCardState extends State<SparkProductCard> {
                     ),
                     child: Center(
                       child: Icon(
-                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        widget.isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border,
                         color: isFavorite ? Colors.red : Colors.white,
                         size: 20, // adjust icon size
                       ),

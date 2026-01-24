@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
+import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 
 class ReminderBottomSheet {
-  static void show(BuildContext context) {
+  static void show(BuildContext context,
+      {required String id, required String spark_id}) {
     showModalBottomSheet(
       context: context,
       backgroundColor: const Color(0xFF1E1E2C), // dark background
@@ -16,40 +19,7 @@ class ReminderBottomSheet {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               Text(
-                "Options",
-                style: TextFontStyle.textStyle16InterW700
-              ),
-              const SizedBox(height: 12),
-
-              // Delete Spark
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFF2A2A3D),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  leading: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFDB2121),
-                      shape: BoxShape.circle,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: const Icon(Icons.delete_outlined, color: Colors.white),
-                  ),
-                  title:  Text(
-                    "Delete Spark",
-                    style: TextFontStyle.textStyle14InterW500,
-                  ),
-                  subtitle: const Text(
-                    "Remove this reminder",
-                    style: TextStyle(color: Colors.white54),
-                  ),
-                  onTap: () {
-                    // Handle delete action
-                  },
-                ),
-              ),
+              Text("Options", style: TextFontStyle.textStyle16InterW700),
               const SizedBox(height: 12),
 
               // Remind Me
@@ -65,11 +35,13 @@ class ReminderBottomSheet {
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(8),
-                    child: const Icon(Icons.notification_important, color: Colors.white),
+                    child: const Icon(Icons.notification_important,
+                        color: Colors.white),
                   ),
                   title: const Text(
                     "Remind Me",
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   subtitle: const Text(
                     "Click to edit reminder",
@@ -78,13 +50,16 @@ class ReminderBottomSheet {
                   trailing: TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Color(0xFFEB690E),
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 4),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     onPressed: () {
-                      // Handle edit reminder
+                      NavigationService.navigateToWithArgs(
+                          Routes.selfCareReminderScreen,
+                          {"id": id, "spark_id": spark_id});
                     },
                     child: const Text(
                       "Edit",
@@ -102,19 +77,21 @@ class ReminderBottomSheet {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: ListTile(
-                  title:  Text(
+                  title: Text(
                     "Reminder set for 26 September 2025 at 16:30",
-                    style: TextFontStyle.textStyle14InterW500.copyWith(color: Color(0xFF24C776)),
+                    style: TextFontStyle.textStyle14InterW500
+                        .copyWith(color: Color(0xFF24C776)),
                   ),
-                  subtitle:  Text(
+                  subtitle: Text(
                     "You’ll be notified about this spark",
-                    style: TextFontStyle.textStyle12InterW400.copyWith(color: Colors.white60),
+                    style: TextFontStyle.textStyle12InterW400
+                        .copyWith(color: Colors.white60),
                   ),
                   trailing: TextButton(
                     onPressed: () {
                       // Handle remove reminder
                     },
-                    child:  Text(
+                    child: Text(
                       "Remove",
                       style: TextStyle(color: Colors.red),
                     ),

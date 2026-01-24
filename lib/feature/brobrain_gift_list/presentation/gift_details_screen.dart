@@ -75,6 +75,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   CustomAppBar(
                     title: "Gift Details",
                   ),
+                  UIHelper.verticalSpace(16.h),
                   Center(
                     child: CircularProgressIndicator(
                       color: Colors.white,
@@ -90,6 +91,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   CustomAppBar(
                     title: "Gift Details",
                   ),
+                  UIHelper.verticalSpace(16.h),
                   Center(
                     child: Text(
                       "Failed to load product details",
@@ -110,6 +112,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   CustomAppBar(
                     title: "Gift Details",
                   ),
+                  UIHelper.verticalSpace(16.h),
                   Center(
                     child: Text(
                       "No product data available",

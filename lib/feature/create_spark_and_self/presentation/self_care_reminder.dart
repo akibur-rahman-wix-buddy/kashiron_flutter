@@ -6,12 +6,17 @@ import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
+import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
 
 class SelfCareReminderScreen extends StatefulWidget {
-  const SelfCareReminderScreen({Key? key}) : super(key: key);
+  String? id;
+  String? spark_id;
+
+  SelfCareReminderScreen({Key? key, this.id, this.spark_id}) : super(key: key);
 
   @override
   State<SelfCareReminderScreen> createState() => _SelfCareReminderScreenState();
@@ -61,7 +66,7 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
       setState(() {
         selectedTime = picked;
         timeController.text =
-            "${picked.hourOfPeriod}:${picked.minute.toString().padLeft(2, '0')} ${picked.period.name.toUpperCase()}";
+            "${picked.hourOfPeriod}:${picked.minute.toString().padLeft(2, '0')}";
       });
     }
   }
@@ -134,13 +139,15 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
                   backgroundColor: Color(0xFF373B4C),
                   width: 140.w,
                   text: "Cancel",
-                  onPressed: () {},
+                  onPressed: () {
+                    NavigationService.goBack;
+                  },
                 ),
                 CustomElevatedButton(
                   padding: EdgeInsets.all(0),
                   width: 140.w,
                   text: "Save",
-                  onPressed: () {
+                  onPressed: () async {
                     log(">>>>>>>>>>>>>>>>>>>> VIP Profile: ${vipProfileController.text}");
                     log(">>>>>>>>>>>>>>>>>>>> Spark Title: ${sparkTitleController.text}");
                     log(">>>>>>>>>>>>>>>>>>>> Description: ${sparkDescriptionController.text}");
@@ -148,11 +155,29 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
                     log(">>>>>>>>>>>>>>>>>>>> Time: ${timeController.text}");
                     log(">>>>>>>>>>>>>>>>>>>> Gift Suggestion Needed: ${_selectedOption ?? 'Not selected'}");
 
-                    selfReminderApiRx.selfReminder(
-                        title: sparkTitleController.text,
-                        description: sparkDescriptionController.text,
-                        date: dateController.text,
-                        time: timeController.text);
+                    if (widget.id != null) {
+                      bool success = await sparkUpdateApiRx.sparkUpdate(
+                          vip_id: widget.id.toString(),
+                          title: sparkTitleController.text,
+                          description: sparkDescriptionController.text,
+                          date: dateController.text,
+                          time: timeController.text,
+                          spark_id: widget.spark_id.toString());
+
+                      if (success) {
+                        NavigationService.navigateTo(
+                            Routes.vipSparkDetailsScreen);
+                      }
+                    } else {
+                      bool success = await selfReminderApiRx.selfReminder(
+                          title: sparkTitleController.text,
+                          description: sparkDescriptionController.text,
+                          date: dateController.text,
+                          time: timeController.text);
+                      if (success) {
+                        NavigationService.navigateTo(Routes.customBottomNavBar);
+                      }
+                    }
                   },
                 ),
               ],

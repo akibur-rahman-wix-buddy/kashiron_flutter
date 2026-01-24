@@ -9,7 +9,6 @@ import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 
-
 void AddNewBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
@@ -25,93 +24,124 @@ void AddNewBottomSheet(BuildContext context) {
         ),
         child: Wrap(
           children: [
-            CustomContainer(child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Add New", style: TextFontStyle.textStyle16InterW400.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: AppColor.cEDEDED
-                    ),),
-                    SvgPicture.asset(AppIcons.cross, height: 20.h, width: 20.w,)
-                  ],
-                ),
-                UIHelper.verticalSpace(20.h),
-                GestureDetector(
-                  onTap: () {
-                    NavigationService.navigateTo(Routes.addVipProfilePartScreen);
-                  },
-                  child: CustomContainer(
-                    color: Color(0xff353a4e),
-                    borderRadius: 8,
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                      child: Row(
+            CustomContainer(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SvgPicture.asset(AppIcons.userAdd, height: 22.h, width: 22.w,),
-                      UIHelper.horizontalSpace(8.w),
-                      Text("Add VIP Profile", style: TextFontStyle.textStyle16InterW400.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColor.cEDEDED
-                      ),),
-
+                      Text(
+                        "Add New",
+                        style: TextFontStyle.textStyle16InterW400.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: AppColor.cEDEDED),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          NavigationService.goBack;
+                        },
+                        child: SvgPicture.asset(
+                          AppIcons.cross,
+                          height: 20.h,
+                          width: 20.w,
+                        ),
+                      )
                     ],
-                  )),
-                ),
-                UIHelper.verticalSpace(10.h),
-                GestureDetector(
-                  onTap: () {
-
-                    NavigationService.navigateTo(Routes.createSparkAndSelfScreen);
-
-                  },
-                  child: CustomContainer(
-                      color: Color(0xff353a4e),
-                      borderRadius: 8,
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(AppIcons.fieldCalander, height: 22.h, width: 22.w,),
-                          UIHelper.horizontalSpace(8.w),
-                          Text("Create Spark", style: TextFontStyle.textStyle16InterW400.copyWith(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: AppColor.cEDEDED
-                          ),),
-
-                        ],
-                      )),
-                ),
-                UIHelper.verticalSpace(10.h),
-                GestureDetector(
-                  onTap: () {
-
-
-                    NavigationService.navigateTo(Routes.selfCareReminderScreen);
-
-                  },
-                  child: CustomContainer(
-                      color: Color(0xff353a4e),
-                      borderRadius: 8,
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(AppIcons.selfCare, height: 22.h, width: 22.w,),
-                          UIHelper.horizontalSpace(8.w),
-                          Text("Self-Care Reminder", style: TextFontStyle.textStyle16InterW400.copyWith(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: AppColor.cEDEDED
-                          ),),
-
-                        ],
-                      )),
-                ),
-                UIHelper.verticalSpace(10.h),
-              ],
-            ),
+                  ),
+                  UIHelper.verticalSpace(20.h),
+                  GestureDetector(
+                    onTap: () {
+                      NavigationService.navigateTo(
+                          Routes.addVipProfilePartScreen);
+                    },
+                    child: CustomContainer(
+                        color: Color(0xff353a4e),
+                        borderRadius: 8,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              AppIcons.userAdd,
+                              height: 22.h,
+                              width: 22.w,
+                            ),
+                            UIHelper.horizontalSpace(8.w),
+                            Text(
+                              "Add VIP Profile",
+                              style: TextFontStyle.textStyle16InterW400
+                                  .copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.cEDEDED),
+                            ),
+                          ],
+                        )),
+                  ),
+                  UIHelper.verticalSpace(10.h),
+                  GestureDetector(
+                    onTap: () {
+                      NavigationService.navigateTo(
+                          Routes.createSparkAndSelfScreen);
+                    },
+                    child: CustomContainer(
+                        color: Color(0xff353a4e),
+                        borderRadius: 8,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              AppIcons.fieldCalander,
+                              height: 22.h,
+                              width: 22.w,
+                            ),
+                            UIHelper.horizontalSpace(8.w),
+                            Text(
+                              "Create Spark",
+                              style: TextFontStyle.textStyle16InterW400
+                                  .copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.cEDEDED),
+                            ),
+                          ],
+                        )),
+                  ),
+                  UIHelper.verticalSpace(10.h),
+                  GestureDetector(
+                    onTap: () {
+                      NavigationService.navigateToWithArgs(
+                          Routes.selfCareReminderScreen, {});
+                    },
+                    child: CustomContainer(
+                        color: Color(0xff353a4e),
+                        borderRadius: 8,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              AppIcons.selfCare,
+                              height: 22.h,
+                              width: 22.w,
+                            ),
+                            UIHelper.horizontalSpace(8.w),
+                            Text(
+                              "Self-Care Reminder",
+                              style: TextFontStyle.textStyle16InterW400
+                                  .copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.cEDEDED),
+                            ),
+                          ],
+                        )),
+                  ),
+                  UIHelper.verticalSpace(10.h),
+                ],
+              ),
               padding: EdgeInsets.all(20),
             )
           ],

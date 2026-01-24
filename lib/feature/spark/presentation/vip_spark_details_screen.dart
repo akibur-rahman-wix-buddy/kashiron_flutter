@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
@@ -174,12 +176,12 @@ class _VipSparkDetailsScreenState extends State<VipSparkDetailsScreen> {
                             final data = products[index];
 
                             return SparkProductCard(
+                              isFavorite: data.isFavourite ?? false,
                               title: data.title ?? "",
                               price:
                                   double.tryParse(data.price?.amount ?? '0') ??
                                       0.0,
-                              image:
-                                  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?fm=jpg&q=60&w=3000",
+                              image: data.mainImage.toString(),
                               onBuyTap: () {
                                 print("Buy gift tapped for index $index");
                               },
@@ -258,7 +260,10 @@ class _VipSparkDetailsScreenState extends State<VipSparkDetailsScreen> {
                     iconCircleColor: Color(0xFFEB690E),
                     ifButton: true,
                     onTap: () {
-                      ReminderBottomSheet.show(context);
+                      ReminderBottomSheet.show(context,
+                          id: widget.vip_id, spark_id: widget.id);
+                      log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${widget.vip_id}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                      log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${widget.id}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                     },
                     title: "Remind Me",
                     subTitle:

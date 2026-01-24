@@ -103,8 +103,6 @@
 //
 //
 
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -132,18 +130,18 @@ class _ChooseSendFlowerCardState extends State<ChooseSendFlowerCard> {
     {
       'titleName': 'Sarah Mitchell',
       'address': '123 Oak Street, San Francisco, CA 94102',
-      "value":70,
+      "value": 70,
       'isVip': true,
     },
     {
       'titleName': 'Me',
       'address': '456 Pine Avenue, Los Angeles, CA 0210',
       'isVip': false,
-      "value":75,
+      "value": 75,
     },
     {
       'titleName': 'John Wick',
-      "value":100,
+      "value": 100,
       'address': '789 Maple Road, New York, NY 10001',
       'isVip': true,
     },
@@ -163,9 +161,9 @@ class _ChooseSendFlowerCardState extends State<ChooseSendFlowerCard> {
     final selectedNames = selectedIndexes
         .map((i) => addresses[i]['titleName'] as String)
         .toList();
-final selectedValue = selectedIndexes.map((item)=> addresses[item]["value"]).toList();
+    final selectedValue =
+        selectedIndexes.map((item) => addresses[item]["value"]).toList();
     final totalValue = selectedValue.fold<num>(0, (sum, item) => sum + item);
-
 
     Get.to(ReviewFlowerCardOder(
       message: 'Congratulations! You deserve all the beautiful things in life.',
@@ -209,6 +207,7 @@ final selectedValue = selectedIndexes.map((item)=> addresses[item]["value"]).toL
                   // Address cards
                   ListView.separated(
                     shrinkWrap: true,
+                    padding: EdgeInsets.zero,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: addresses.length,
                     separatorBuilder: (context, index) =>

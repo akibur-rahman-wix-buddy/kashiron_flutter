@@ -16,10 +16,12 @@ class ChooseDeliveryAddressSendFlowerCard extends StatefulWidget {
   const ChooseDeliveryAddressSendFlowerCard({super.key});
 
   @override
-  State<ChooseDeliveryAddressSendFlowerCard> createState() => _ChooseDeliveryAddressSendFlowerCardState();
+  State<ChooseDeliveryAddressSendFlowerCard> createState() =>
+      _ChooseDeliveryAddressSendFlowerCardState();
 }
 
-class _ChooseDeliveryAddressSendFlowerCardState extends State<ChooseDeliveryAddressSendFlowerCard> {
+class _ChooseDeliveryAddressSendFlowerCardState
+    extends State<ChooseDeliveryAddressSendFlowerCard> {
   int? selectedIndex; // Tracks which card is selected
 
   // Sample address data
@@ -68,10 +70,12 @@ class _ChooseDeliveryAddressSendFlowerCardState extends State<ChooseDeliveryAddr
 
                   // Address cards
                   ListView.separated(
+                    padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: addresses.length,
-                    separatorBuilder: (context, index) => UIHelper.verticalSpace(12.h),
+                    separatorBuilder: (context, index) =>
+                        UIHelper.verticalSpace(12.h),
                     itemBuilder: (context, index) {
                       final address = addresses[index];
                       return ChooseDeliveryAddressCard(
@@ -85,12 +89,15 @@ class _ChooseDeliveryAddressSendFlowerCardState extends State<ChooseDeliveryAddr
                   ),
 
                   /// Add New Address Button
-                 UIHelper.verticalSpace(24.h),
+                  UIHelper.verticalSpace(24.h),
                   _buildAddNewAddressButton(),
                   Spacer(),
-                  CustomElevatedButton(text: "Continue", onPressed: (){
-                    NavigationService.navigateTo(Routes.chooseSendFlowerCard);
-                  })
+                  CustomElevatedButton(
+                      text: "Continue",
+                      onPressed: () {
+                        NavigationService.navigateTo(
+                            Routes.chooseSendFlowerCard);
+                      })
                 ],
               ),
             ),
@@ -133,7 +140,7 @@ class _ChooseDeliveryAddressSendFlowerCardState extends State<ChooseDeliveryAddr
             Text(
               'Add New Address',
               style: TextFontStyle.textStyle16InterW700.copyWith(
-                 color: Colors.white,
+                color: Colors.white,
               ),
             ),
           ],
@@ -142,8 +149,3 @@ class _ChooseDeliveryAddressSendFlowerCardState extends State<ChooseDeliveryAddr
     );
   }
 }
-
-
-
-
-

@@ -82,7 +82,7 @@ class SparkDetailsScreen extends StatelessWidget {
                       iconCircleColor: Color(0xFFEB690E),
                       ifButton: true,
                       onTap: () {
-                        ReminderBottomSheet.show(context);
+                        ReminderBottomSheet.show(context, id: '', spark_id: '');
                       },
                       title: "Remind Me",
                       subTitle:
