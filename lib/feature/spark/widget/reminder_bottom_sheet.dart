@@ -5,7 +5,10 @@ import 'package:kashirons_flutter/helpers/navigation_service.dart';
 
 class ReminderBottomSheet {
   static void show(BuildContext context,
-      {required String id, required String spark_id}) {
+      {required String id,
+      required String spark_id,
+      required String date,
+      required String time}) {
     showModalBottomSheet(
       context: context,
       backgroundColor: const Color(0xFF1E1E2C), // dark background
@@ -70,7 +73,6 @@ class ReminderBottomSheet {
               ),
               const SizedBox(height: 12),
 
-              // Reminder Info
               Container(
                 decoration: BoxDecoration(
                   color: const Color(0xFF2A2A3D),
@@ -78,7 +80,7 @@ class ReminderBottomSheet {
                 ),
                 child: ListTile(
                   title: Text(
-                    "Reminder set for 26 September 2025 at 16:30",
+                    "Reminder set for ${date} at ${time}",
                     style: TextFontStyle.textStyle14InterW500
                         .copyWith(color: Color(0xFF24C776)),
                   ),
@@ -89,7 +91,7 @@ class ReminderBottomSheet {
                   ),
                   trailing: TextButton(
                     onPressed: () {
-                      // Handle remove reminder
+                      NavigationService.navigateTo(Routes.customBottomNavBar);
                     },
                     child: Text(
                       "Remove",

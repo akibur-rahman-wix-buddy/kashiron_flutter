@@ -27,7 +27,7 @@ final class SparkUpdateApi {
         "time": time,
       };
       Response response =
-          (await deleteHttp(Endpoints.sparkUpdate(id: spark_id), data));
+          (await postHttp(Endpoints.sparkUpdate(id: spark_id), data));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(json.encode(response.data));

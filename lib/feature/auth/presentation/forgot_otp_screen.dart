@@ -18,7 +18,6 @@ class ForgotOtpScreen extends StatefulWidget {
 }
 
 class _ForgotOtpScreenState extends State<ForgotOtpScreen> {
-
   Timer? _timer;
   int _start = 50;
   bool _canResend = false;
@@ -54,12 +53,10 @@ class _ForgotOtpScreenState extends State<ForgotOtpScreen> {
   }
 
   void _resendCode() async {
-    if (_canResend)  {
-
+    if (_canResend) {
       setState(() {
         isLoading = true;
       });
-
 
       setState(() {
         isLoading = false;
@@ -74,31 +71,48 @@ class _ForgotOtpScreenState extends State<ForgotOtpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.authBg,
-      body: SafeArea(child: Padding(
+      body: SafeArea(
+          child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 30.h,),
+            SizedBox(
+              height: 30.h,
+            ),
             GestureDetector(
                 onTap: () {
                   NavigationService.goBack;
                 },
-                child: Icon(Icons.arrow_back_outlined, size: 24, color: AppColor.cEDEDED,)),
-            SizedBox(height: 24.h,),
-
+                child: Icon(
+                  Icons.arrow_back_outlined,
+                  size: 24,
+                  color: AppColor.cEDEDED,
+                )),
+            SizedBox(
+              height: 24.h,
+            ),
             Text(
               "OTP Verification",
               textAlign: TextAlign.center,
-              style:  TextFontStyle.textStyle8InterW700.copyWith(fontSize: 24.sp, fontWeight: FontWeight.w500, color: AppColor.cEDEDED),
+              style: TextFontStyle.textStyle8InterW700.copyWith(
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.cEDEDED),
             ),
-            SizedBox(height: 4.h,),
+            SizedBox(
+              height: 4.h,
+            ),
             Text(
-              "To ensure the safety and reliability of our community, please enter the 4-digit OTP sent to md@gmail.com",
-              style:  TextFontStyle.textStyle8InterW700.copyWith(fontSize: 16.sp, fontWeight: FontWeight.w400, color: Color(0xffa9a9a9)),
+              "To ensure the safety and reliability of our community, please enter the 6-digit OTP sent to md@gmail.com",
+              style: TextFontStyle.textStyle8InterW700.copyWith(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xffa9a9a9)),
             ),
-            SizedBox(height: 24.h,),
-
+            SizedBox(
+              height: 24.h,
+            ),
             OtpTextField(
               contentPadding: EdgeInsets.all(25),
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,16 +122,15 @@ class _ForgotOtpScreenState extends State<ForgotOtpScreen> {
               fieldHeight: 71.92.h,
               borderRadius: BorderRadius.circular(7.38.r),
               showFieldAsBox: true,
-              inputFormatters: [
-
-              ],
+              inputFormatters: [],
               filled: true,
-              fillColor:Color(0xff373B4C),
+              fillColor: Color(0xff373B4C),
               borderWidth: 1.0.w,
               enabledBorderColor: Color(0xff373B4C),
               borderColor: Color(0xff373B4C),
               focusedBorderColor: Color(0xff373B4C),
-              textStyle: TextFontStyle.textStyle8InterW700.copyWith(color: AppColor.cFFFFFF, fontSize: 24),
+              textStyle: TextFontStyle.textStyle8InterW700
+                  .copyWith(color: AppColor.cFFFFFF, fontSize: 24),
               onCodeChanged: (String code) {
                 setState(() {
                   otpCode = code;
@@ -130,8 +143,9 @@ class _ForgotOtpScreenState extends State<ForgotOtpScreen> {
                 print("Entered OTP: $otpCode");
               },
             ),
-            SizedBox(height: 18.h,),
-
+            SizedBox(
+              height: 18.h,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -141,11 +155,8 @@ class _ForgotOtpScreenState extends State<ForgotOtpScreen> {
                       onTap: _canResend ? _resendCode : null,
                       child: Text(
                         'Resend Code',
-                        style: TextFontStyle.textStyle8InterW700
-                            .copyWith(
-                          color: _canResend
-                              ? Colors.grey
-                              : Colors.grey,
+                        style: TextFontStyle.textStyle8InterW700.copyWith(
+                          color: _canResend ? Colors.grey : Colors.grey,
                           fontSize: 14,
                         ),
                       ),
@@ -154,8 +165,7 @@ class _ForgotOtpScreenState extends State<ForgotOtpScreen> {
                     if (!_canResend)
                       Text(
                         'In $_start second${_start != 1 ? 's' : ''}',
-                        style: TextFontStyle.textStyle8InterW700
-                            .copyWith(
+                        style: TextFontStyle.textStyle8InterW700.copyWith(
                           color: Colors.white70,
                           fontSize: 14,
                         ),
@@ -164,16 +174,19 @@ class _ForgotOtpScreenState extends State<ForgotOtpScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 32.h,),
-            CustomElevatedButton(text: "Verify", onPressed: () {
-
-              NavigationService.navigateTo(Routes.resetPasswordScreen);
-            }, isLoading: isLoading,  )
-
+            SizedBox(
+              height: 32.h,
+            ),
+            CustomElevatedButton(
+              text: "Verify",
+              onPressed: () {
+                NavigationService.navigateTo(Routes.resetPasswordScreen);
+              },
+              isLoading: isLoading,
+            )
           ],
         ),
       )),
-
     );
   }
 }

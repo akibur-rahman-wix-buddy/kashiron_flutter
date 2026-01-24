@@ -3,7 +3,7 @@ import 'dart:convert';
 class PopularProductsModel {
   bool? success;
   String? message;
-  List<Datum>? data;
+  List<Product>? data;
 
   PopularProductsModel({
     this.success,
@@ -22,7 +22,7 @@ class PopularProductsModel {
         message: json["message"],
         data: json["data"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<Product>.from(json["data"]!.map((x) => Product.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,7 +34,7 @@ class PopularProductsModel {
       };
 }
 
-class Datum {
+class Product {
   int? id;
   String? title;
   Price? price;
@@ -44,7 +44,7 @@ class Datum {
   int? favorers;
   bool? isFavourite;
 
-  Datum({
+  Product({
     this.id,
     this.title,
     this.price,
@@ -55,19 +55,19 @@ class Datum {
     this.isFavourite,
   });
 
-  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
+  factory Product.fromRawJson(String str) => Product.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
         title: json["title"],
         price: json["price"] == null ? null : Price.fromJson(json["price"]),
         url: json["url"],
         mainImage: json["main_image"],
-        views: json["views"],
-        favorers: json["favorers"],
-        isFavourite: json["is_favourite"],
+        views: json["views"] ?? 0,
+        favorers: json["favorers"] ?? 0,
+        isFavourite: json["is_favourite"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
@@ -84,7 +84,7 @@ class Datum {
 
 class Price {
   double? amount;
-  CurrencyCode? currencyCode;
+  String? currencyCode;
 
   Price({
     this.amount,
@@ -96,29 +96,17 @@ class Price {
   String toRawJson() => json.encode(toJson());
 
   factory Price.fromJson(Map<String, dynamic> json) => Price(
-        amount: json["amount"]?.toDouble(),
-        currencyCode: currencyCodeValues.map[json["currency_code"]]!,
+        amount: json["amount"] is num
+            ? (json["amount"] as num).toDouble()
+            : double.tryParse(json["amount"].toString()) ?? 0.0,
+        currencyCode: json["currency_code"],
       );
 
   Map<String, dynamic> toJson() => {
         "amount": amount,
-        "currency_code": currencyCodeValues.reverse[currencyCode],
+        "currency_code": currencyCode,
       };
 }
 
-enum CurrencyCode { INR, USD }
-
-final currencyCodeValues =
-    EnumValues({"INR": CurrencyCode.INR, "USD": CurrencyCode.USD});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
-}
+// Remove the CurrencyCode enum and EnumValues class entirely
+// They are causing the error because they don't include all possible currency codes

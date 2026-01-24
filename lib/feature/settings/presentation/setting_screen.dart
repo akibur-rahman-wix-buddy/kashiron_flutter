@@ -101,7 +101,8 @@ class _SettingScreenState extends State<SettingScreen> {
                                         shimmerClipOvalWidget(
                                           height: 50.h,
                                           weight: 50.w,
-                                          networkImageLink: personImageUrl,
+                                          networkImageLink: userProfileData
+                                              ?.data?.user?.avatar,
                                         ),
                                         UIHelper.horizontalSpace(8.w),
                                         Column(

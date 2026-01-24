@@ -119,6 +119,9 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
   late String selectedVipId = '';
   late String selectedVipName = '';
 
+  String _selectedVipId = '';
+  String _selectedVipName = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -230,9 +233,9 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                               builder: (context, value, child) {
                                 return CustomTextField(
                                   key: _textFieldKey,
-                                  hintText: vipProfileController.text.isEmpty
+                                  hintText: _selectedVipName.isEmpty
                                       ? "Choose a VIP"
-                                      : vipProfileController.text,
+                                      : _selectedVipName,
                                   hintTextSyle: TextFontStyle
                                       .textStyle12InterW400
                                       .copyWith(
@@ -245,9 +248,14 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                                       context: context,
                                       controller: vipProfileController,
                                       textFieldKey: _textFieldKey,
-                                      onVipSelected: () {
+                                      onVipSelected:
+                                          (String vipId, String vipName) {
+                                        setState(() {
+                                          _selectedVipId = vipId;
+                                          _selectedVipName = vipName;
+                                        });
                                         print(
-                                            'VIP selected: ${vipProfileController.text}');
+                                            'VIP selected - ID: $_selectedVipId, Name: $_selectedVipName');
                                       },
                                     );
                                   },
@@ -275,71 +283,7 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                                 maxLength: 500,
                               ),
                             ),
-                            UIHelper.verticalSpace(16.h),
-                            Text(
-                              "Gift Suggestion Needed?",
-                              style: TextFontStyle.textStyle16InterW700,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Radio(
-                                  activeColor: Colors.white,
-                                  fillColor:
-                                      MaterialStateProperty.resolveWith<Color>(
-                                    (states) {
-                                      if (states
-                                          .contains(MaterialState.selected)) {
-                                        return Colors.white; // Active color
-                                      }
-                                      return Colors.grey; // Inactive color
-                                    },
-                                  ),
-                                  value: 'yes',
-                                  groupValue: _selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedOption = value;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  'Yes',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                ),
-                                Radio(
-                                  activeColor: Colors.white,
-                                  fillColor:
-                                      MaterialStateProperty.resolveWith<Color>(
-                                    (states) {
-                                      if (states
-                                          .contains(MaterialState.selected)) {
-                                        return Colors.white; // Active color
-                                      }
-                                      return Colors.grey; // Inactive color
-                                    },
-                                  ),
-                                  value: 'no',
-                                  groupValue: _selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedOption = value;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  'No',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              "If Yes, we'll connect this spark with gift suggestions later.",
-                              style: TextFontStyle.textStyle14InterW400
-                                  .copyWith(color: Colors.white60),
-                            ),
+
                             UIHelper.verticalSpace(16.h),
                             Text(
                               "Date",

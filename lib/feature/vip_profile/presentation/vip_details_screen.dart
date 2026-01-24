@@ -86,12 +86,23 @@ class _VipDetailsScreenState extends State<VipDetailsScreen> {
                       ),
                       PopupMenuItem(
                         value: 'delete',
-                        child: Row(
-                          children: [
-                            Icon(Icons.delete, size: 20, color: Colors.red),
-                            SizedBox(width: 8.w),
-                            Text('Delete', style: TextStyle(color: Colors.red)),
-                          ],
+                        child: GestureDetector(
+                          onTap: () async {
+                            bool success =
+                                await vipDeleteApiRx.vipDelete(id: widget.id);
+                            if (success) {
+                              NavigationService.navigateTo(
+                                  Routes.customBottomNavBar);
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.delete, size: 20, color: Colors.red),
+                              SizedBox(width: 8.w),
+                              Text('Delete',
+                                  style: TextStyle(color: Colors.red)),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -127,7 +138,7 @@ class _VipDetailsScreenState extends State<VipDetailsScreen> {
 
                           vipProfileAddToSparkCard(
                             onCardTap: () {},
-                            buttonName: "Add Heads-Up",
+                            buttonName: "Add Spark",
                             type: data?.relation.name ?? " ",
                             name: data?.name ?? " ",
                             birthdayDate: data?.birthday ?? " ",

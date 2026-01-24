@@ -73,6 +73,8 @@ final class Endpoints {
 
   static String sparkDelete({required dynamic id}) => "/api/spark/$id";
 
+  static String vipDelete({required dynamic id}) => "/api/vip/$id";
+
   static String sparkUpdate({required dynamic id}) => "/api/spark/$id";
 
   static String interestWiseProduct({required dynamic id}) =>

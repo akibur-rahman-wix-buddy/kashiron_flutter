@@ -260,8 +260,12 @@ class _VipSparkDetailsScreenState extends State<VipSparkDetailsScreen> {
                     iconCircleColor: Color(0xFFEB690E),
                     ifButton: true,
                     onTap: () {
-                      ReminderBottomSheet.show(context,
-                          id: widget.vip_id, spark_id: widget.id);
+                      NavigationService.navigateToWithArgs(
+                          Routes.selfCareReminderScreen,
+                          {"id": widget.vip_id, "spark_id": widget.id});
+                      //
+                      // ReminderBottomSheet.show(context,
+                      //     id: widget.vip_id, spark_id: widget.id);
                       log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${widget.vip_id}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                       log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${widget.id}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                     },

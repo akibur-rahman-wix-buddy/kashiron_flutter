@@ -6,6 +6,7 @@ import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
+import 'package:kashirons_flutter/feature/spark/widget/reminder_bottom_sheet.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
@@ -65,8 +66,9 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
     if (picked != null) {
       setState(() {
         selectedTime = picked;
+        // Use 24-hour format for backend
         timeController.text =
-            "${picked.hourOfPeriod}:${picked.minute.toString().padLeft(2, '0')}";
+            "${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}";
       });
     }
   }
@@ -164,7 +166,13 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
                           time: timeController.text,
                           spark_id: widget.spark_id.toString());
 
+                      ReminderBottomSheet.show(context,
+                          id: widget.id.toString(),
+                          spark_id: widget.spark_id.toString(),
+                          date: dateController.text,
+                          time: timeController.text);
                       if (success) {
+                        log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                         NavigationService.navigateTo(
                             Routes.vipSparkDetailsScreen);
                       }
@@ -189,7 +197,8 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
         child: Column(
           children: [
             CustomAppBar(
-              title: "Self Care Reminder",
+              title:
+                  widget.id != null ? "Set Reminder 🔔" : "Self Care Reminder",
             ),
             Expanded(
               child: Padding(

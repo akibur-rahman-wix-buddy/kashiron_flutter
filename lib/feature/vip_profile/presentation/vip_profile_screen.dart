@@ -230,20 +230,20 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                               return Column(
                                 children: [
                                   vipProfileAddToSparkCard(
-                                    onCardTap: () {
-                                      NavigationService.navigateToWithArgs(
-                                          Routes.vipDetailsScreen,
-                                          {"id": vip.id.toString()});
-                                    },
+                                    onCardTap: () {},
                                     type: vip.relation?.name ?? "",
                                     // null-safe
                                     name: vip.name ?? "",
                                     birthdayDate:
                                         vip.anniversaryDate?.toString() ?? "",
-                                    onAddSparkTap: () {},
+                                    onAddSparkTap: () {
+                                      NavigationService.navigateToWithArgs(
+                                          Routes.vipDetailsScreen,
+                                          {"id": vip.id.toString()});
+                                    },
                                     sparkNumber:
                                         vip.sparkCount?.toString() ?? "0",
-                                    buttonName: 'Add Heads-Up',
+                                    buttonName: 'Add Spark',
                                     imageUrl: vip.avatar ?? "",
                                   ),
                                   UIHelper.verticalSpace(8.h),

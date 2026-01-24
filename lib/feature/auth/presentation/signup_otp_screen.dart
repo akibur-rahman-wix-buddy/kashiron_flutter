@@ -12,7 +12,8 @@ import '../../../assets_helperfdg/app_fonts.dart';
 import '../../../helpers/all_routes.dart';
 
 class SignupOtpScreen extends StatefulWidget {
-  const SignupOtpScreen({super.key, required this.email, required this.isForgetScreen});
+  const SignupOtpScreen(
+      {super.key, required this.email, required this.isForgetScreen});
   final String email;
   final bool isForgetScreen;
 
@@ -69,18 +70,16 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
         isReSendLoading = true;
       });
 
-
-     bool success =  await otpResentRx.otpSentInfo(email: widget.email,action:"email_verification" );
+      bool success = await otpResentRx.otpSentInfo(
+          email: widget.email, action: "email_verification");
       setState(() {
         isReSendLoading = false;
       });
 
-      if(success){
+      if (success) {
         ToastUtil.showShortToast('OTP sent successfully');
         _startTimer();
       }
-
-
     }
   }
 
@@ -94,21 +93,24 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
       return;
     }
 
-
     setState(() {
-      isLoading= true;
+      isLoading = true;
     });
 
-   bool success =   await otpVerificationRx.otpVerification(email: widget.email.toString(), otp: otpCode,action: widget.isForgetScreen?"forgot_password":"email_verification") ;
-    if(success){
+    bool success = await otpVerificationRx.otpVerification(
+        email: widget.email.toString(),
+        otp: otpCode,
+        action:
+            widget.isForgetScreen ? "forgot_password" : "email_verification");
+    if (success) {
       print("><>>>>>>>>>>>>>>>>>>> success");
       NavigationService.navigateToWithArgs(Routes.setPasswordScreen, {
-        "isForget":widget.isForgetScreen,
-        "email":widget.email.toString(),
-        "setToken":otpVerificationRx.setToken.toString()
+        "isForget": widget.isForgetScreen,
+        "email": widget.email.toString(),
+        "setToken": otpVerificationRx.setToken.toString()
       });
       setState(() {
-        isLoading= false;
+        isLoading = false;
       });
     }
 
@@ -118,7 +120,7 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
     });
 
     setState(() {
-      isLoading= false;
+      isLoading = false;
     });
     // TODO: Implement your OTP verification API call here
 
@@ -173,7 +175,7 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
                   ),
                 ),
                 SizedBox(height: 24.h),
-            
+
                 Text(
                   "OTP Verification",
                   style: TextFontStyle.textStyle8InterW700.copyWith(
@@ -184,7 +186,7 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  "To ensure the safety and reliability of our community, please enter the 4-digit OTP sent to ${widget.email.toString()}",
+                  "To ensure the safety and reliability of our community, please enter the 6-digit OTP sent to ${widget.email.toString()}",
                   style: TextFontStyle.textStyle8InterW700.copyWith(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
@@ -192,14 +194,13 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
                   ),
                 ),
                 SizedBox(height: 24.h),
-            
-                // OTP Field with Error Handling
+
                 Column(
                   children: [
                     OtpTextField(
                       contentPadding: EdgeInsets.all(0),
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            alignment: Alignment.topCenter,
+                      alignment: Alignment.topCenter,
                       enabled: true,
                       numberOfFields: _requiredOtpLength,
                       fieldWidth: 45.92.w,
@@ -207,11 +208,16 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
                       borderRadius: BorderRadius.circular(7.38.r),
                       showFieldAsBox: true,
                       filled: true,
-                      fillColor: _hasOtpError ? Colors.red.withOpacity(0.1) : Color(0xff373B4C),
+                      fillColor: _hasOtpError
+                          ? Colors.red.withOpacity(0.1)
+                          : Color(0xff373B4C),
                       borderWidth: 1.0.w,
-                      enabledBorderColor: _hasOtpError ? Colors.red : Color(0xff373B4C),
-                      borderColor: _hasOtpError ? Colors.red : Color(0xff373B4C),
-                      focusedBorderColor: _hasOtpError ? Colors.red : Color(0xffA4161A),
+                      enabledBorderColor:
+                          _hasOtpError ? Colors.red : Color(0xff373B4C),
+                      borderColor:
+                          _hasOtpError ? Colors.red : Color(0xff373B4C),
+                      focusedBorderColor:
+                          _hasOtpError ? Colors.red : Color(0xffA4161A),
                       textStyle: TextFontStyle.textStyle8InterW700.copyWith(
                         color: AppColor.cFFFFFF,
                         fontSize: 22,
@@ -219,7 +225,7 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
                       onCodeChanged: _onOtpChanged,
                       onSubmit: _onOtpCompleted,
                     ),
-            
+
                     // Error message
                     if (_hasOtpError)
                       Padding(
@@ -245,9 +251,9 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
                       ),
                   ],
                 ),
-            
+
                 SizedBox(height: 18.h),
-            
+
                 // Resend Code Section
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -257,11 +263,16 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
                         InkWell(
                           onTap: _canResend ? _resendCode : null,
                           child: Text(
-                            isReSendLoading ?"Resending Code ...":'Resend Code',
+                            isReSendLoading
+                                ? "Resending Code ..."
+                                : 'Resend Code',
                             style: TextFontStyle.textStyle8InterW700.copyWith(
-                              color: _canResend ? Color(0xffA4161A) : Colors.grey,
+                              color:
+                                  _canResend ? Color(0xffA4161A) : Colors.grey,
                               fontSize: 14.sp,
-                              decoration: _canResend ? TextDecoration.underline : TextDecoration.none,
+                              decoration: _canResend
+                                  ? TextDecoration.underline
+                                  : TextDecoration.none,
                             ),
                           ),
                         ),
@@ -278,17 +289,16 @@ class _SignupOtpScreenState extends State<SignupOtpScreen> {
                     ),
                   ],
                 ),
-            
+
                 SizedBox(height: 32.h),
-            
+
                 // Verify Button
                 CustomElevatedButton(
-            
                   text: "Verify",
                   onPressed: _verifyOtp,
                   isLoading: isLoading,
                 ),
-            
+
                 // OTP Info
                 SizedBox(height: 16.h),
                 Container(
