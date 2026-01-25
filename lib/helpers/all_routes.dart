@@ -168,11 +168,23 @@ final class RouteGenerator {
             : CupertinoPageRoute(builder: (context) => DeleteAccountScreen());
 
       case Routes.addVipProfilePartScreen:
+        final args = settings.arguments as Map;
+
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-                widget: AddVipProfilePartScreen(), settings: settings)
+                widget: AddVipProfilePartScreen(
+                  isEdit: args['isEdit'],
+                  data: args["data"],
+                ),
+                settings: settings,
+              )
             : CupertinoPageRoute(
-                builder: (context) => AddVipProfilePartScreen());
+                builder: (context) => AddVipProfilePartScreen(
+                  isEdit: args['isEdit'],
+                  data: args["data"],
+                ),
+              );
+
       case Routes.settingsNotificationScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(

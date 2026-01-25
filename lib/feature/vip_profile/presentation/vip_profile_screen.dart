@@ -75,11 +75,14 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
             title: "VIP Profile",
             actionButton: GestureDetector(
                 onTap: () {
-                  NavigationService.navigateTo(Routes.addVipProfilePartScreen);
+                  NavigationService.navigateToWithArgs(
+                      Routes.addVipProfilePartScreen, {
+                    "isEdit": false,
+                  });
                 },
                 child: Icon(Icons.add, color: Colors.white, size: 30)),
           ),
-          StreamBuilder(
+          StreamBuilder<VipProfileListModel>(
               stream: getVipProfileListApiRx.dataFetcher,
               builder: (context, snapshot) {
                 final data = snapshot.data?.data ?? [];
@@ -106,7 +109,7 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                   orElse: () => Datum(name: "All", vips: []),
                 );
 
-                final allDataLength = allDataCategory.vips?.length ?? 0;
+                final allDataLength = allDataCategory.vips.length ?? 0;
 
                 if (vipListAll.isEmpty) {
                   vipListAll = allDataCategory.vips ?? [];
@@ -232,10 +235,8 @@ class _VipProfileScreenState extends State<VipProfileScreen> {
                                   vipProfileAddToSparkCard(
                                     onCardTap: () {},
                                     type: vip.relation?.name ?? "",
-                                    // null-safe
                                     name: vip.name ?? "",
-                                    birthdayDate:
-                                        vip.anniversaryDate?.toString() ?? "",
+                                    birthdayDate: vip.birthDate.display ?? "",
                                     onAddSparkTap: () {
                                       NavigationService.navigateToWithArgs(
                                           Routes.vipDetailsScreen,

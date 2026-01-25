@@ -54,25 +54,26 @@ import 'package:kashirons_flutter/networks/dio/dio.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 import 'package:kashirons_flutter/networks/exception_handler/data_source.dart';
 
-final class CreateVipProfileApi {
-  static final CreateVipProfileApi _singleton = CreateVipProfileApi._internal();
+final class UpdateVipProfileApi {
+  static final UpdateVipProfileApi _singleton = UpdateVipProfileApi._internal();
 
-  CreateVipProfileApi._internal();
+  UpdateVipProfileApi._internal();
 
-  static CreateVipProfileApi get instance => _singleton;
+  static UpdateVipProfileApi get instance => _singleton;
 
-  Future<Map<String, dynamic>> createVipProfileApi({
-    String? name,
-    String? dateOfBirth,
-    dynamic relationId,
-    dynamic specialNotes,
-    dynamic streetAddress,
-    dynamic country,
-    dynamic city,
-    dynamic zipCode,
-    dynamic phone,
-    List<dynamic>? interests,
-    dynamic anniversaryDate,
+  Future<Map<String, dynamic>> updateVipProfileApi({
+    required String id,
+    required String name,
+    required String dateOfBirth,
+    required dynamic relationId,
+    required dynamic specialNotes,
+    required dynamic streetAddress,
+    required dynamic country,
+    required dynamic city,
+    required dynamic zipCode,
+    required dynamic phone,
+    required List<dynamic> interests,
+    required dynamic anniversaryDate,
     XFile? avatar,
   }) async {
     try {
@@ -109,7 +110,7 @@ final class CreateVipProfileApi {
       }
 
       // Make the POST request with FormData
-      Response response = await postHttp(Endpoints.createVip(), formData);
+      Response response = await postHttp(Endpoints.updateVip(id: id), formData);
 
       if (response.statusCode == 200) {
         final data = json.decode(json.encode(response.data));

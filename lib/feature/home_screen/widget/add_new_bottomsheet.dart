@@ -4,12 +4,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_container.dart';
+import 'package:kashirons_flutter/feature/vip_profile/model/vip_profile_model.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 
-void AddNewBottomSheet(BuildContext context) {
+void AddNewBottomSheet(
+  BuildContext context,
+) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -52,8 +55,10 @@ void AddNewBottomSheet(BuildContext context) {
                   UIHelper.verticalSpace(20.h),
                   GestureDetector(
                     onTap: () {
-                      NavigationService.navigateTo(
-                          Routes.addVipProfilePartScreen);
+                      NavigationService.navigateToWithArgs(
+                          Routes.addVipProfilePartScreen, {
+                        "isEdit": false,
+                      });
                     },
                     child: CustomContainer(
                         color: Color(0xff353a4e),

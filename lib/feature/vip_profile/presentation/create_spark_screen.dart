@@ -213,7 +213,8 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                                         shimmerClipOvalWidget(
                                           height: 50.h,
                                           weight: 50.w,
-                                          networkImageLink: data!.avatar,
+                                          networkImageLink:
+                                              data!.avatar.toString(),
                                         ),
                                         UIHelper.horizontalSpace(8.w),
                                         Column(

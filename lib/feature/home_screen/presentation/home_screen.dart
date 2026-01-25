@@ -10,6 +10,7 @@ import 'package:kashirons_flutter/feature/home_screen/model/home_api_data_model.
     hide UpcomingSparks, UpcomingBirthday;
 import 'package:kashirons_flutter/feature/home_screen/widget/add_new_bottomsheet.dart';
 import 'package:kashirons_flutter/feature/home_screen/widget/home_shimmer.dart';
+import 'package:kashirons_flutter/feature/vip_profile/model/vip_profile_model.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
@@ -96,21 +97,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
       body: Column(
         children: [
-          /// ============================ App bar ====================== ///
           StreamBuilder(
             stream: getUserProfileRx.dataFetcher,
             builder: (context, snapshot) {
-              // Loading
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return homeAppBarShimmer();
               }
 
-              // Error
               if (snapshot.hasError) {
-                return homeAppBarShimmer(); // or error UI
+                return homeAppBarShimmer();
               }
 
-              // Null / Empty data
               if (!snapshot.hasData ||
                   snapshot.data == null ||
                   snapshot.data!.data == null ||
@@ -118,7 +115,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 return homeAppBarShimmer();
               }
 
-              // Safe access
               final user = snapshot.data!.data!.user!;
 
               return HomeAppBar(
@@ -134,7 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: StreamBuilder<HomeApiDataModel>(
                   stream: homeApiDataRx.dataFetcher,
                   builder: (context, snapshot) {
-                    // First check for connection state
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
                         child: SizedBox(
@@ -175,7 +170,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /// ============================ top cards  ====================== ///
                         TopSectionData(
                           birthday: data.vipBirthdaysThisMonth.toString(),
                           sparks: data.thisWeekSparks.toString(),
@@ -190,8 +184,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: AppColor.cFFFFFF),
                         ),
                         UIHelper.verticalSpace(8.h),
-
-                        /// ============================ Upcoming Sparks ====================== ///
                         UpcomingSparksWidget(
                           upcomingSparks:
                               data.upcomingSparks?.original?.data ?? [],
@@ -205,8 +197,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: AppColor.cFFFFFF),
                         ),
                         UIHelper.verticalSpace(12.h),
-
-                        /// ============================ Birthday ====================== ///
                         UpcomingBirthday(
                           upcomingBirthday: data.upcomingBirthdays!,
                         ),
@@ -244,8 +234,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Color(0xff787A83)),
                         ),
                         UIHelper.verticalSpace(16.h),
-
-                        /// ============================ Popular Gifts ====================== ///
                         SizedBox(
                           height: 252,
                           child: ListView.builder(
@@ -285,15 +273,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     debugPrint('Could not launch $url');
                                   }
                                 },
-                                // currency: data.popularGifts?.original
-                                //         ?.data?[index].price?.currencyCode
-                                //         .toString() ??
-                                //     " ",
                               );
                             },
                           ),
                         ),
-
                         UIHelper.verticalSpace(30.h),
                       ],
                     );
@@ -319,7 +302,6 @@ Widget homeAppBarShimmer() {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              /// Left side (Avatar + Text)
               Row(
                 children: [
                   Shimmer.fromColors(
@@ -367,8 +349,6 @@ Widget homeAppBarShimmer() {
                   ),
                 ],
               ),
-
-              /// Right side (Notification Icon)
               Shimmer.fromColors(
                 baseColor: Colors.grey.shade700,
                 highlightColor: Colors.grey.shade500,

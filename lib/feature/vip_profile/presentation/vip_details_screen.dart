@@ -8,12 +8,14 @@ import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
+import 'package:kashirons_flutter/feature/vip_profile/model/vip_profile_model.dart';
 import 'package:kashirons_flutter/feature/vip_profile/widget/select_interested_button.dart';
 import 'package:kashirons_flutter/feature/vip_profile/widget/vip_profile_add_to_spark_card.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
+import 'package:kashirons_flutter/networks/endpoints.dart';
 
 class VipDetailsScreen extends StatefulWidget {
   final dynamic id;
@@ -26,6 +28,8 @@ class VipDetailsScreen extends StatefulWidget {
 
 class _VipDetailsScreenState extends State<VipDetailsScreen> {
   TextEditingController searchTextController = TextEditingController();
+
+  late VipDataInfo vipDataInfo;
 
   @override
   void initState() {
@@ -69,19 +73,26 @@ class _VipDetailsScreenState extends State<VipDetailsScreen> {
                     items: [
                       PopupMenuItem(
                         value: 'edit',
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.edit,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: 8.w),
-                            Text(
-                              'Edit',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
+                        child: GestureDetector(
+                          onTap: () {
+                            NavigationService.navigateToWithArgs(
+                                Routes.addVipProfilePartScreen,
+                                {"isEdit": true, "data": vipDataInfo});
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.edit,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 8.w),
+                              Text(
+                                'Edit',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       PopupMenuItem(
@@ -125,6 +136,26 @@ class _VipDetailsScreenState extends State<VipDetailsScreen> {
               builder: (context, snapshot) {
                 final data = snapshot.data?.data;
 
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: const CircularProgressIndicator());
+                }
+
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Something went wrong',
+                      style: TextFontStyle.textStyle14InterW400c787A83
+                          .copyWith(color: Colors.redAccent),
+                    ),
+                  );
+                }
+
+                if (data == null || data == []) {
+                  return Center(child: const CircularProgressIndicator());
+                }
+
+                vipDataInfo = data;
+
                 return Expanded(
                   child: Padding(
                     padding:
@@ -137,16 +168,19 @@ class _VipDetailsScreenState extends State<VipDetailsScreen> {
                           UIHelper.verticalSpace(16.h),
 
                           vipProfileAddToSparkCard(
-                            onCardTap: () {},
+                            imageUrl: "${imageUrlForBackend + data.avatar}",
+                            onCardTap: () {
+                              log(">>>>>>>>>>>>>>>>>>>>>>>>>> print ${data.avatar.toString()}");
+                            },
                             buttonName: "Add Spark",
-                            type: data?.relation.name ?? " ",
-                            name: data?.name ?? " ",
-                            birthdayDate: data?.birthday ?? " ",
+                            type: data.relation.name,
+                            name: data.name,
+                            birthdayDate: data.birthday,
                             onAddSparkTap: () {
                               NavigationService.navigateToWithArgs(
-                                  Routes.createSparkScreen, {"id": data?.id});
+                                  Routes.createSparkScreen, {"id": data.id});
                             },
-                            sparkNumber: data?.sparkCount.toString() ?? " ",
+                            sparkNumber: data.sparkCount.toString(),
                           ),
                           UIHelper.verticalSpace(8.h),
 
@@ -207,7 +241,6 @@ class _VipDetailsScreenState extends State<VipDetailsScreen> {
                             ),
                           ),
 
-                          /// select interest section
                           UIHelper.verticalSpace(16.h),
 
                           SelectedInterestsScreen(

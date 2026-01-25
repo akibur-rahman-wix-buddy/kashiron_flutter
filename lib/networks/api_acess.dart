@@ -43,6 +43,7 @@ import 'package:kashirons_flutter/feature/spark/model/spark_show_model.dart';
 import 'package:kashirons_flutter/feature/vip_profile/data/get_vip_profile/rx.dart';
 import 'package:kashirons_flutter/feature/vip_profile/data/get_vip_profile_list/rx.dart';
 import 'package:kashirons_flutter/feature/vip_profile/data/spark_create/rx.dart';
+import 'package:kashirons_flutter/feature/vip_profile/data/update_vip/rx.dart';
 import 'package:kashirons_flutter/feature/vip_profile/data/vip_delete/rx.dart';
 import 'package:kashirons_flutter/feature/vip_profile/model/vip_profile_list_model.dart';
 import 'package:kashirons_flutter/feature/vip_profile/model/vip_profile_model.dart';
@@ -84,6 +85,11 @@ EmailForgetRx emailForgetRx = EmailForgetRx(
 );
 
 CreateVipProfileRx createVipProfileRx = CreateVipProfileRx(
+  empty: <String, dynamic>{},
+  dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
+);
+
+UpdateVipProfileApiRx updateVipProfileApiRx = UpdateVipProfileApiRx(
   empty: <String, dynamic>{},
   dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
 );

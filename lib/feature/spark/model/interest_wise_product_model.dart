@@ -46,6 +46,7 @@ class Datum {
   Price? price;
   dynamic msrp;
   String? mainImage;
+  String? sourceRef; // ADDED THIS FIELD
   dynamic reviewScore;
   dynamic reviewCount;
   List<String>? matchedKeywords;
@@ -62,6 +63,7 @@ class Datum {
     this.price,
     this.msrp,
     this.mainImage,
+    this.sourceRef, // ADDED THIS FIELD
     this.reviewScore,
     this.reviewCount,
     this.matchedKeywords,
@@ -83,6 +85,7 @@ class Datum {
         price: json["price"] == null ? null : Price.fromJson(json["price"]),
         msrp: json["msrp"],
         mainImage: json["main_image"],
+        sourceRef: json["source_ref"], // ADDED THIS FIELD
         reviewScore: json["review_score"],
         reviewCount: json["review_count"],
         matchedKeywords: json["matched_keywords"] == null
@@ -102,6 +105,7 @@ class Datum {
         "price": price?.toJson(),
         "msrp": msrp,
         "main_image": mainImage,
+        "source_ref": sourceRef, // ADDED THIS FIELD
         "review_score": reviewScore,
         "review_count": reviewCount,
         "matched_keywords": matchedKeywords == null

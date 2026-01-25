@@ -18,6 +18,23 @@ class UpcomingSparksWidget extends StatelessWidget {
     required this.upcomingSparks,
   });
 
+  // Base URL for images
+  final String baseImageUrl = "https://admin.brobrainapp.com/";
+
+  String _getFullImageUrl(String? imagePath) {
+    if (imagePath == null || imagePath.isEmpty) {
+      return "";
+    }
+
+    // If the imagePath already starts with http, return as is
+    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+      return imagePath;
+    }
+
+    // Otherwise, add the base URL prefix
+    return baseImageUrl + imagePath;
+  }
+
   @override
   Widget build(BuildContext context) {
     // First, flatten the list of all sparks from all date groups
@@ -104,9 +121,9 @@ class UpcomingSparksWidget extends StatelessWidget {
                             placeholder: AppImages.demoAvatar,
                             height: 20.h,
                             width: 20.w,
-                            imageUrl: spark.vip?.avatar ??
-                                spark.createdBy?.avatar ??
-                                "",
+                            imageUrl: _getFullImageUrl(
+                              spark.vip?.avatar ?? spark.createdBy?.avatar,
+                            ),
                           ),
                         ),
                         UIHelper.horizontalSpace(8.w),
@@ -160,11 +177,19 @@ class UpcomingSparksWidget extends StatelessWidget {
                           color: AppColor.cFFFFFF,
                         ),
                         onPressed: () {
+                          // FIX: Add null checks for vip and vip.id
+                          String? vipId;
+                          if (spark.vip != null && spark.vip.id != null) {
+                            vipId = spark.vip.id.toString();
+                          } else if (spark.vipId != null) {
+                            vipId = spark.vipId.toString();
+                          }
+
                           NavigationService.navigateToWithArgs(
                             Routes.vipSparkDetailsScreen,
                             {
-                              "id": spark.id.toString(),
-                              "vip_id": spark.vip.id.toString()
+                              "id": spark.id?.toString() ?? "0",
+                              "vip_id": vipId ?? "0",
                             },
                           );
                         },

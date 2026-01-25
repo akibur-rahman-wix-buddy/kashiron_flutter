@@ -14,6 +14,7 @@ class SparkProductCard extends StatefulWidget {
   final double price;
   final String image;
   final VoidCallback onBuyTap;
+  final VoidCallback ontap;
   final String id;
   final bool isFavorite;
 
@@ -25,6 +26,7 @@ class SparkProductCard extends StatefulWidget {
     required this.onBuyTap,
     required this.id,
     required this.isFavorite,
+    required this.ontap,
   }) : super(key: key);
 
   @override
@@ -36,115 +38,119 @@ class _SparkProductCardState extends State<SparkProductCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: AppColor.authBg,
-      ),
-      clipBehavior: Clip.hardEdge, // ensures image respects radius
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              // Image
-              ShimmerImage(
-                imageUrl: widget.image,
-                placeholder: AppImages.placeholderImageItem,
-                height: 120.h,
-                width: double.infinity,
-              ),
+    return GestureDetector(
+      onTap: widget.ontap,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: AppColor.authBg,
+        ),
+        clipBehavior: Clip.hardEdge, // ensures image respects radius
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                // Image
+                ShimmerImage(
+                  imageUrl: widget.image,
+                  placeholder: AppImages.placeholderImageItem,
+                  height: 120.h,
+                  width: double.infinity,
+                ),
 
-              // Favorite icon
-              Positioned(
-                top: 10,
-                right: 10,
-                child: GestureDetector(
-                  onTap: () {
-                    favoriteToggleApiRx.favoriteToggle(id: widget.id);
+                // Favorite icon
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      favoriteToggleApiRx.favoriteToggle(id: widget.id);
 
-                    setState(() {
-                      isFavorite = !isFavorite;
-                    });
-                  },
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: const Color(0x661F1F1F),
-                      shape: BoxShape.circle, // make it circular
-                    ),
-                    child: Center(
-                      child: Icon(
-                        widget.isFavorite
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: isFavorite ? Colors.red : Colors.white,
-                        size: 20, // adjust icon size
+                      setState(() {
+                        isFavorite = !isFavorite;
+                      });
+                    },
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        color: const Color(0x661F1F1F),
+                        shape: BoxShape.circle, // make it circular
+                      ),
+                      child: Center(
+                        child: Icon(
+                          widget.isFavorite
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: isFavorite ? Colors.red : Colors.white,
+                          size: 20, // adjust icon size
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextFontStyle.textStyle16InterW400.copyWith(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.cFFFFFF,
-                    ),
-                  ),
-                  Text(
-                    "\$${widget.price}",
-                    style: TextFontStyle.textStyle16InterW400.copyWith(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xffEF233C),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: widget.onBuyTap,
-                    child: Container(
-                      height: 34.h,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: const Color(0xff373c51),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(AppIcons.gift,
-                              height: 14.h, width: 14.w),
-                          UIHelper.horizontalSpace(4.w),
-                          Text(
-                            "Buy Gift",
-                            style: TextFontStyle.textStyle16InterW400.copyWith(
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColor.cEDEDED,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              ],
             ),
-          )
-        ],
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextFontStyle.textStyle16InterW400.copyWith(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColor.cFFFFFF,
+                      ),
+                    ),
+                    Text(
+                      "\$${widget.price}",
+                      style: TextFontStyle.textStyle16InterW400.copyWith(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xffEF233C),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: widget.onBuyTap,
+                      child: Container(
+                        height: 34.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xff373c51),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(AppIcons.gift,
+                                height: 14.h, width: 14.w),
+                            UIHelper.horizontalSpace(4.w),
+                            Text(
+                              "Buy Gift",
+                              style:
+                                  TextFontStyle.textStyle16InterW400.copyWith(
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColor.cEDEDED,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

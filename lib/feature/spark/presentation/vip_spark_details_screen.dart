@@ -18,6 +18,7 @@ import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VipSparkDetailsScreen extends StatefulWidget {
   final String id;
@@ -134,7 +135,6 @@ class _VipSparkDetailsScreenState extends State<VipSparkDetailsScreen> {
                     ),
                   ),
 
-                  /// ============================ GridView Section ====================== ///
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
                     child: StreamBuilder<VipInterestWiseProductModel>(
@@ -182,10 +182,26 @@ class _VipSparkDetailsScreenState extends State<VipSparkDetailsScreen> {
                                   double.tryParse(data.price?.amount ?? '0') ??
                                       0.0,
                               image: data.mainImage.toString(),
-                              onBuyTap: () {
-                                print("Buy gift tapped for index $index");
+                              onBuyTap: () async {
+                                final url = data.sourceRef;
+
+                                if (url == null || url.isEmpty) return;
+
+                                final uri = Uri.parse(url);
+
+                                if (!await launchUrl(
+                                  uri,
+                                  mode: LaunchMode.externalApplication,
+                                )) {
+                                  debugPrint('Could not launch $url');
+                                }
                               },
                               id: data.productId.toString(),
+                              ontap: () {
+                                NavigationService.navigateToWithArgs(
+                                    Routes.productDetailScreen,
+                                    {"id": data.productId.toString()});
+                              },
                             );
                           },
                         );
@@ -193,7 +209,6 @@ class _VipSparkDetailsScreenState extends State<VipSparkDetailsScreen> {
                     ),
                   ),
 
-                  /// "Surprise Flowers" Text at the bottom
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -214,7 +229,6 @@ class _VipSparkDetailsScreenState extends State<VipSparkDetailsScreen> {
                     iconName: Icons.settings,
                   ),
 
-                  ///>>>>>>>>>>>>>>>>>>>>>> option section >>>>>>>>>>>>>>>>>>>>>>>>
                   UIHelper.verticalSpace(16),
                   Padding(
                     padding:

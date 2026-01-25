@@ -15,17 +15,18 @@ final class CreateVipProfileRx extends RxResponseInt<Map<String, dynamic>> {
   ValueStream get getFileData => dataFetcher.stream;
 
   Future<bool> createVipProfileInfo({
-    required String name,
-    required String dateOfBirth,
-    required dynamic relationId,
-    required dynamic specialNotes,
-    required dynamic streetAddress,
-    required dynamic country,
-    required dynamic city,
-    required dynamic zipCode,
-    required dynamic phone,
-    required List<dynamic> interests,
-    required dynamic anniversaryDate,
+    String? name,
+    String? dateOfBirth,
+    dynamic relationId,
+    dynamic specialNotes,
+    dynamic streetAddress,
+    dynamic country,
+    dynamic city,
+    dynamic zipCode,
+    dynamic phone,
+    List<dynamic>? interests,
+    dynamic anniversaryDate,
+    XFile? avatar,
   }) async {
     try {
       // Call the sign-in API
@@ -40,7 +41,8 @@ final class CreateVipProfileRx extends RxResponseInt<Map<String, dynamic>> {
           zipCode: zipCode,
           phone: phone,
           interests: interests,
-          anniversaryDate: anniversaryDate);
+          anniversaryDate: anniversaryDate,
+          avatar: avatar);
 
       String message = data['message'];
       log(">>>>>>>>>>>>>>> massage : $message");
@@ -55,8 +57,6 @@ final class CreateVipProfileRx extends RxResponseInt<Map<String, dynamic>> {
 
   @override
   handleSuccessWithReturn(Map<String, dynamic> data) {
-
-
     ToastUtil.showLongToast(data['message']);
 
     dataFetcher.sink.add(data);
@@ -69,6 +69,7 @@ final class CreateVipProfileRx extends RxResponseInt<Map<String, dynamic>> {
     if (error is DioException) {
       if (error.response != null) {
         if (error.response!.statusCode == 422) {
+          ToastUtil.showShortToast(error.response?.data["message"]);
           var errors = error.response!.data["message"];
           if (errors is Map<String, dynamic>) {
             // Combine all error messages into a single string
@@ -82,6 +83,7 @@ final class CreateVipProfileRx extends RxResponseInt<Map<String, dynamic>> {
             });
             ToastUtil.showShortToast(buffer.toString());
           } else {
+            // ToastUtil.showShortToast(error.response?.data["message"]);
             ToastUtil.showShortToast("Something went wrong!");
           }
         } else {

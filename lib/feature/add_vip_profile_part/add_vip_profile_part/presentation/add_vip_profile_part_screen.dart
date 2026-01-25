@@ -1,6 +1,4 @@
-
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,13 +15,17 @@ import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_p
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/widget/important_events_widget.dart';
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/model/relation_vip_data_model.dart';
 import 'package:kashirons_flutter/feature/add_vip_profile_part/add_vip_profile_part/model/vip_category_data_model.dart';
+import 'package:kashirons_flutter/feature/vip_profile/model/vip_profile_model.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/toast.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
 
 class AddVipProfilePartScreen extends StatefulWidget {
-  const AddVipProfilePartScreen({super.key});
+  final bool isEdit;
+  final VipDataInfo? data;
+
+  const AddVipProfilePartScreen({super.key, required this.isEdit, this.data});
 
   @override
   State<AddVipProfilePartScreen> createState() =>
@@ -33,7 +35,7 @@ class AddVipProfilePartScreen extends StatefulWidget {
 class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
   final _profileImage = Rx<XFile?>(null);
   String? selectedRelationship;
-  int? selectedRelationshipId; // NEW: Store the relationship ID
+  int? selectedRelationshipId;
   bool isOn = false;
 
   // All controllers
@@ -45,8 +47,6 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
   final TextEditingController streetAddressController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController anniversaryController = TextEditingController();
-
-  // Important Events controllers
   final TextEditingController birthdayController = TextEditingController();
   final TextEditingController specialNoteController = TextEditingController();
 
@@ -54,8 +54,8 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
   final _formKey = GlobalKey<FormState>();
 
   List<RelationShipData>? relationshipCategories;
-  List<Relations> allRelations = []; // CHANGED: Store Relations objects instead of just names
-  List<Relations> filteredRelations = []; // CHANGED: Store filtered Relations objects
+  List<Relations> allRelations = [];
+  List<Relations> filteredRelations = [];
   bool isLoadingRelationships = true;
   bool isLoadingCategories = true;
   String? errorMessage;
@@ -63,12 +63,70 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
   Map<String, List<Interests>> categories = {};
   List<dynamic> selectedInterestIds = [];
 
+  // Base URL for images
+  final String baseImageUrl = "https://admin.brobrainapp.com/";
+
   @override
   void initState() {
     super.initState();
     _loadRelationshipData();
     _loadVipCategoryData();
+    _initializeData();
+
+    print(">>>>>>>> isEdit: ${widget.isEdit}");
+    print(">>>>>>>> Data name: ${widget.data?.name.toString()}");
+
+    if (widget.isEdit == false) {
+      widget.data == null;
+    }
+
     searchController.addListener(_filterRelationships);
+  }
+
+  void _initializeData() {
+    if (widget.data != null && widget.data!.selectedInterest.isNotEmpty) {
+      selectedInterestIds =
+          widget.data!.selectedInterest.map((e) => e.id).toList();
+      print(">>>>>>>> selectedInterestIds: $selectedInterestIds");
+    }
+
+    if (widget.data?.name != null && widget.data!.name.isNotEmpty) {
+      firstNameController.text = widget.data!.name;
+    }
+    if (widget.data?.relation.name != null &&
+        widget.data!.relation.name.isNotEmpty) {
+      selectedRelationship = widget.data!.relation.name;
+    }
+    if (widget.data?.relation.id != null) {
+      selectedRelationshipId = widget.data!.relation.id;
+    }
+    if (widget.data?.anniversaryDate != null &&
+        widget.data!.anniversaryDate!.isNotEmpty) {
+      anniversaryController.text = widget.data!.anniversaryDate!;
+    }
+    if (widget.data?.birthday != null && widget.data!.birthday.isNotEmpty) {
+      birthdayController.text = widget.data!.dateOfBirth!;
+    }
+    if (widget.data?.specialNotes != null &&
+        widget.data!.specialNotes.isNotEmpty) {
+      specialNoteController.text = widget.data!.specialNotes;
+    }
+    if (widget.data?.streetAddress != null &&
+        widget.data!.streetAddress!.isNotEmpty) {
+      streetAddressController.text = widget.data!.streetAddress!;
+    }
+    if (widget.data?.country != null && widget.data!.country!.isNotEmpty) {
+      countryController.text = widget.data!.country!;
+    }
+    if (widget.data?.city != null && widget.data!.city!.isNotEmpty) {
+      cityController.text = widget.data!.city!;
+    }
+    if (widget.data?.zipCode != null && widget.data!.zipCode!.isNotEmpty) {
+      zipcodeController.text = widget.data!.zipCode!;
+    }
+    if (widget.data?.phone != null && widget.data!.phone!.isNotEmpty) {
+      phoneController.text = widget.data!.phone!;
+    }
   }
 
   Future<void> _loadRelationshipData() async {
@@ -82,12 +140,12 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
       if (data != null && data.data != null) {
         setState(() {
           relationshipCategories = data.data!;
-          // Extract all relations objects into a flat list
           allRelations = relationshipCategories!
-              .expand<Relations>((category) => category.relations ?? <Relations>[])
-              .where((relation) => relation.name != null && relation.name!.isNotEmpty)
+              .expand<Relations>(
+                  (category) => category.relations ?? <Relations>[])
+              .where((relation) =>
+                  relation.name != null && relation.name!.isNotEmpty)
               .toList();
-
           filteredRelations = allRelations;
           isLoadingRelationships = false;
         });
@@ -119,6 +177,9 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
           categories = _convertToCategoriesMap(result.data!);
           isLoadingCategories = false;
         });
+
+        // Initialize selected interests after categories are loaded
+        _initializeSelectedInterestsFromData();
       } else {
         setState(() {
           errorMessage = result?.message ?? 'Failed to load categories';
@@ -130,6 +191,29 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
         errorMessage = 'Error loading categories: $error';
         isLoadingCategories = false;
       });
+    }
+  }
+
+  void _initializeSelectedInterestsFromData() {
+    if (widget.data != null &&
+        widget.data!.selectedInterest.isNotEmpty &&
+        categories.isNotEmpty) {
+      List<dynamic> validIds = [];
+
+      categories.forEach((category, interests) {
+        for (var interest in interests) {
+          if (widget.data!.selectedInterest
+              .any((selected) => selected.id == interest.id)) {
+            validIds.add(interest.id);
+          }
+        }
+      });
+
+      if (validIds.isNotEmpty) {
+        setState(() {
+          selectedInterestIds = validIds;
+        });
+      }
     }
   }
 
@@ -160,7 +244,6 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
     });
   }
 
-  // NEW: Method to handle relationship selection with both name and ID
   void _onRelationshipSelected(String name, int id) {
     setState(() {
       selectedRelationship = name;
@@ -168,7 +251,6 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
     });
   }
 
-  // Method to handle interest selection
   void _onInterestSelected(List<dynamic> selectedIds) {
     setState(() {
       selectedInterestIds = selectedIds;
@@ -189,7 +271,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
 
   void _showRelationshipMenu(BuildContext context) {
     final RenderBox? renderBox =
-    _relationshipFieldKey.currentContext?.findRenderObject() as RenderBox?;
+        _relationshipFieldKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox == null) return;
 
     final Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -235,13 +317,12 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                             vertical: 8.h, horizontal: 16.w),
                         hintText: 'Search relationships...',
                         hintTextSyle:
-                        TextFontStyle.textStyle10InterW400.copyWith(
+                            TextFontStyle.textStyle10InterW400.copyWith(
                           color: const Color(0xFF787A83),
                           fontSize: 14.sp,
                         ),
                       ),
                       UIHelper.verticalSpace(14.h),
-
                       if (relationshipCategories != null)
                         ...relationshipCategories!.map((category) {
                           String emoji = '•';
@@ -270,7 +351,6 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                             setState,
                           );
                         }).toList(),
-
                       if (isLoadingRelationships)
                         Padding(
                           padding: EdgeInsets.all(16.w),
@@ -287,7 +367,6 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
         ),
       ],
     ).then((value) {
-      // Clear search when popup is closed
       searchController.clear();
       filteredRelations = allRelations;
     });
@@ -299,8 +378,9 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
 
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter localSetState) {
-        List<Relations> filteredItems =
-        relations.where((relation) => filteredRelations.contains(relation)).toList();
+        List<Relations> filteredItems = relations
+            .where((relation) => filteredRelations.contains(relation))
+            .toList();
         if (filteredItems.isEmpty) return const SizedBox.shrink();
 
         return Column(
@@ -351,21 +431,23 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: filteredItems
-                      .map((relation) => GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      _onRelationshipSelected(relation.name!, relation.id!);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 7.h),
-                      child: Text(
-                        relation.name!,
-                        style: TextFontStyle.textStyle10InterW400
-                            .copyWith(fontSize: 14.sp),
-                      ),
-                    ),
-                  ),
-                  )
+                      .map(
+                        (relation) => GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                            _onRelationshipSelected(
+                                relation.name!, relation.id!);
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 7.h),
+                            child: Text(
+                              relation.name!,
+                              style: TextFontStyle.textStyle10InterW400
+                                  .copyWith(fontSize: 14.sp),
+                            ),
+                          ),
+                        ),
+                      )
                       .toList(),
                 ),
               ),
@@ -423,10 +505,10 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
     return InterestsWidget(
       categories: categories,
       onInterestsSelected: _onInterestSelected,
+      initiallySelectedIds: selectedInterestIds,
     );
   }
 
-  // Method to get interest names from IDs for display
   List<String> _getSelectedInterestNames() {
     List<String> names = [];
     categories.forEach((category, interests) {
@@ -439,9 +521,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
     return names;
   }
 
-  // Method to collect and print all form data - UPDATED to use relationship ID
-  void _saveVipProfile() {
-    // Validate required fields
+  Future<void> _saveVipProfile() async {
     if (firstNameController.text.isEmpty) {
       ToastUtil.showLongToast("Please enter full name");
       return;
@@ -455,67 +535,78 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
       ToastUtil.showLongToast("Please select birthday");
       return;
     }
-    if ( selectedInterestIds.isEmpty) {
+    if (selectedInterestIds.isEmpty) {
       ToastUtil.showLongToast("Please select interest category ");
       return;
     }
 
-    // Collect all data
-    final vipProfileData = {
-      'profileImage': _profileImage.value?.path ?? 'No image selected',
-      'firstName': firstNameController.text,
-      'relationship': selectedRelationship ?? 'Not selected',
-      'relationshipId': selectedRelationshipId ?? 'Not selected', // NEW: Include ID
-      'anniversary': anniversaryController.text.isNotEmpty ? anniversaryController.text : '',
-      'birthday': birthdayController.text.isNotEmpty ? birthdayController.text : 'Not set',
-      'specialNote': specialNoteController.text.isNotEmpty ? specialNoteController.text : 'No special notes',
-      'locationEnabled': isOn,
-      'streetAddress': streetAddressController.text,
-      'city': cityController.text,
-      'country': countryController.text,
-      'zipcode': zipcodeController.text,
-      'phone': phoneController.text,
-    };
-
-    // Print all values to console
-    print('=== VIP Profile Data ===');
-    vipProfileData.forEach((key, value) {
-      print('$key: $value');
-    });
-
-    // Print interests with IDs and names
-    if (selectedInterestIds.isEmpty) {
-      print('selectedInterests: No interests selected');
-    } else {
-      print('selectedInterestIds: $selectedInterestIds');
-      print('selectedInterestNames: ${_getSelectedInterestNames().join(", ")}');
-    }
-
+    print('selectedInterestIds: $selectedInterestIds');
+    print('selectedInterestNames: ${_getSelectedInterestNames().join(", ")}');
     print('=======================');
+    print(
+        '>>>>>>>>>> anniversary date ${anniversaryController.text.isNotEmpty ? anniversaryController.text : "Not set"}');
+    print('>>>>>>>>>> avatar ${_profileImage.value}');
 
-    // Call API with relationship ID
-    createVipProfileRx.createVipProfileInfo(
-      name: firstNameController.text,
-      dateOfBirth: birthdayController.text.isNotEmpty ? birthdayController.text : 'Not set',
-      relationId: selectedRelationshipId, // CHANGED: Now using the ID instead of name
-      specialNotes: specialNoteController.text.isNotEmpty ? specialNoteController.text : 'No special notes',
-      streetAddress:  streetAddressController.text,
-      country: countryController.text,
-      city: cityController.text,
-      zipCode: zipcodeController.text,
-      phone:  phoneController.text,
-      interests: selectedInterestIds,
-      anniversaryDate: anniversaryController.text.isNotEmpty ? anniversaryController.text : 'Not set',
-    );
+    try {
+      if (widget.isEdit) {
+        await updateVipProfileApiRx.updateVipProfileInfo(
+          avatar: _profileImage.value,
+          name: firstNameController.text,
+          dateOfBirth: birthdayController.text.isNotEmpty
+              ? birthdayController.text
+              : 'Not set',
+          relationId: selectedRelationshipId,
+          specialNotes: specialNoteController.text.isNotEmpty
+              ? specialNoteController.text
+              : 'No special notes',
+          streetAddress: streetAddressController.text,
+          country: countryController.text,
+          city: cityController.text,
+          zipCode: zipcodeController.text,
+          phone: phoneController.text,
+          interests: selectedInterestIds,
+          anniversaryDate: anniversaryController.text.isNotEmpty
+              ? anniversaryController.text
+              : 'Not set',
+          id: widget.data!.id.toString(),
+        );
 
+        // Only call getVipProfile if we have an ID in edit mode
+        if (widget.data?.id != null) {
+          getVipProfileApiRx.getVipProfile(id: widget.data!.id);
+        }
+      } else {
+        await createVipProfileRx.createVipProfileInfo(
+          name: firstNameController.text,
+          dateOfBirth: birthdayController.text.isNotEmpty
+              ? birthdayController.text
+              : 'Not set',
+          relationId: selectedRelationshipId,
+          specialNotes: specialNoteController.text.isNotEmpty
+              ? specialNoteController.text
+              : 'No special notes',
+          streetAddress: streetAddressController.text,
+          country: countryController.text,
+          city: cityController.text,
+          zipCode: zipcodeController.text,
+          phone: phoneController.text,
+          interests: selectedInterestIds,
+          avatar: _profileImage.value,
+          anniversaryDate: anniversaryController.text.isNotEmpty
+              ? anniversaryController.text
+              : 'Not set',
+        );
+      }
+      getVipProfileListApiRx.getVipProfileList();
 
-    // Navigate back
-    // NavigationService.goBack;
+      NavigationService.goBack();
+    } catch (e) {
+      print('Error saving VIP profile: $e');
+    }
   }
 
   @override
   void dispose() {
-    // Dispose all controllers
     searchController.dispose();
     countryController.dispose();
     cityController.dispose();
@@ -526,7 +617,6 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
     anniversaryController.dispose();
     birthdayController.dispose();
     specialNoteController.dispose();
-
     super.dispose();
   }
 
@@ -542,7 +632,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
         title: Row(
           children: [
             const Spacer(),
-            Text(' Add VIP Profile',
+            Text(widget.isEdit ? "Edit VIP Profile" : 'Add VIP Profile',
                 style: TextFontStyle.textStyle14InterW500
                     .copyWith(fontSize: 18.sp)),
             const Spacer(),
@@ -561,15 +651,30 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                   clipBehavior: Clip.none,
                   children: [
                     Obx(() {
+                      final pickedImage = _profileImage.value;
+                      ImageProvider? image;
+
+                      if (pickedImage != null) {
+                        image = FileImage(File(pickedImage.path));
+                      } else if (widget.isEdit &&
+                          widget.data?.avatar != null &&
+                          widget.data!.avatar.isNotEmpty) {
+                        // FIX: Combine base URL with avatar path
+                        String fullImageUrl = widget.data!.avatar!;
+                        if (!fullImageUrl.startsWith('http')) {
+                          fullImageUrl = baseImageUrl + widget.data!.avatar!;
+                        }
+                        print(">>>>>>>> Full Image URL: $fullImageUrl");
+                        image = NetworkImage(fullImageUrl);
+                      }
+
                       return CircleAvatar(
                         radius: 50.r,
                         backgroundColor: AppColor.blackColor.withOpacity(0.2),
-                        backgroundImage: _profileImage.value != null
-                            ? FileImage(File(_profileImage.value!.path))
-                            : null,
-                        child: _profileImage.value == null
+                        backgroundImage: image,
+                        child: image == null
                             ? Icon(Icons.person,
-                            size: 50.r, color: Colors.white)
+                                size: 50.r, color: Colors.white)
                             : null,
                       );
                     }),
@@ -593,7 +698,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                                     },
                                     child: Text('Take Photo',
                                         style:
-                                        TextFontStyle.textStyle10InterW400),
+                                            TextFontStyle.textStyle10InterW400),
                                   ),
                                   UIHelper.verticalSpace(10.h),
                                   const Divider(color: Colors.grey),
@@ -605,7 +710,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                                     },
                                     child: Text('Select from library',
                                         style:
-                                        TextFontStyle.textStyle14InterW500),
+                                            TextFontStyle.textStyle14InterW500),
                                   ),
                                 ],
                               ),
@@ -627,8 +732,6 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                   textAlign: TextAlign.center,
                   style: TextFontStyle.textcA9A9A9Style12InterW400),
               UIHelper.verticalSpace(20.h),
-
-              /// Basic Information Section
               BasicInformationSection(
                 selectedRelationship: selectedRelationship,
                 relationshipFieldKey: _relationshipFieldKey,
@@ -636,18 +739,13 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                 firstNameController: firstNameController,
                 anniversaryController: anniversaryController,
               ),
-
               UIHelper.verticalSpace(20.h),
-
-              /// Important Events Widget with controllers
               ImportantEventsWidget(
                 title: 'Important Events',
                 birthday: birthdayController,
                 spacialNote: specialNoteController,
               ),
-
               UIHelper.verticalSpace(20.h),
-
               AddTheirLocationWidget(
                 isOn: isOn,
                 streetAddressController: streetAddressController,
@@ -657,13 +755,9 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                 phoneController: phoneController,
                 onSwitchChanged: (value) => setState(() => isOn = value),
               ),
-
               UIHelper.verticalSpace(20.h),
-
               _buildInterestsSection(),
-
               UIHelper.verticalSpace(20.h),
-
               Row(
                 children: [
                   Expanded(

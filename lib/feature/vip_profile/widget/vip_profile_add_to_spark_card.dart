@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
+import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_button.dart';
+import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
@@ -29,6 +31,8 @@ class vipProfileAddToSparkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>> this is image url $imageUrl");
+
     return GestureDetector(
       onTap: onCardTap,
       child: Container(
@@ -44,11 +48,16 @@ class vipProfileAddToSparkCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                shimmerClipOvalWidget(
-                  height: 50.h,
-                  weight: 50.w,
-                  networkImageLink: imageUrl,
-                ),
+                // shimmerClipOvalWidget(
+                //   height: 50.h,
+                //   weight: 50.w,
+                //   networkImageLink: imageUrl,
+                // ),
+                ShimmerImage(
+                    imageUrl: imageUrl.toString(),
+                    placeholder: AppImages.demoAvatar,
+                    height: 50.h,
+                    width: 50.w),
                 UIHelper.horizontalSpace(8.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -13,8 +13,6 @@ import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
 import 'package:kashirons_flutter/feature/bottom_nav_bar.dart';
 import 'package:kashirons_flutter/feature/settings/model/user_infi_data_model.dart';
-import 'package:kashirons_flutter/helpers/all_routes.dart';
-import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/toast.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
