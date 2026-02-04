@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,11 +7,8 @@ import 'package:kashirons_flutter/feature/brobrain_gift_list/widget/product_card
 import 'package:kashirons_flutter/feature/home_screen/model/home_api_data_model.dart'
     hide UpcomingSparks, UpcomingBirthday;
 import 'package:kashirons_flutter/feature/home_screen/widget/add_new_bottomsheet.dart';
-import 'package:kashirons_flutter/feature/home_screen/widget/home_shimmer.dart';
-import 'package:kashirons_flutter/feature/vip_profile/model/vip_profile_model.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
-import 'package:kashirons_flutter/networks/endpoints.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
@@ -235,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         UIHelper.verticalSpace(16.h),
                         SizedBox(
-                          height: 252,
+                          height: 252.h,
                           child: ListView.builder(
                             itemCount:
                                 data.popularGifts!.original?.data?.length,

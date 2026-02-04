@@ -77,6 +77,7 @@ class Data {
   ProductCategory? productCategory;
   Image? primaryImage;
   List<Image>? images;
+  bool? isFavourite;
 
   Data({
     this.id,
@@ -121,6 +122,7 @@ class Data {
     this.productCategory,
     this.primaryImage,
     this.images,
+    this.isFavourite,
   });
 
   factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
@@ -180,6 +182,7 @@ class Data {
         images: json["images"] == null
             ? []
             : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
+        isFavourite: json["is_favourite"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -227,6 +230,7 @@ class Data {
         "images": images == null
             ? []
             : List<dynamic>.from(images!.map((x) => x.toJson())),
+        "is_favourite": isFavourite,
       };
 }
 

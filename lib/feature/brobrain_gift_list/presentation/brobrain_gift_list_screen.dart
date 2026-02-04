@@ -116,7 +116,6 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
             title: "Brobrain Giftlist",
           ),
           UIHelper.verticalSpace(16.h),
-
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Row(
@@ -144,7 +143,6 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
             ),
           ),
           UIHelper.verticalSpace(16.h),
-
           if (isSearching)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -162,7 +160,8 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
               ),
             )
           else
-            SizedBox(
+            Container(
+              padding: EdgeInsets.only(left: 16.w),
               height: 45.h,
               child: ListView.builder(
                 primary: false,
@@ -203,9 +202,7 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                 },
               ),
             ),
-
           if (!isSearching) UIHelper.verticalSpace(20.h),
-
           if (!isSearching)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -217,10 +214,7 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
                 ),
               ),
             ),
-
           if (!isSearching) UIHelper.verticalSpace(16.h),
-
-          /// Products Grid - Shows search results OR category products
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -280,6 +274,7 @@ class _BrobrainGiftListScreenState extends State<BrobrainGiftListScreen> {
           isSearching
               ? "No results found for '$searchQuery'"
               : "No products found",
+          style: TextFontStyle.textStyle12InterW400,
         ),
       );
     }

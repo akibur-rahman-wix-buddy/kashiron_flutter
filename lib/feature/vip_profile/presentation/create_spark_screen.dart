@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_icons.dart';
+import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
+import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
@@ -12,6 +14,7 @@ import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
+import 'package:kashirons_flutter/networks/endpoints.dart';
 
 class CreateSparkScreen extends StatefulWidget {
   final dynamic id;
@@ -210,19 +213,20 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        shimmerClipOvalWidget(
-                                          height: 50.h,
-                                          weight: 50.w,
-                                          networkImageLink:
-                                              data!.avatar.toString(),
-                                        ),
+                                        ShimmerImage(
+                                            imageUrl: imageUrlForBackend +
+                                                (data?.avatar.toString() ?? ""),
+                                            placeholder:
+                                                AppImages.placeholderImageItem,
+                                            height: 50.h,
+                                            width: 50.w),
                                         UIHelper.horizontalSpace(8.w),
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              data.name,
+                                              data?.name ?? "",
                                               style: TextFontStyle
                                                   .textStyle20InterW500
                                                   .copyWith(fontSize: 18),
@@ -240,7 +244,8 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                                                       BorderRadius.circular(12),
                                                 ),
                                               ),
-                                              child: Text(data.relation.name,
+                                              child: Text(
+                                                  data?.relation?.name ?? "",
                                                   style: TextFontStyle
                                                       .textStyle10InterW400),
                                             )
@@ -261,7 +266,7 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                                             ),
                                             UIHelper.horizontalSpace(8.w),
                                             Text(
-                                              "Birthday: ${data.birthday}",
+                                              "Birthday: ${data?.birthday ?? ""}",
                                               style: TextFontStyle
                                                   .textStyle10InterW400,
                                             )
@@ -289,7 +294,9 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                                                 CrossAxisAlignment.center,
                                             spacing: 6,
                                             children: [
-                                              Text(data.sparkCount.toString(),
+                                              Text(
+                                                  data?.sparkCount.toString() ??
+                                                      "0",
                                                   textAlign: TextAlign.center,
                                                   style: TextFontStyle
                                                       .textStyle12InterW600

@@ -9,7 +9,6 @@ import 'package:kashirons_flutter/common_widgets/custom_text_field.dart';
 import 'package:kashirons_flutter/feature/brobrain_gift_list/widget/product_card.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
-import 'package:kashirons_flutter/networks/endpoints.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FavoriteGiftsScreen extends StatefulWidget {

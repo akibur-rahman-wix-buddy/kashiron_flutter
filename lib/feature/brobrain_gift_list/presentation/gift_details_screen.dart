@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
-import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_app_bar.dart';
 import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
@@ -22,12 +21,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int quantity = 1;
   bool _isFavorited = false;
   String? selectedImage;
-  List<String> productImages = [];
+  bool _hasInitializedFavorite = false;
 
   @override
   void initState() {
     super.initState();
     giftDetailsApiRx.getGiftDetails(id: widget.id);
+    _isFavorited = false;
+    _hasInitializedFavorite = false;
+  }
+
+  void _toggleFavorite() {
+    favoriteToggleApiRx.favoriteToggle(id: widget.id.toString());
+
+    setState(() {
+      _isFavorited = !_isFavorited;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          _isFavorited ? "Added to wishlist" : "Removed from wishlist",
+        ),
+      ),
+    );
   }
 
   @override
@@ -103,6 +120,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ],
               );
+            }
+
+            // Initialize favorite status only once when data loads
+            if (!_hasInitializedFavorite && snapshot.data?.data != null) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mounted) {
+                  setState(() {
+                    _isFavorited = snapshot.data!.data!.isFavourite == true;
+                    _hasInitializedFavorite = true;
+                  });
+                }
+              });
             }
 
             final data = snapshot.data!.data;
@@ -215,21 +244,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _isFavorited = !_isFavorited;
-                                      });
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            _isFavorited
-                                                ? "Added to wishlist"
-                                                : "Removed from wishlist",
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                    onPressed: _toggleFavorite,
                                     icon: Icon(
                                       _isFavorited
                                           ? Icons.favorite

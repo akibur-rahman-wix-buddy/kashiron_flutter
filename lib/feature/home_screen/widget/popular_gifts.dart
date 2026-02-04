@@ -9,11 +9,13 @@ import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 import '../../../assets_helperfdg/app_fonts.dart';
 
-
-
 class PopularGifts extends StatelessWidget {
   const PopularGifts({
-    super.key, required this.title, required this.value, required this.isLove, required this.imageUrl,
+    super.key,
+    required this.title,
+    required this.value,
+    required this.isLove,
+    required this.imageUrl,
   });
 
   final String title;
@@ -30,8 +32,13 @@ class PopularGifts extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
-
-          return ProductCard(imageUrl:imageUrl,isLoveValue: false,price: 250.toString(),productName: "Smart Watch", isBuyGiftClick: () {  },);
+          return ProductCard(
+            imageUrl: imageUrl,
+            isLoveValue: false,
+            price: 250.toString(),
+            productName: "Smart Watch",
+            isBuyGiftClick: () {},
+          );
           ;
         },
       ),
