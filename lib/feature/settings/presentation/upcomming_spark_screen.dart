@@ -156,14 +156,16 @@ class _UpcommingSparkScreenState extends State<UpcommingSparkScreen> {
                               titleName: spark.title ?? "No Title",
                               description:
                                   spark.description ?? "No Description",
-                              image: spark.vip?.avatar ?? "",
+                              image: spark.vip == null
+                                  ? spark.createdBy!.avatar.toString()
+                                  : spark.vip?.avatar.toString() ?? "",
                               cancelOnTap: () {
                                 _showCancelDialog(context, spark.id);
                               },
                               date: spark.dateTime ?? "",
                               day: spark.daysLeft ?? "",
-                              relationship: spark.vip?.relation?.name ??
-                                  "No Relationship",
+                              relationship:
+                                  spark.vip?.relation?.name ?? "My Self",
                               saveOnTap: () {
                                 _showSaveDialog(context, spark.id);
                               },

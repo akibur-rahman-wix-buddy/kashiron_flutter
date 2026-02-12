@@ -4,26 +4,22 @@ import 'package:kashirons_flutter/networks/dio/dio.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
 import 'package:kashirons_flutter/networks/exception_handler/data_source.dart';
 
-final class SelfReminderApi {
-  static final SelfReminderApi _singleton = SelfReminderApi._internal();
+final class ReminderDeleteApi {
+  static final ReminderDeleteApi _singleton = ReminderDeleteApi._internal();
 
-  SelfReminderApi._internal();
+  ReminderDeleteApi._internal();
 
-  static SelfReminderApi get instance => _singleton;
+  static ReminderDeleteApi get instance => _singleton;
 
-  Future<Map<String, dynamic>> selfReminderApi(
-      {required String title,
-      required String description,
-      required String date,
-      required String time}) async {
+  Future<Map<String, dynamic>> reminderDeleteApi({
+    required String id,
+  }) async {
     try {
       Map<String, dynamic> data = {
-        "title": title,
-        "description": description,
-        "date": date,
-        "time": time,
+        "id": id,
       };
-      Response response = (await postHttp(Endpoints.selfReminder(), data));
+      Response response =
+          (await deleteHttp(Endpoints.reminderDelete(id: id), data));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(json.encode(response.data));

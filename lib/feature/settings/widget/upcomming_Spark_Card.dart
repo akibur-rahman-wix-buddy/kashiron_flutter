@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
+import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
 import 'package:kashirons_flutter/common_widgets/shimmerClipOverImageWidget.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/endpoints.dart';
@@ -60,11 +61,11 @@ class UpcommingSparkCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  shimmerClipOvalWidget(
-                    height: 15,
-                    weight: 15,
-                    networkImageLink: personImageUrl,
-                  ),
+                  ShimmerImage(
+                      imageUrl: image,
+                      placeholder: personImageUrl,
+                      height: 15.h,
+                      width: 15.w),
                   UIHelper.horizontalSpace(8.w),
                   Text(
                     relationship,

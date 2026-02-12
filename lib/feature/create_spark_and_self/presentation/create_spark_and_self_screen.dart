@@ -158,7 +158,7 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                     text: "Save",
                     onPressed: () async {
                       bool success = await sparkCreateApiRx.sparkCreate(
-                          vip_id: vipProfileController.text,
+                          vip_id: _selectedVipId.toString(),
                           title: sparkTitleController.text,
                           description: sparkDescriptionController.text,
                           date: dateController.text,
@@ -168,7 +168,7 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                         NavigationService.navigateTo(Routes.customBottomNavBar);
                       }
 
-                      log(">>>>>>>>>>>>>>>>>>>> VIP Profile: ${vipProfileController.text}");
+                      log(">>>>>>>>>>>>>>>>>>>> VIP Profile: ${_selectedVipId.toString()}");
                       log(">>>>>>>>>>>>>>>>>>>> Spark Title: ${sparkTitleController.text}");
                       log(">>>>>>>>>>>>>>>>>>>> Description: ${sparkDescriptionController.text}");
                       log(">>>>>>>>>>>>>>>>>>>> Date: ${dateController.text}");

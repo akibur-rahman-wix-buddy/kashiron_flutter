@@ -14,10 +14,7 @@ import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
 
 class SelfCareReminderScreen extends StatefulWidget {
-  String? id;
-  String? spark_id;
-
-  SelfCareReminderScreen({Key? key, this.id, this.spark_id}) : super(key: key);
+  SelfCareReminderScreen({super.key});
 
   @override
   State<SelfCareReminderScreen> createState() => _SelfCareReminderScreenState();
@@ -142,7 +139,7 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
                   width: 140.w,
                   text: "Cancel",
                   onPressed: () {
-                    NavigationService.goBack;
+                    NavigationService.navigateTo(Routes.customBottomNavBar);
                   },
                 ),
                 CustomElevatedButton(
@@ -157,34 +154,27 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
                     log(">>>>>>>>>>>>>>>>>>>> Time: ${timeController.text}");
                     log(">>>>>>>>>>>>>>>>>>>> Gift Suggestion Needed: ${_selectedOption ?? 'Not selected'}");
 
-                    if (widget.id != null) {
-                      bool success = await sparkUpdateApiRx.sparkUpdate(
-                          vip_id: widget.id.toString(),
-                          title: sparkTitleController.text,
-                          description: sparkDescriptionController.text,
-                          date: dateController.text,
-                          time: timeController.text,
-                          spark_id: widget.spark_id.toString());
+                    // if (widget.id != null) {
+                    //   bool success = await sparkUpdateApiRx.sparkUpdate(
+                    //     title: sparkTitleController.text,
+                    //     description: sparkDescriptionController.text,
+                    //     date: dateController.text,
+                    //     time: timeController.text,
+                    //   );
+                    //   if (success) {
+                    //     log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                    //     NavigationService.navigateTo(
+                    //         Routes.vipSparkDetailsScreen);
+                    //   }
+                    // }
 
-                      ReminderBottomSheet.show(context,
-                          id: widget.id.toString(),
-                          spark_id: widget.spark_id.toString(),
-                          date: dateController.text,
-                          time: timeController.text);
-                      if (success) {
-                        log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-                        NavigationService.navigateTo(
-                            Routes.vipSparkDetailsScreen);
-                      }
-                    } else {
-                      bool success = await selfReminderApiRx.selfReminder(
-                          title: sparkTitleController.text,
-                          description: sparkDescriptionController.text,
-                          date: dateController.text,
-                          time: timeController.text);
-                      if (success) {
-                        NavigationService.navigateTo(Routes.customBottomNavBar);
-                      }
+                    bool success = await selfReminderApiRx.selfReminder(
+                        title: sparkTitleController.text,
+                        description: sparkDescriptionController.text,
+                        date: dateController.text,
+                        time: timeController.text);
+                    if (success) {
+                      NavigationService.navigateTo(Routes.customBottomNavBar);
                     }
                   },
                 ),
@@ -197,8 +187,18 @@ class _SelfCareReminderScreenState extends State<SelfCareReminderScreen> {
         child: Column(
           children: [
             CustomAppBar(
-              title:
-                  widget.id != null ? "Set Reminder 🔔" : "Self Care Reminder",
+              prefixIcon: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_outlined,
+                  size: 24,
+                  color: AppColor.cEDEDED,
+                ),
+                onPressed: () {
+                  NavigationService.navigateTo(Routes.customBottomNavBar);
+                  // Or use: Navigator.pop(context);
+                },
+              ),
+              title: "Self Care Spark",
             ),
             Expanded(
               child: Padding(

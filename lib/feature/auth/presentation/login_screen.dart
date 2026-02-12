@@ -26,17 +26,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final TextEditingController passController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
 
-
-
   Future<void> _submitForm() async {
     if (!_formKey.currentState!.validate()) return;
-
 
     setState(() {
       isLoading = true;
@@ -46,19 +42,18 @@ class _LoginScreenState extends State<LoginScreen> {
       // Set a timeout of 10 seconds
       bool success = await signInApiRxObj
           .signIn(
-        email: emailController.text,
-        password: passController.text,
-      )
+            email: emailController.text,
+            password: passController.text,
+          )
           .timeout(const Duration(seconds: 10));
 
       if (success) {
         await appData.write(kKeyIsLoggedIn, true);
         NavigationService.navigateTo(Routes.customBottomNavBar);
-      } else {
-
-      }
+      } else {}
     } on TimeoutException {
-      ToastUtil.showLongToast("Request timed out. Please check your connection and try again.");
+      ToastUtil.showLongToast(
+          "Request timed out. Please check your connection and try again.");
     } catch (e) {
       ToastUtil.showLongToast('An error occurred: $e');
     } finally {
@@ -68,12 +63,12 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.authBg,
-      body: SafeArea(child: SingleChildScrollView(
+      body: SafeArea(
+          child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
@@ -81,27 +76,37 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 20.h,),
-                SvgPicture.asset(AppIcons.authPlaceHolder, height: 80.h, width: 80.w,),
-                SizedBox(height: 12.h,),
+                SizedBox(
+                  height: 20.h,
+                ),
+                SvgPicture.asset(
+                  AppIcons.authPlaceHolder,
+                  height: 80.h,
+                  width: 80.w,
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
                 Text(
                   "Welcome Back",
                   style: TextFontStyle.textStyle12InterW300.copyWith(
                       fontSize: 28,
                       fontWeight: FontWeight.w500,
-                      color: AppColor.cEDEDED
-                  ),
+                      color: AppColor.cEDEDED),
                 ),
-                SizedBox(height: 2.h,),
+                SizedBox(
+                  height: 2.h,
+                ),
                 Text(
                   "Sign in to continue",
                   style: TextFontStyle.textStyle12InterW300.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
-                      color: AppColor.cEDEDED
-                  ),
+                      color: AppColor.cEDEDED),
                 ),
-                SizedBox(height: 32.h,),
+                SizedBox(
+                  height: 32.h,
+                ),
                 CustomTextField(
                   leftIcon: AppIcons.fieldMai,
                   hintText: "Email address",
@@ -116,7 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16.h,),
+                SizedBox(
+                  height: 16.h,
+                ),
                 CustomTextField(
                   leftIcon: AppIcons.fieldLock,
                   hintText: "Password",
@@ -130,43 +137,42 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 8.h,),
+                SizedBox(
+                  height: 8.h,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
                       onTap: () {
-                        NavigationService.navigateTo(Routes.forgotPasswordScreen);
+                        NavigationService.navigateTo(
+                            Routes.forgotPasswordScreen);
                       },
                       child: Text(
                         'Forget Password?',
-                        style: TextFontStyle.textStyle12InterW300
-                            .copyWith(
+                        style: TextFontStyle.textStyle12InterW300.copyWith(
                             decoration: TextDecoration.underline,
                             decorationColor: Color(0xffD7263D),
                             color: Color(0xffD7263D),
-                            fontSize: 14
-                        ),
+                            fontSize: 14),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 16.h,),
-                CustomElevatedButton(text: "Sign In",
-
-                    isLoading:  isLoading ,
-
+                SizedBox(
+                  height: 16.h,
+                ),
+                CustomElevatedButton(
+                    text: "Sign In",
+                    isLoading: isLoading,
                     onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-
-
-                    _submitForm();
-
-
-
-                  }
-                }),
-                SizedBox(height: 30.h,),
+                      if (_formKey.currentState!.validate()) {
+                        _submitForm();
+                      }
+                    }),
+                SizedBox(
+                  height: 30.h,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -175,16 +181,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 60.w,
                       color: Color(0xff787a83),
                     ),
-                    SizedBox(width: 10.w,),
+                    SizedBox(
+                      width: 10.w,
+                    ),
                     Text(
                       "Or continue with",
                       style: TextFontStyle.textStyle12InterW300.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
-                          color: Color(0xff787a83)
-                      ),
+                          color: Color(0xff787a83)),
                     ),
-                    SizedBox(width: 10.w,),
+                    SizedBox(
+                      width: 10.w,
+                    ),
                     Container(
                       height: 1.h,
                       width: 60.w,
@@ -192,29 +201,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30.h,),
+                SizedBox(
+                  height: 30.h,
+                ),
                 AuthOptionContainer(
                   logo: AppIcons.google,
                   title: "Continue with Google",
                   onTap: () {},
                 ),
-                SizedBox(height: 16.h,),
+                SizedBox(
+                  height: 16.h,
+                ),
                 AuthOptionContainer(
                   logo: AppIcons.apple,
                   title: "Continue with Apple",
                   onTap: () {},
                 ),
-                SizedBox(height: 20.h,),
+                SizedBox(
+                  height: 20.h,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Don't have an account? ",
                       style: TextFontStyle.textStyle12InterW300
-                          .copyWith(
-                          color: AppColor.cEDEDED,
-                          fontSize: 14
-                      ),
+                          .copyWith(color: AppColor.cEDEDED, fontSize: 14),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -222,41 +234,37 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: Text(
                         'Sign Up',
-                        style: TextFontStyle.textStyle12InterW300
-                            .copyWith(
+                        style: TextFontStyle.textStyle12InterW300.copyWith(
                             decoration: TextDecoration.underline,
                             decorationColor: Color(0xffD7263D),
                             color: Color(0xffD7263D),
-                            fontSize: 14
-                        ),
+                            fontSize: 14),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20.h,),
+                SizedBox(
+                  height: 20.h,
+                ),
                 Text(
                   'By using this app, you agree to our ',
-                  style: TextFontStyle.textStyle12InterW300
-                      .copyWith(
+                  style: TextFontStyle.textStyle12InterW300.copyWith(
                       color: AppColor.cEDEDED,
                       fontSize: 12,
-                      fontWeight: FontWeight.w400
-                  ),
+                      fontWeight: FontWeight.w400),
                 ),
                 Text(
                   'Terms of Use and Privacy Policy',
-                  style: TextFontStyle.textStyle12InterW300
-                      .copyWith(
+                  style: TextFontStyle.textStyle12InterW300.copyWith(
                       decoration: TextDecoration.underline,
                       decorationColor: Color(0xffD7263D),
                       color: Color(0xffD7263D),
                       fontSize: 12,
-                      fontWeight: FontWeight.w400
-                  ),
+                      fontWeight: FontWeight.w400),
                 ),
-                SizedBox(height: 10,)
-
-
+                SizedBox(
+                  height: 10.h,
+                )
               ],
             ),
           ),
@@ -265,4 +273,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-

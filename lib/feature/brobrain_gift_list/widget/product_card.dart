@@ -22,6 +22,7 @@ class ProductCard extends StatefulWidget {
       required this.imageUrl,
       this.currency,
       this.id});
+
   final String productName;
   final String price;
   final String imageUrl;
@@ -128,7 +129,7 @@ class _ProductCardState extends State<ProductCard> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
-                        "USD - ${widget.price}",
+                        "${widget.currency} - ${widget.price}",
                         style: TextFontStyle.textStyle16InterW400.copyWith(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,

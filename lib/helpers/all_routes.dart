@@ -117,16 +117,9 @@ final class RouteGenerator {
 
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-                widget: SelfCareReminderScreen(
-                  id: args["id"],
-                  spark_id: args["spark_id"],
-                ),
-                settings: settings)
+                widget: SelfCareReminderScreen(), settings: settings)
             : CupertinoPageRoute(
-                builder: (context) => SelfCareReminderScreen(
-                      id: args["id"],
-                      spark_id: args["spark_id"],
-                    ));
+                builder: (context) => SelfCareReminderScreen());
 
       case Routes.signupOtpScreen:
         final Map args = settings.arguments as Map;
