@@ -84,8 +84,6 @@
 // //   );
 // // }
 
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../assets_helperfdg/app_colors.dart';
@@ -113,7 +111,8 @@ Widget customButton({
       foregroundColor: AppColor.cFFFFFF,
       elevation: elevation ?? 0,
       minimumSize: Size(minWidth ?? double.infinity, height ?? 62.h),
-      padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      padding:
+          padding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
         side: BorderSide(
@@ -128,15 +127,16 @@ Widget customButton({
       children: [
         if (icon != null) icon,
         if (icon != null) SizedBox(width: iconSpacing ?? 8.w),
-        Text(
-          name,
-          overflow: TextOverflow.ellipsis,
-          style: textStyle ??
-              TextFontStyle.textStyle14InterW400.copyWith(
-                color: AppColor.cFFFFFF,
-                fontSize: 18,
-                fontWeight: FontWeight.w500
-              ),
+        Center(
+          child: Text(
+            name,
+            overflow: TextOverflow.ellipsis,
+            style: textStyle ??
+                TextFontStyle.textStyle14InterW400.copyWith(
+                    color: AppColor.cFFFFFF,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500),
+          ),
         ),
       ],
     ),

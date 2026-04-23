@@ -156,7 +156,7 @@ class _CreateSparkScreenState extends State<CreateSparkScreen> {
                     log(">>>>>>>>>>>>>>>>>>>> this is time${timeController.text} ");
 
                     bool success = await sparkCreateApiRx.sparkCreate(
-                        vip_id: widget.id.toString(),
+                        vip_id: widget.id,
                         title: sparkTitleTextController.text,
                         description: sparkDescriptionController.text,
                         date: dateController.text,

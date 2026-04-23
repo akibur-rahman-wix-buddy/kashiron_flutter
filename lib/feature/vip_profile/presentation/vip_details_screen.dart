@@ -197,17 +197,17 @@ class _VipDetailsScreenState extends State<VipDetailsScreen> {
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
+                              spacing: 8.w,
                               children: [
                                 SizedBox(
-                                  width: 303,
+                                  width: 303.w,
                                   child: Text('Special Notes',
                                       style:
                                           TextFontStyle.textStyle18InterW700),
                                 ),
                                 Container(
                                   width: double.infinity,
-                                  padding: const EdgeInsets.all(12),
+                                  padding: EdgeInsets.all(12.sp),
                                   decoration: ShapeDecoration(
                                     color: const Color(0xFF2D3142),
                                     shape: RoundedRectangleBorder(
@@ -215,7 +215,7 @@ class _VipDetailsScreenState extends State<VipDetailsScreen> {
                                         width: 1,
                                         color: const Color(0xFF373B4C),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.r),
                                     ),
                                   ),
                                   child: Row(
@@ -223,12 +223,13 @@ class _VipDetailsScreenState extends State<VipDetailsScreen> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                    spacing: 167,
+                                    spacing: 167.w,
                                     children: [
                                       SizedBox(
-                                        width: 305,
-                                        child: Text(data?.specialNotes ?? " ",
+                                        child: Text(data.specialNotes,
                                             textAlign: TextAlign.justify,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                             style: TextFontStyle
                                                 .textStyle14InterW500
                                                 .copyWith(

@@ -134,7 +134,7 @@ void AddNewBottomSheet(
                             ),
                             UIHelper.horizontalSpace(8.w),
                             Text(
-                              "Self-Care Reminder",
+                              "Self-Care Spark",
                               style: TextFontStyle.textStyle16InterW400
                                   .copyWith(
                                       fontSize: 16,

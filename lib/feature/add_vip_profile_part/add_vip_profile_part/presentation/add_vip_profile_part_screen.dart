@@ -683,37 +683,17 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                       right: 0,
                       child: GestureDetector(
                         onTap: () {
-                          Get.bottomSheet(
-                            Container(
-                              color: AppColor.c0E3E2C,
-                              padding: EdgeInsets.all(20.sp),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.back();
-                                      _pickImage(ImageSource.camera);
-                                    },
-                                    child: Text('Take Photo',
-                                        style:
-                                            TextFontStyle.textStyle10InterW400),
-                                  ),
-                                  UIHelper.verticalSpace(10.h),
-                                  const Divider(color: Colors.grey),
-                                  UIHelper.verticalSpace(10.h),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.back();
-                                      _pickImage(ImageSource.gallery);
-                                    },
-                                    child: Text('Select from library',
-                                        style:
-                                            TextFontStyle.textStyle14InterW500),
-                                  ),
-                                ],
-                              ),
+                          showModalBottomSheet(
+                            context: context,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(16.r)),
+                            ),
+                            builder: (_) => _imagePickerSheet(
+                              context,
+                              onCameraTap: () => _pickImage(ImageSource.camera),
+                              onGalleryTap: () =>
+                                  _pickImage(ImageSource.gallery),
                             ),
                           );
                         },
@@ -763,7 +743,7 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
                   Expanded(
                     child: CancelSaveButton(
                         onTap: () {
-                          NavigationService.goBack();
+                          NavigationService.goBack;
                         },
                         color: AppColor.c373B4C,
                         title: 'Cancel'),
@@ -783,4 +763,51 @@ class _AddVipProfilePartScreenState extends State<AddVipProfilePartScreen> {
       ),
     );
   }
+}
+
+Widget _imagePickerSheet(
+  BuildContext context, {
+  required VoidCallback onCameraTap,
+  required VoidCallback onGalleryTap,
+}) {
+  return Container(
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14.r), color: AppColor.primaryBg),
+    child: Padding(
+      padding: EdgeInsets.all(12.sp),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: Icon(
+              Icons.camera_alt,
+              color: AppColor.cFFFFFF,
+            ),
+            title: Text(
+              "Camera",
+              style: TextFontStyle.textStyle14InterW400c787A83,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              onCameraTap();
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.photo_library,
+              color: AppColor.cFFFFFF,
+            ),
+            title: Text(
+              "Gallery",
+              style: TextFontStyle.textStyle14InterW400c787A83,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              onGalleryTap();
+            },
+          ),
+        ],
+      ),
+    ),
+  );
 }

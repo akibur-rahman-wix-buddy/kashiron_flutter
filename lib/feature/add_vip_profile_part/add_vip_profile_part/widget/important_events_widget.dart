@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +15,9 @@ class ImportantEventsWidget extends StatefulWidget {
 
   const ImportantEventsWidget({
     super.key,
-    required this.title, required this.birthday, required this.spacialNote,
+    required this.title,
+    required this.birthday,
+    required this.spacialNote,
   });
 
   @override
@@ -24,7 +25,6 @@ class ImportantEventsWidget extends StatefulWidget {
 }
 
 class _ImportantEventsWidgetState extends State<ImportantEventsWidget> {
-
   void _pickDate() async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -35,7 +35,7 @@ class _ImportantEventsWidgetState extends State<ImportantEventsWidget> {
         return Theme(
           data: ThemeData.dark().copyWith(
             colorScheme: ColorScheme.dark(
-              primary: AppColor.c373B4C,
+              primary: AppColor.cFFFFFF.withValues(alpha: 0.4),
               onPrimary: Colors.white,
               surface: AppColor.c2D3142,
               onSurface: Colors.white,
@@ -95,7 +95,7 @@ class _ImportantEventsWidgetState extends State<ImportantEventsWidget> {
           CustomTextField(
             controller: widget.birthday,
             contentPadding:
-            EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+                EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
             hintText: 'dd/mm/yyyy',
             hintTextSyle: TextFontStyle.textStyle10InterW400.copyWith(
               color: const Color(0xFF787A83),
@@ -104,11 +104,13 @@ class _ImportantEventsWidgetState extends State<ImportantEventsWidget> {
             readOnly: true,
             onTap: _pickDate,
             rightIconWidget: InkWell(
-              onTap: _pickDate,
-              child: Transform.scale(
-                scale: 0.45,
-                  child: SvgPicture.asset(AppIcons.calendar,height: 20.h,))
-            ),
+                onTap: _pickDate,
+                child: Transform.scale(
+                    scale: 0.45,
+                    child: SvgPicture.asset(
+                      AppIcons.calendar,
+                      height: 20.h,
+                    ))),
           ),
 
           UIHelper.verticalSpace(12.h),
@@ -128,7 +130,7 @@ class _ImportantEventsWidgetState extends State<ImportantEventsWidget> {
             controller: widget.spacialNote,
             maxLines: 7,
             contentPadding:
-            EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+                EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
             hintText: 'Add any special notes or anything...',
             hintTextSyle: TextFontStyle.textStyle14InterW400c787A83,
           ),

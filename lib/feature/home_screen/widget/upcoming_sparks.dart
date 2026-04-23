@@ -18,7 +18,6 @@ class UpcomingSparksWidget extends StatelessWidget {
     required this.upcomingSparks,
   });
 
-  // Base URL for images
   final String baseImageUrl = "https://admin.brobrainapp.com/";
 
   String _getFullImageUrl(String? imagePath) {
@@ -26,18 +25,15 @@ class UpcomingSparksWidget extends StatelessWidget {
       return "";
     }
 
-    // If the imagePath already starts with http, return as is
     if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
       return imagePath;
     }
 
-    // Otherwise, add the base URL prefix
     return baseImageUrl + imagePath;
   }
 
   @override
   Widget build(BuildContext context) {
-    // First, flatten the list of all sparks from all date groups
     List<dynamic> allSparks = [];
     List<String> sparkDates = [];
 
@@ -45,7 +41,6 @@ class UpcomingSparksWidget extends StatelessWidget {
       if (dateGroup.sparks != null && dateGroup.sparks!.isNotEmpty) {
         for (var spark in dateGroup.sparks!) {
           allSparks.add(spark);
-          // Get the formatted date for this spark (Today/Tomorrow/Date)
           if (dateGroup.isToday == true) {
             sparkDates.add("Today");
           } else if (dateGroup.isTomorrow == true) {
@@ -59,13 +54,8 @@ class UpcomingSparksWidget extends StatelessWidget {
 
     if (allSparks.isEmpty) {
       return Center(
-        child: Text(
-          "No upcoming sparks",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 14.sp,
-          ),
-        ),
+        child: Text("No upcoming sparks",
+            style: TextFontStyle.textStyle14InterW400c787A83),
       );
     }
 
@@ -177,7 +167,6 @@ class UpcomingSparksWidget extends StatelessWidget {
                           color: AppColor.cFFFFFF,
                         ),
                         onPressed: () {
-                          // FIX: Add null checks for vip and vip.id
                           String? vipId;
                           if (spark.vip != null && spark.vip.id != null) {
                             vipId = spark.vip.id.toString();

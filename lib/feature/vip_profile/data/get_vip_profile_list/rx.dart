@@ -24,7 +24,7 @@ final class GetVipProfileListApiRx extends RxResponseInt<VipProfileListModel> {
       VipProfileListModel allData = await api.getVipProfileListApi();
       handleSuccessWithReturn(allData);
     } catch (error) {
-      handleErrorWithReturn(ErrorHandler.handle(error).failure);
+      handleErrorWithReturn(error);
     }
   }
 

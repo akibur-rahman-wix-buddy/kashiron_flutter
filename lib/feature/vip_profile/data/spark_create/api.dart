@@ -12,7 +12,7 @@ final class SparkCreateApi {
   static SparkCreateApi get instance => _singleton;
 
   Future<Map<String, dynamic>> sparkCreateApi(
-      {required String vip_id,
+      {required dynamic vip_id,
       required String title,
       required String description,
       required String date,

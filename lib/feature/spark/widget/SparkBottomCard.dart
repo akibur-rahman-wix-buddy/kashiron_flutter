@@ -30,11 +30,12 @@ class SparkCard extends StatelessWidget {
       onTap: ifButton ? null : onTap,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.w),
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.sp),
         width: double.infinity,
         decoration: ShapeDecoration(
           color: const Color(0xFF2D3142),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,15 +43,14 @@ class SparkCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  // circle icon ✅ fine
-                  width: 40,
-                  height: 40,
+                  width: 40.w,
+                  height: 40.h,
                   decoration: BoxDecoration(
                     color: iconCircleColor,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
-                    child: Icon(iconName, color: Colors.white, size: 25),
+                    child: Icon(iconName, color: Colors.white, size: 25.sp),
                   ),
                 ),
                 UIHelper.horizontalSpace(8.w),
@@ -71,14 +71,16 @@ class SparkCard extends StatelessWidget {
               ],
             ),
             ifButton
-                ? customButton(
-                    borderColor: Colors.transparent,
-                    name: buttonName,
-                    onCallBack: onTap,
-                    context: context,
-                    minWidth: 90.w,
-                    height: 35,
-                    color: iconCircleColor)
+                ? Expanded(
+                    child: customButton(
+                        borderColor: Colors.transparent,
+                        name: buttonName,
+                        onCallBack: onTap,
+                        context: context,
+                        minWidth: 90.w,
+                        height: 35.h,
+                        color: iconCircleColor),
+                  )
                 : SizedBox.shrink(),
           ],
         ),

@@ -292,119 +292,118 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryBg,
-      body: Column(
-        children: [
-          /// App Bar
-          CustomAppBar(
-            title: "Edit Profile",
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    UIHelper.verticalSpace(26.h),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 2),
-                              borderRadius: BorderRadius.circular(60),
-                            ),
-                            child: _buildProfileImage(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            /// App Bar
+            CustomAppBar(
+              title: "Edit Profile",
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  UIHelper.verticalSpace(26.h),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            borderRadius: BorderRadius.circular(60),
                           ),
-                          Positioned(
-                            right: 5,
-                            bottom: 5,
-                            child: GestureDetector(
-                              onTap: _pickImage,
-                              child: Container(
-                                height: 30,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: const Color(0xFFA4161A),
-                                ),
-                                child: const Icon(
-                                  Icons.camera_alt,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
+                          child: _buildProfileImage(),
+                        ),
+                        Positioned(
+                          right: 5,
+                          bottom: 5,
+                          child: GestureDetector(
+                            onTap: _pickImage,
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: const Color(0xFFA4161A),
+                              ),
+                              child: const Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                                size: 20,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    UIHelper.verticalSpace(16.h),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text("Change Photo",
-                          style: TextFontStyle.textStyle16InterW700),
-                    ),
-                    UIHelper.verticalSpace(16.h),
-
-                    // Name Field
-                    Text("Name", style: TextFontStyle.textStyle14InterW500),
-                    UIHelper.verticalSpace(8.h),
-                    CustomTextField(
-                      controller: firstNameController,
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                    ),
-
-                    UIHelper.verticalSpace(16.h),
-                    // Email Field
-                    Text("Email Address",
-                        style: TextFontStyle.textStyle14InterW500),
-                    UIHelper.verticalSpace(8.h),
-                    CustomTextField(
-                      readOnly: true,
-                      controller: emailController,
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                    ),
-
-                    UIHelper.verticalSpace(16.h),
-                    // Date of Birth Field
-                    Text("Date of Birth",
-                        style: TextFontStyle.textStyle14InterW500),
-                    UIHelper.verticalSpace(8.h),
-                    InkWell(
-                      onTap: _selectDate,
-                      child: AbsorbPointer(
-                        child: CustomTextField(
-                          hintText: "mm/dd/yyyy",
-                          rightIcon: AppIcons.calendar,
-                          readOnly: true,
-                          controller: dateController,
                         ),
+                      ],
+                    ),
+                  ),
+                  UIHelper.verticalSpace(16.h),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text("Change Photo",
+                        style: TextFontStyle.textStyle16InterW700),
+                  ),
+                  UIHelper.verticalSpace(16.h),
+
+                  // Name Field
+                  Text("Name", style: TextFontStyle.textStyle14InterW500),
+                  UIHelper.verticalSpace(8.h),
+                  CustomTextField(
+                    controller: firstNameController,
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                  ),
+
+                  UIHelper.verticalSpace(16.h),
+                  // Email Field
+                  Text("Email Address",
+                      style: TextFontStyle.textStyle14InterW500),
+                  UIHelper.verticalSpace(8.h),
+                  CustomTextField(
+                    readOnly: true,
+                    controller: emailController,
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                  ),
+
+                  UIHelper.verticalSpace(16.h),
+                  // Date of Birth Field
+                  Text("Date of Birth",
+                      style: TextFontStyle.textStyle14InterW500),
+                  UIHelper.verticalSpace(8.h),
+                  InkWell(
+                    onTap: _selectDate,
+                    child: AbsorbPointer(
+                      child: CustomTextField(
+                        hintText: "mm/dd/yyyy",
+                        rightIcon: AppIcons.calendar,
+                        readOnly: true,
+                        controller: dateController,
                       ),
                     ),
+                  ),
 
-                    UIHelper.verticalSpace(100.h),
-                    // Save Button
-                    _isLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : customButton(
-                            name: "Save Changes",
-                            borderColor: Colors.transparent,
-                            height: 45,
-                            onCallBack: _saveChanges,
-                            context: context,
-                          ),
-                  ],
-                ),
+                  UIHelper.verticalSpace(
+                      MediaQuery.of(context).size.height * 0.22),
+                  // Save Button
+                  _isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : customButton(
+                          name: "Save Changes",
+                          borderColor: Colors.transparent,
+                          height: 45,
+                          onCallBack: _saveChanges,
+                          context: context,
+                        ),
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

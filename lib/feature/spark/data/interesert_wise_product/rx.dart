@@ -28,7 +28,7 @@ final class InterestWiseProductApiRx
           await api.interestWiseProductApi(id: id);
       handleSuccessWithReturn(allData);
     } catch (error) {
-      handleErrorWithReturn(ErrorHandler.handle(error).failure);
+      handleErrorWithReturn(error);
     }
   }
 

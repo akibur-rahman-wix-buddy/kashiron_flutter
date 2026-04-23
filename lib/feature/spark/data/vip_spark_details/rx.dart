@@ -23,7 +23,7 @@ final class VipSparksDetailsApiRx extends RxResponseInt<SparkShowModel> {
       SparkShowModel allData = await api.vipSparksDetailsApi(id: id);
       handleSuccessWithReturn(allData);
     } catch (error) {
-      handleErrorWithReturn(ErrorHandler.handle(error).failure);
+      handleErrorWithReturn(error);
     }
   }
 

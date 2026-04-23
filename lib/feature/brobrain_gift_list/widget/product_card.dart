@@ -53,12 +53,10 @@ class _ProductCardState extends State<ProductCard> {
         });
       },
       child: Padding(
-        padding: EdgeInsets.only(right: 16),
+        padding: EdgeInsets.only(right: 16.w),
         child: Container(
-          width: 140.w,
-          height: 240.h,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
             color: AppColor.authBg,
           ),
           child: Column(
@@ -68,11 +66,11 @@ class _ProductCardState extends State<ProductCard> {
                 children: [
                   ShimmerImage(
                     imageUrl: widget.imageUrl,
-                    height: 135,
+                    height: 120.h,
                     width: double.infinity,
                     borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        topLeft: Radius.circular(8)),
+                        topRight: Radius.circular(8.r),
+                        topLeft: Radius.circular(8.r)),
                     placeholder: AppImages.placeholderImageItem,
                   ),
 
@@ -81,8 +79,8 @@ class _ProductCardState extends State<ProductCard> {
                   //   borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                   // ),
                   Positioned(
-                    right: 10,
-                    top: 20,
+                    right: 10.w,
+                    top: 20.h,
                     child: Container(
                       decoration: BoxDecoration(boxShadow: [
                         BoxShadow(
@@ -94,7 +92,7 @@ class _ProductCardState extends State<ProductCard> {
                           onTap: () {
                             favoriteToggleApiRx.favoriteToggle(
                                 id: widget.id.toString());
-
+                            homeApiDataRx.homeApiDataApiInfo();
                             setState(() {
                               isLove = !isLove;
                             });
@@ -112,9 +110,9 @@ class _ProductCardState extends State<ProductCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    UIHelper.verticalSpace(10.h),
+                    UIHelper.verticalSpace(8.h),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
                       child: Text(
                         widget.productName,
                         maxLines: 1,
@@ -126,7 +124,7 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
                       child: Text(
                         "USD - ${widget.price}",
                         style: TextFontStyle.textStyle16InterW400.copyWith(
@@ -168,7 +166,7 @@ class _ProductCardState extends State<ProductCard> {
                         ),
                       ),
                     ),
-                    UIHelper.verticalSpace(10.h),
+                    UIHelper.verticalSpace(8.h),
                   ],
                 ),
               )

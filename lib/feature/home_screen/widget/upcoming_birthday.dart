@@ -17,6 +17,19 @@ class UpcomingBirthday extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> allSparks = [];
+
+    for (var sparks in upcomingBirthday) {
+      allSparks.add(sparks);
+    }
+
+    if (allSparks.isEmpty) {
+      return Center(
+        child: Text("No upcoming birthdays for now",
+            style: TextFontStyle.textStyle14InterW400c787A83),
+      );
+    }
+
     return ListView.builder(
         padding: EdgeInsets.zero,
         shrinkWrap: true,

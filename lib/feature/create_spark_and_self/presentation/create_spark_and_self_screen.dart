@@ -157,18 +157,22 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                     width: 140.w,
                     text: "Save",
                     onPressed: () async {
+                      final vipId =
+                          int.tryParse(vipProfileController.text) ?? 0;
+
                       bool success = await sparkCreateApiRx.sparkCreate(
-                          vip_id: vipProfileController.text,
-                          title: sparkTitleController.text,
-                          description: sparkDescriptionController.text,
-                          date: dateController.text,
-                          time: timeController.text);
+                        vip_id: vipId,
+                        title: sparkTitleController.text,
+                        description: sparkDescriptionController.text,
+                        date: dateController.text,
+                        time: timeController.text,
+                      );
 
                       if (success) {
                         NavigationService.navigateTo(Routes.customBottomNavBar);
                       }
 
-                      log(">>>>>>>>>>>>>>>>>>>> VIP Profile: ${vipProfileController.text}");
+                      log(">>>>>>>>>>>>>>>>>>>> VIP Profile: ${vipProfileController.toString()}");
                       log(">>>>>>>>>>>>>>>>>>>> Spark Title: ${sparkTitleController.text}");
                       log(">>>>>>>>>>>>>>>>>>>> Description: ${sparkDescriptionController.text}");
                       log(">>>>>>>>>>>>>>>>>>>> Date: ${dateController.text}");
@@ -211,12 +215,14 @@ class _CreateSparkAndSelfScreenState extends State<CreateSparkAndSelfScreen> {
                                   color: Colors.grey,
                                 ),
                                 UIHelper.horizontalSpace(08),
-                                SizedBox(
-                                  width: 270.w,
-                                  child: Text(
-                                    "Set a Spark to remember important tasks and special moments with your VIPs.",
-                                    style: TextFontStyle.textStyle14InterW400
-                                        .copyWith(color: Color(0xFF787A83)),
+                                Expanded(
+                                  child: SizedBox(
+                                    width: 270.w,
+                                    child: Text(
+                                      "Set a Spark to remember important tasks and special moments with your VIPs.",
+                                      style: TextFontStyle.textStyle14InterW400
+                                          .copyWith(color: Color(0xFF787A83)),
+                                    ),
                                   ),
                                 ),
                               ],

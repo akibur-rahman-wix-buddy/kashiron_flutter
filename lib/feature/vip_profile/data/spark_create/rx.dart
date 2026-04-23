@@ -14,7 +14,7 @@ final class SparkCreateApiRx extends RxResponseInt<Map<String, dynamic>> {
   ValueStream get getFileData => dataFetcher.stream;
 
   Future<bool> sparkCreate({
-    required String vip_id,
+    required dynamic vip_id,
     required String title,
     required String description,
     required String date,
