@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -33,7 +32,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   XFile? _pickedImage;
   final ImagePicker _picker = ImagePicker();
 
-
   ///>>>>>>>>>>>>>>>>>. here is the file picker >>>>>>>>>>>>>>>>>>>>>>>>>>
   Future<void> _pickImage() async {
     showModalBottomSheet(
@@ -58,11 +56,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onTap: () async {
                   Navigator.pop(context);
                   final XFile? image =
-                  await _picker.pickImage(source: ImageSource.gallery);
+                      await _picker.pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     setState(() {
                       _pickedImage = image;
-                      _hasImageError = false; // Clear error when image is selected
+                      _hasImageError =
+                          false; // Clear error when image is selected
                     });
                   }
                 },
@@ -76,11 +75,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onTap: () async {
                   Navigator.pop(context);
                   final XFile? image =
-                  await _picker.pickImage(source: ImageSource.camera);
+                      await _picker.pickImage(source: ImageSource.camera);
                   if (image != null) {
                     setState(() {
                       _pickedImage = image;
-                      _hasImageError = false; // Clear error when image is selected
+                      _hasImageError =
+                          false; // Clear error when image is selected
                     });
                   }
                 },
@@ -128,10 +128,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
 
       if (success) {
-        NavigationService.navigateToWithArgs(Routes.signupOtpScreen, {
-          "email": emailController.text,
-          "isForgetScreen": false
-        });
+        NavigationService.navigateToWithArgs(Routes.signupOtpScreen,
+            {"email": emailController.text, "isForgetScreen": false});
       }
 
       setState(() {
@@ -164,7 +162,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Container(
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: _hasImageError ? Colors.red : Colors.white,
+                                  color: _hasImageError
+                                      ? Colors.red
+                                      : Colors.white,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(60),
@@ -172,29 +172,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               child: ClipOval(
                                 child: _pickedImage != null
                                     ? Image.file(
-                                  File(_pickedImage!.path),
-                                  height: 110,
-                                  width: 110,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      height: 110,
-                                      width: 110,
-                                      color: Colors.grey[300],
-                                      child: Icon(
-                                        Icons.person,
-                                        size: 50,
-                                        color: Colors.grey[600],
+                                        File(_pickedImage!.path),
+                                        height: 110,
+                                        width: 110,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container(
+                                            height: 110,
+                                            width: 110,
+                                            color: Colors.grey[300],
+                                            child: Icon(
+                                              Icons.person,
+                                              size: 50,
+                                              color: Colors.grey[600],
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    : SvgPicture.asset(
+                                        AppIcons.authPlaceHolder,
+                                        height: 80.h,
+                                        width: 80.w,
                                       ),
-                                    );
-                                  },
-                                )
-                                    : Container(
-                                  height: 110,
-                                  width: 110,
-                                  color: Colors.grey[300],
-                                  child: Image.network(personImageUrl,fit: BoxFit.cover,)
-                                ),
                               ),
                             ),
                             Positioned(
@@ -272,7 +272,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter an email";
-                      } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+                      } else if (!RegExp(
+                              r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
                           .hasMatch(value)) {
                         return "Please enter a valid email";
                       }
@@ -290,7 +291,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                       // Calculate initial date (18 years ago for default selection)
                       final DateTime now = DateTime.now();
-                      final DateTime initialDate = DateTime(now.year - 0, now.month, now.day);
+                      final DateTime initialDate =
+                          DateTime(now.year - 0, now.month, now.day);
                       final DateTime firstDate = DateTime(1900);
                       final DateTime lastDate = now;
 
@@ -311,13 +313,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return Theme(
                             data: Theme.of(context).copyWith(
                               colorScheme: const ColorScheme.light(
-                                primary: Color(0xffA4161A), // header background color
-                                onPrimary: Colors.white, // header text color
+                                primary: Color(0xffA4161A),
+                                // header background color
+                                onPrimary: Colors.white,
+                                // header text color
                                 onSurface: Colors.black, // body text color
                               ),
                               textButtonTheme: TextButtonThemeData(
                                 style: TextButton.styleFrom(
-                                  foregroundColor: const Color(0xffA4161A), // button text color
+                                  foregroundColor: const Color(
+                                      0xffA4161A), // button text color
                                 ),
                               ),
                             ),
@@ -329,7 +334,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (pickedDate != null) {
                         setState(() {
                           dateController.text =
-                          "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+                              "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
                         });
                       }
                     },

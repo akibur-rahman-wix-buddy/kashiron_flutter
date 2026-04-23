@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_colors.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
@@ -39,7 +38,7 @@ class _RerollButtonState extends State<RerollButton>
     widget.onTap();
 
     // stop after 30 seconds
-    Future.delayed(const Duration(seconds: 30), () {
+    Future.delayed(const Duration(seconds: 3), () {
       if (mounted) _controller.stop();
     });
   }

@@ -397,6 +397,7 @@ class SparkData {
       };
 }
 
+// Update the Spark class to have correct types for vip field
 class Spark {
   int? id;
   String? title;
@@ -405,7 +406,7 @@ class Spark {
   String? dateTime;
   String? daysLeft;
   bool? isSelf;
-  CreatedBy? vip;
+  VipDetail? vip; // Changed from CreatedBy? to VipDetail?
   CreatedBy? createdBy;
 
   Spark({
@@ -432,7 +433,8 @@ class Spark {
         dateTime: json["date_time"],
         daysLeft: json["days_left"],
         isSelf: json["is_self"],
-        vip: json["vip"] == null ? null : CreatedBy.fromJson(json["vip"]),
+        vip: json["vip"] == null ? null : VipDetail.fromJson(json["vip"]),
+        // Changed this line
         createdBy: json["created_by"] == null
             ? null
             : CreatedBy.fromJson(json["created_by"]),
@@ -451,25 +453,26 @@ class Spark {
       };
 }
 
-class CreatedBy {
+// Add this new class for VIP details (used in Spark's vip field)
+class VipDetail {
   int? id;
   String? name;
   String? avatar;
   Relation? relation;
 
-  CreatedBy({
+  VipDetail({
     this.id,
     this.name,
     this.avatar,
     this.relation,
   });
 
-  factory CreatedBy.fromRawJson(String str) =>
-      CreatedBy.fromJson(json.decode(str));
+  factory VipDetail.fromRawJson(String str) =>
+      VipDetail.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory CreatedBy.fromJson(Map<String, dynamic> json) => CreatedBy(
+  factory VipDetail.fromJson(Map<String, dynamic> json) => VipDetail(
         id: json["id"],
         name: json["name"],
         avatar: json["avatar"],
@@ -483,6 +486,37 @@ class CreatedBy {
         "name": name,
         "avatar": avatar,
         "relation": relation?.toJson(),
+      };
+}
+
+// Update the CreatedBy class to remove relation field (since in JSON, created_by doesn't have relation)
+class CreatedBy {
+  int? id;
+  String? name;
+  String? avatar;
+
+  CreatedBy({
+    this.id,
+    this.name,
+    this.avatar,
+  });
+
+  factory CreatedBy.fromRawJson(String str) =>
+      CreatedBy.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory CreatedBy.fromJson(Map<String, dynamic> json) => CreatedBy(
+        id: json["id"],
+        name: json["name"],
+        avatar: json["avatar"],
+        // Removed relation field as it's not present in created_by JSON
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "avatar": avatar,
       };
 }
 

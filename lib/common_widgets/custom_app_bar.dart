@@ -143,12 +143,10 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kashirons_flutter/assets_helperfdg/app_fonts.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
-import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 
 import '../assets_helperfdg/app_colors.dart';
 
@@ -212,12 +210,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       icon: Icon(
         Icons.arrow_back_outlined,
         size: 24,
-        color: enableBack ? AppColor.cEDEDED : AppColor.cEDEDED.withOpacity(0.5),
+        color:
+            enableBack ? AppColor.cEDEDED : AppColor.cEDEDED.withOpacity(0.5),
       ),
-      onPressed: enableBack ? () {
-        NavigationService.goBack;
-        // Or use: Navigator.pop(context);
-      } : null,
+      onPressed: enableBack
+          ? () {
+              NavigationService.goBack;
+              // Or use: Navigator.pop(context);
+            }
+          : null,
     );
   }
 }

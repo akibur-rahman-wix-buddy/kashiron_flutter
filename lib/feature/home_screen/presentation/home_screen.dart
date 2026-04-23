@@ -7,7 +7,9 @@ import 'package:kashirons_flutter/feature/brobrain_gift_list/widget/product_card
 import 'package:kashirons_flutter/feature/home_screen/model/home_api_data_model.dart'
     hide UpcomingSparks, UpcomingBirthday;
 import 'package:kashirons_flutter/feature/home_screen/widget/add_new_bottomsheet.dart';
-import 'package:kashirons_flutter/feature/home_screen/widget/home_shimmer.dart';
+import 'package:kashirons_flutter/feature/home_screen/widget/dashboard_shimmer.dart';
+import 'package:kashirons_flutter/helpers/all_routes.dart';
+import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
 import 'package:kashirons_flutter/networks/api_acess.dart';
 import 'package:shimmer/shimmer.dart';
@@ -34,25 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onViewAllTap() {
-    // TODO: Add your navigation logic here
-    // For example:
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => PopularGiftsScreen()));
-
+    NavigationService.navigateTo(Routes.brobrainGiftListScreen);
     // Or show a snackbar/dialog for now
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('View all popular gifts'),
-        duration: Duration(seconds: 2),
-      ),
-    );
-
-    // If you want to navigate to a new screen, uncomment and implement:
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => AllPopularGiftsScreen(
-    //       gifts: data.popularGifts?.original?.data ?? [],
-    //     ),
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Text('View all popular gifts'),
+    //     duration: Duration(seconds: 2),
     //   ),
     // );
   }
@@ -124,11 +113,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   stream: homeApiDataRx.dataFetcher,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: HomeShimmer());
+                      return Center(
+                        child: DashboardShimmer(),
+                      );
                     }
 
                     if (!snapshot.hasData) {
-                      return SizedBox();
+                      return Center(child: DashboardShimmer());
                     }
 
                     final homeData = snapshot.data!;
@@ -224,41 +215,37 @@ class _HomeScreenState extends State<HomeScreen> {
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.zero,
                             itemBuilder: (context, index) {
-                              return SizedBox(
-                                width: 160.w,
-                                child: ProductCard(
-                                  id: data
-                                      .popularGifts?.original?.data?[index].id
-                                      .toString(),
-                                  imageUrl: data.popularGifts?.original
-                                          ?.data?[index].mainImage ??
-                                      " ",
-                                  isLoveValue: data.popularGifts?.original
-                                          ?.data?[index].isFavourite ??
-                                      false,
-                                  price: data.popularGifts?.original
-                                          ?.data?[index].price?.amount
-                                          .toString() ??
-                                      " ",
-                                  productName: data.popularGifts?.original
-                                          ?.data?[index].title ??
-                                      " ",
-                                  isBuyGiftClick: () async {
-                                    final url = data.popularGifts?.original
-                                        ?.data?[index].url;
+                              return ProductCard(
+                                id: data.popularGifts?.original?.data?[index].id
+                                    .toString(),
+                                imageUrl: data.popularGifts?.original
+                                        ?.data?[index].mainImage ??
+                                    " ",
+                                isLoveValue: data.popularGifts?.original
+                                        ?.data?[index].isFavourite ??
+                                    false,
+                                price: data.popularGifts?.original?.data?[index]
+                                        .price?.amount
+                                        .toString() ??
+                                    " ",
+                                productName: data.popularGifts?.original
+                                        ?.data?[index].title ??
+                                    " ",
+                                isBuyGiftClick: () async {
+                                  final url = data
+                                      .popularGifts?.original?.data?[index].url;
 
-                                    if (url == null || url.isEmpty) return;
+                                  if (url == null || url.isEmpty) return;
 
-                                    final uri = Uri.parse(url);
+                                  final uri = Uri.parse(url);
 
-                                    if (!await launchUrl(
-                                      uri,
-                                      mode: LaunchMode.externalApplication,
-                                    )) {
-                                      debugPrint('Could not launch $url');
-                                    }
-                                  },
-                                ),
+                                  if (!await launchUrl(
+                                    uri,
+                                    mode: LaunchMode.externalApplication,
+                                  )) {
+                                    debugPrint('Could not launch $url');
+                                  }
+                                },
                               );
                             },
                           ),

@@ -5,6 +5,7 @@ import 'package:kashirons_flutter/assets_helperfdg/app_image.dart';
 import 'package:kashirons_flutter/common_widgets/custom_container.dart';
 import 'package:kashirons_flutter/common_widgets/custom_elevated_button.dart';
 import 'package:kashirons_flutter/common_widgets/custom_shimmer_image.dart';
+import 'package:kashirons_flutter/feature/home_screen/widget/set_reminder_bottomSheet.dart';
 import 'package:kashirons_flutter/helpers/all_routes.dart';
 import 'package:kashirons_flutter/helpers/navigation_service.dart';
 import 'package:kashirons_flutter/helpers/ui_helpers.dart';
@@ -93,7 +94,7 @@ class UpcomingSparksWidget extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextFontStyle.textStyle16InterW400.copyWith(
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xff3BB515),
                       ),
@@ -118,7 +119,7 @@ class UpcomingSparksWidget extends StatelessWidget {
                         ),
                         UIHelper.horizontalSpace(8.w),
                         Text(
-                          spark.vip?.name?.toString() ?? "No VIP",
+                          spark.vip?.name?.toString() ?? "My Self",
                           style: TextFontStyle.textStyle16InterW400.copyWith(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
@@ -170,8 +171,6 @@ class UpcomingSparksWidget extends StatelessWidget {
                           String? vipId;
                           if (spark.vip != null && spark.vip.id != null) {
                             vipId = spark.vip.id.toString();
-                          } else if (spark.vipId != null) {
-                            vipId = spark.vipId.toString();
                           }
 
                           NavigationService.navigateToWithArgs(
@@ -195,7 +194,17 @@ class UpcomingSparksWidget extends StatelessWidget {
                           fontSize: 12,
                           color: AppColor.cFFFFFF,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          setReminderBottomSheet(context,
+                              title: spark.title,
+                              image: spark.vip == null
+                                  ? spark.createdBy.avatar
+                                  : spark.vip.avatar,
+                              date: upcomingSparks[index].date,
+                              time: spark.time,
+                              id: spark.id.toString(),
+                              isEdit: false);
+                        },
                       ),
                     ),
                   ],

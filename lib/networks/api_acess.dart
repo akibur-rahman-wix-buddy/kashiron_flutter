@@ -34,11 +34,15 @@ import 'package:kashirons_flutter/feature/settings/model/favorite_gifts_model.da
 import 'package:kashirons_flutter/feature/brobrain_gift_list/model/search_products_model.dart';
 import 'package:kashirons_flutter/feature/settings/model/upcomng_sparks.dart';
 import 'package:kashirons_flutter/feature/settings/model/user_infi_data_model.dart';
+import 'package:kashirons_flutter/feature/spark/data/delete_reminder/rx.dart';
 import 'package:kashirons_flutter/feature/spark/data/interesert_wise_product/rx.dart';
+import 'package:kashirons_flutter/feature/spark/data/reminder_list/rx.dart';
 import 'package:kashirons_flutter/feature/spark/data/spark_delete/rx.dart';
 import 'package:kashirons_flutter/feature/spark/data/spark_update/rx.dart';
+import 'package:kashirons_flutter/feature/spark/data/update_reminder/rx.dart';
 import 'package:kashirons_flutter/feature/spark/data/vip_spark_details/rx.dart';
 import 'package:kashirons_flutter/feature/spark/model/interest_wise_product_model.dart';
+import 'package:kashirons_flutter/feature/spark/model/reminder_list_model.dart';
 import 'package:kashirons_flutter/feature/spark/model/spark_show_model.dart';
 import 'package:kashirons_flutter/feature/vip_profile/data/get_vip_profile/rx.dart';
 import 'package:kashirons_flutter/feature/vip_profile/data/get_vip_profile_list/rx.dart';
@@ -177,6 +181,16 @@ FavoriteToggleApiRx favoriteToggleApiRx = FavoriteToggleApiRx(
   dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
 );
 
+ReminderDeleteApiRx reminderDeleteApiRx = ReminderDeleteApiRx(
+  empty: <String, dynamic>{},
+  dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
+);
+
+ReminderUpdateApiRx reminderUpdateApiRx = ReminderUpdateApiRx(
+  empty: <String, dynamic>{},
+  dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
+);
+
 // NotificationToggleApiRx notificationToggleApiRx = NotificationToggleApiRx(
 //   empty: <String, dynamic>{},
 //   dataFetcher: BehaviorSubject<Map<String, dynamic>>(),
@@ -187,6 +201,11 @@ final notificationToggleApiRx = NotificationToggleApiRx();
 GetAllVipRx getAllVipRx = GetAllVipRx(
   empty: GetAllVipModelData(),
   dataFetcher: BehaviorSubject<GetAllVipModelData>(),
+);
+
+ReminderListApiRx reminderListApiRx = ReminderListApiRx(
+  empty: ReminderListModel(),
+  dataFetcher: BehaviorSubject<ReminderListModel>(),
 );
 
 NotificationScreenApiRx notificationScreenApiRx = NotificationScreenApiRx(
